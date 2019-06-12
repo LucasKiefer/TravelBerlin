@@ -21,7 +21,6 @@ class Attractions extends Component {
     render() {
       return (
         <div className="Attractions">
-        <h1>Attarctions page</h1>
         <StackGrid columnWidth={300} gutterWidth={50}>
           {this.state.title.filter(itm => true).map(item =>(
                <Attraction name={item.name} description={item.description} location={item.location}/>
