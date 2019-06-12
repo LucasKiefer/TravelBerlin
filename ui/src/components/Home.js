@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import LoginButton from './LoginButton';
+import RegisterButton from './RegisterButton';
 import {
   BrowserRouter as Router,
   Route,
@@ -25,6 +26,7 @@ class Home extends Component {
       return (
         <div className="Home">
           <LoginButton></LoginButton>
+          <RegisterButton></RegisterButton>
         </div>
     );
     }

@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {Header, Modal, Button, Form} from 'semantic-ui-react'
-import { Dropdown } from 'semantic-ui-react'
 
 
 class LoginButton extends Component {
@@ -18,7 +17,7 @@ class LoginButton extends Component {
                 <Form>
                     <Form.Field>
                         <label>Email</label>
-                        <input placeholder='Email' />
+                        <input placeholder='Email' type="email" />
                     </Form.Field>
                     <Form.Field>
                         <label>Password</label>
