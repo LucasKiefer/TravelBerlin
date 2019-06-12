@@ -14,3 +14,5 @@ GET     /*file                      controllers.FrontendController.assetOrDefaul
 # POST Routes
 
 POST    /login                      controllers.SubmitController.login
+
+POST    /register                   controllers.SubmitController.register

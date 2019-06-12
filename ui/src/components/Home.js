@@ -35,7 +35,7 @@ class Home extends Component {
           </form>
 
           <p>Register:</p>
-          <form>
+          <form action="/register" method="post">
             <label>First Name:</label>
             <input type="text" name="firstName" /><br></br>
              Last Name:
@@ -44,6 +44,8 @@ class Home extends Component {
             <input type="text" name="userName" /><br></br>
             Email:
             <input type="text" name="email" /><br></br>
+            Password:
+            <input type="password" name="password" /><br></br>
             
             <input type="submit" value="Register"/>
           </form>
