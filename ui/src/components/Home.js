@@ -24,18 +24,28 @@ class Home extends Component {
       return (
         <div className="Home">
           <h1>Home page</h1>
+          <p>Login:</p>
           <form action="/login" method="post">
             <label>
-              Name:
-              <input type="text" name="name" />
-            </label>
-            <br/><br/>
-            <label>
+              User Name:</label>
+              <input type="text" name="userName" /><br></br>
               Password:
-              <input type="password" name="password" />
-            </label>
-            <br/><br/>
-            <input type="submit" value="Submit" />
+              <input type="password" name="password"/><br></br>
+            <input type="submit" value="Login" />
+          </form>
+
+          <p>Register:</p>
+          <form>
+            <label>First Name:</label>
+            <input type="text" name="firstName" /><br></br>
+             Last Name:
+            <input type="text" name="lastName" /><br></br>
+            User Name:
+            <input type="text" name="userName" /><br></br>
+            Email:
+            <input type="text" name="email" /><br></br>
+            
+            <input type="submit" value="Register"/>
           </form>
         </div>
     );
