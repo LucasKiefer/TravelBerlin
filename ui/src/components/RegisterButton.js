@@ -22,10 +22,20 @@ class RegisterButton extends Component {
         event.preventDefault();
         const data = new FormData(event.target);
         
-        fetch('/register', {
-          method: 'POST',
-          body: data,
-        });
+        // fetch('/register', {
+        //     method: 'POST',
+        //     body: data,
+        // });
+
+        (async () => {
+            const rawResponse = await fetch('/register', {
+              method: 'POST',
+              body: data//JSON.stringify(data)
+            });
+            const content = await rawResponse.json();
+          
+            console.log(content);
+          })();
       }
 
     render() {
