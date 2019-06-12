@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Modal, Form, Checkbox} from 'semantic-ui-react'
+import Client from '../Client'
 
 
 class RegisterButton extends Component {
@@ -9,6 +10,12 @@ class RegisterButton extends Component {
 
     render() {
     const { open } = this.state
+
+    function formClicked(e) {
+        console.log("in form clicked")
+        Client.sendForm()
+    }
+
     return(
         <Modal open={open} onClose={this.close} trigger={<div onClick={(e) => e.preventDefault()} className="ui primary button" onClick={this.show('blurring')}>Register</div>}>
             <Modal.Header>Register</Modal.Header>
@@ -27,7 +34,7 @@ class RegisterButton extends Component {
                     </Form.Field>
                     <Form.Field control={Checkbox} label='Register as Admin'/>
                     <Form.Input fluid label='Admin Password' placeholder='Admin Password' type="password" />
-                    <Form.Button type='submit'>Register</Form.Button>
+                    <Form.Button type='submit' onClick={this.formClicked}>Register</Form.Button>
                 </Form>
             </Modal.Description>
             </Modal.Content>
