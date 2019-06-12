@@ -1,11 +1,7 @@
 import React, {Component} from 'react';
 import LoginButton from './LoginButton';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom';
-
+import RegisterButton from './RegisterButton';
+import Attractions from './Attractions'
 
 class Home extends Component {
     constructor(props) {
@@ -25,6 +21,8 @@ class Home extends Component {
       return (
         <div className="Home">
           <LoginButton></LoginButton>
+          <RegisterButton></RegisterButton>
+          <Attractions />
         </div>
     );
     }

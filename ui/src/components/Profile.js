@@ -1,9 +1,4 @@
 import React, {Component} from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom';
 
 
 class Profile extends Component {
@@ -35,7 +30,7 @@ class Profile extends Component {
             <input type ="text" name="password" /><br></br>
         </form>
         </div>
-    );
+      );
     }
   }
   export default Profile;
