@@ -1,11 +1,5 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { Card, Icon, Image } from 'semantic-ui-react'
-
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom';
 
 class Attraction extends React.Component {
     render() {

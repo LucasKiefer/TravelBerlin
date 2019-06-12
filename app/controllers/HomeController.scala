@@ -19,11 +19,18 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     // val json = try {  Json.parse(stream) } finally { stream.close() }
 
     val json: JsValue = Json.parse("""
-      {
-        "name": "G27",
-        "location": "idk I just follow lucas",
-        "description": "it's neet i guess"
-      }
+    [
+        {
+          "name": "G27",
+          "location": "idk I just follow lucas",
+          "description": "it's neet i guess"
+        },
+        {
+          "name": "G28",
+          "location": "big meme",
+          "description": "ecksdeee"
+        }
+    ]
     """)
 
     // Ok(Json.stringify(json))
