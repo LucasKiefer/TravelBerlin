@@ -2,23 +2,19 @@ import React, {Component} from 'react';
 import {
   BrowserRouter as Router,
   Route,
-  Link
 } from 'react-router-dom';
 
 import Home from './components/Home.js'
 import Profile from './components/Profile.js'
+import Attractions from './components/Attractions'
+import Attraction from './components/Attraction'
 
 import Client from "./Client";
-
-import reactLogo from './images/react.svg';
-import playLogo from './images/play.svg';
-import scalaLogo from './images/scala.png';
-
 import './App.css';
 
-const Tech = ({ match }) => {
-  return <div>Current Route: {match.params.tech}</div>
-};
+// const Tech = ({ match }) => {
+//   return <div>Current Route: {match.params.tech}</div>
+//};
 
 
 class App extends Component {
