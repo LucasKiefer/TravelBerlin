@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
-import {Header, Modal, Button, Form} from 'semantic-ui-react'
+import {Modal, Button, Form, Checkbox} from 'semantic-ui-react'
 
 
-class LoginButton extends Component {
-    state = { open: false }
+class RegisterButton extends Component {
+    state = { open: false, needed: true }
     show = dimmer => () => this.setState({ dimmer, open: true })
     close = () => this.setState({ open: false })
 
@@ -15,27 +15,19 @@ class LoginButton extends Component {
             <Modal.Content>
             <Modal.Description>
                 <Form>
+                    <Form.Group widths='equal'>
+                        <Form.Input required fluid label='First name' placeholder='First name' />
+                        <Form.Input required fluid label='Last name' placeholder='Last name' />
+                    </Form.Group>
                     <Form.Field>
-                        <label>First Name</label>
-                        <input placeholder='First Name' />
+                        <Form.Input required fluid label='Email' placeholder='Email' type='email' />
                     </Form.Field>
                     <Form.Field>
-                        <label>Last Name</label>
-                        <input placeholder='Last Name' />
+                        <Form.Input required fluid label='Password' placeholder='Password' type="password" />
                     </Form.Field>
-                    <Form.Field>
-                        <label>User Name</label>
-                        <input placeholder='User Name' />
-                    </Form.Field>
-                    <Form.Field>
-                        <label>Email</label>
-                        <input placeholder='Email' />
-                    </Form.Field>
-                    <Form.Field>
-                        <label>Password</label>
-                        <input placeholder='Password' type="email" />
-                    </Form.Field>
-                    <Button type='submit'>Register</Button>
+                    <Form.Field control={Checkbox} label='Register as Admin'/>
+                    <Form.Input fluid label='Admin Password' placeholder='Admin Password' type="password" />
+                    <Form.Button type='submit'>Register</Form.Button>
                 </Form>
             </Modal.Description>
             </Modal.Content>
@@ -44,4 +36,4 @@ class LoginButton extends Component {
   }
 }
 
-export default LoginButton
+export default RegisterButton

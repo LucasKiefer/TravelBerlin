@@ -16,12 +16,10 @@ class LoginButton extends Component {
             <Modal.Description>
                 <Form>
                     <Form.Field>
-                        <label>Email</label>
-                        <input placeholder='Email' type="email" />
+                        <Form.Input required fluid label='Email' placeholder='Email' type='email' />
                     </Form.Field>
                     <Form.Field>
-                        <label>Password</label>
-                        <input placeholder='Password' type="password" />
+                        <Form.Input required fluid label='Password' placeholder='Password' type="password" />
                     </Form.Field>
                     <Button type='submit'>Login</Button>
                 </Form>
