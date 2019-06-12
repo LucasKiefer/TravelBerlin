@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import LoginButton from './LoginButton';
 import RegisterButton from './RegisterButton';
 import Attractions from './Attractions'
+import NavBar from './NavBar';
 
 class Home extends Component {
     constructor(props) {
@@ -20,8 +21,7 @@ class Home extends Component {
     render() {
       return (
         <div className="Home">
-          <LoginButton></LoginButton>
-          <RegisterButton></RegisterButton>
+          <NavBar></NavBar>
           <Attractions />
         </div>
     );
