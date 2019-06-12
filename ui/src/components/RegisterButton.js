@@ -5,7 +5,7 @@ import {Modal, Form, Checkbox} from 'semantic-ui-react'
 class RegisterButton extends Component {
     constructor(props) {
         super(props);
-        this.state = { open: false, isChecked: true};
+        this.state = { open: false, isChecked: false};
         this.show = this.show.bind(this);
         this.close = this.close.bind(this);
         this.handleChecked = this.handleChecked.bind(this);
@@ -16,7 +16,6 @@ class RegisterButton extends Component {
     close = () => this.setState({ open: false })
     handleChecked = (events) => {
         this.setState({isChecked: !this.state.isChecked})
-        console.log(this.state);
     }
 
     handleSubmit(event) {
@@ -48,7 +47,7 @@ class RegisterButton extends Component {
                         <Form.Input required fluid label='Password' placeholder='Password' type="password" />
                     </Form.Field>
                     <Form.Field control={Checkbox} onChange={this.handleChecked} label='Register as Admin'/>
-                    <Form.Input fluid label='Admin Password' placeholder='Admin Password' type="password" />
+                    {this.state.isChecked && <Form.Input fluid label='Admin Password' placeholder='Admin Password' type="password" />}
                     <Form.Button type='submit'>Register</Form.Button>
                 </Form>
             </Modal.Description>
