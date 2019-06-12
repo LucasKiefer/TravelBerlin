@@ -1,33 +1,31 @@
 import React, {Component} from 'react';
 import Attraction from './Attraction'
-import { Button } from 'semantic-ui-react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom';
-
+import Client from '../Client.js'
+import StackGrid from "react-stack-grid";
 
 class Attractions extends Component {
     constructor(props) {
       super(props);
-      this.state = {title: ''};
+      this.state = {title: [1]};
     }
   
-    // async componentDidMount() {
-    //   Client.getSummary(summary => {
-    //     this.setState({
-    //       title: summary.content
-    //     });
-    //   });
-    // }
+    async componentDidMount() {
+      Client.getSummary(summary => {
+        this.setState({
+          title: JSON.parse(summary.content)
+        });
+        console.log(this.state.title[0]);
+      });
+    }
   
     render() {
       return (
         <div className="Attractions">
-        <h1>Attarctions page</h1>
-        {/* <Attraction /> */}
-        <Button color="red">Danger!</Button>
+        <StackGrid columnWidth={300} gutterWidth={50}>
+          {this.state.title.filter(itm => true).map(item =>(
+               <Attraction name={item.name} description={item.description} location={item.location}/>
+          ))}
+        </StackGrid>
         </div>
     );
     }

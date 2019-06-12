@@ -1,12 +1,7 @@
 import React, {Component} from 'react';
 import LoginButton from './LoginButton';
 import RegisterButton from './RegisterButton';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom';
-
+import Attractions from './Attractions'
 
 class Home extends Component {
     constructor(props) {
@@ -27,6 +22,7 @@ class Home extends Component {
         <div className="Home">
           <LoginButton></LoginButton>
           <RegisterButton></RegisterButton>
+          <Attractions />
         </div>
     );
     }

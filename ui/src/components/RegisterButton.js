@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Modal, Button, Form, Checkbox} from 'semantic-ui-react'
+import {Modal, Form, Checkbox} from 'semantic-ui-react'
 
 
 class RegisterButton extends Component {
@@ -8,7 +8,7 @@ class RegisterButton extends Component {
     close = () => this.setState({ open: false })
 
     render() {
-    const { open, dimmer } = this.state
+    const { open } = this.state
     return(
         <Modal open={open} onClose={this.close} trigger={<div onClick={(e) => e.preventDefault()} className="ui primary button" onClick={this.show('blurring')}>Register</div>}>
             <Modal.Header>Register</Modal.Header>
