@@ -3,9 +3,31 @@ import {Modal, Form, Checkbox} from 'semantic-ui-react'
 
 
 class RegisterButton extends Component {
-    state = { open: false, needed: true }
-    show = dimmer => () => this.setState({ dimmer, open: true })
+    constructor(props) {
+        super(props);
+        this.state = { open: false, isChecked: true};
+        this.show = this.show.bind(this);
+        this.close = this.close.bind(this);
+        this.handleChecked = this.handleChecked.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    
+    show = dimmer => () => this.setState({ dimmer, open: true})
     close = () => this.setState({ open: false })
+    handleChecked = (events) => {
+        this.setState({isChecked: !this.state.isChecked})
+        console.log(this.state);
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        const data = new FormData(event.target);
+        
+        fetch('/register', {
+          method: 'POST',
+          body: data,
+        });
+      }
 
     render() {
     const { open } = this.state
@@ -14,7 +36,7 @@ class RegisterButton extends Component {
             <Modal.Header>Register</Modal.Header>
             <Modal.Content>
             <Modal.Description>
-                <Form>
+                <Form onSubmit={this.handleSubmit}>
                     <Form.Group widths='equal'>
                         <Form.Input required fluid label='First name' placeholder='First name' />
                         <Form.Input required fluid label='Last name' placeholder='Last name' />
@@ -25,7 +47,7 @@ class RegisterButton extends Component {
                     <Form.Field>
                         <Form.Input required fluid label='Password' placeholder='Password' type="password" />
                     </Form.Field>
-                    <Form.Field control={Checkbox} label='Register as Admin'/>
+                    <Form.Field control={Checkbox} onChange={this.handleChecked} label='Register as Admin'/>
                     <Form.Input fluid label='Admin Password' placeholder='Admin Password' type="password" />
                     <Form.Button type='submit'>Register</Form.Button>
                 </Form>
