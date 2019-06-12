@@ -10,3 +10,7 @@ GET     /api/summary                controllers.HomeController.appSummary
 
 # Serve static assets under public directory
 GET     /*file                      controllers.FrontendController.assetOrDefault(file)
+
+# POST Routes
+
+POST    /login                      controllers.SubmitController.login
