@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Attraction from './Attraction'
-import { Button } from 'reactstrap';
+import { Button } from 'semantic-ui-react';
 import {
   BrowserRouter as Router,
   Route,
@@ -27,7 +27,7 @@ class Attractions extends Component {
         <div className="Attractions">
         <h1>Attarctions page</h1>
         {/* <Attraction /> */}
-        <Button color="danger">Danger!</Button>
+        <Button color="red">Danger!</Button>
         </div>
     );
     }
