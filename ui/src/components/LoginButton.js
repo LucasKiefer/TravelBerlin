@@ -1,49 +1,36 @@
-import React, {Component} from 'react';
-import { Button, Header, Icon, Modal } from 'semantic-ui-react'
-import LoginModal from './LoginModal'
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom';
+import React, {Component} from 'react'
+import {Header, Modal, Button, Form} from 'semantic-ui-react'
+import { Dropdown } from 'semantic-ui-react'
 
-const ModalExampleCloseIcon = () => (
-  <Modal trigger={<Button>Show Modal</Button>} closeIcon>
-    <Header icon='archive' content='Archive Old Messages' />
-    <Modal.Content>
-      <p>
-        Your inbox is getting full, would you like us to enable automatic archiving of old messages?
-      </p>
-    </Modal.Content>
-    <Modal.Actions>
-      <Button color='red'>
-        <Icon name='remove' /> No
-      </Button>
-      <Button color='green'>
-        <Icon name='checkmark' /> Yes
-      </Button>
-    </Modal.Actions>
-  </Modal>
-)
 
 class LoginButton extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        modal: false
-      };
-      this.toggle = this.toggle.bind(this);
-    }
-    toggle() {
-      this.setState(prevState => ({
-        modal: !prevState.modal
-      }));
-    }
-  
+    state = { open: false }
+    show = dimmer => () => this.setState({ dimmer, open: true })
+    close = () => this.setState({ open: false })
+
     render() {
-      return (
-        <LoginModal></LoginModal>
-    );
-    }
+    const { open, dimmer } = this.state
+    return(
+        <Modal open={open} onClose={this.close} trigger={<div onClick={(e) => e.preventDefault()} className="ui primary button" onClick={this.show('blurring')}>Login</div>}>
+            <Modal.Header>Login</Modal.Header>
+            <Modal.Content>
+            <Modal.Description>
+                <Form>
+                    <Form.Field>
+                        <label>Email</label>
+                        <input placeholder='Email' />
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Password</label>
+                        <input placeholder='Password' type="password" />
+                    </Form.Field>
+                    <Button type='submit'>Login</Button>
+                </Form>
+            </Modal.Description>
+            </Modal.Content>
+        </Modal>
+    )
   }
-  export default LoginButton;
+}
+
+export default LoginButton
