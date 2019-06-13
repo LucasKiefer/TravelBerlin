@@ -37,11 +37,18 @@ class SubmitController @Inject()(cc: ControllerComponents) extends AbstractContr
         // val userName = body.get("userName").get(0)
         // val email = body.get("email").get(0)
         // val password = body.get("password").get(0)
-        // User.createUser(firstName, lastName, username, email, password, false)
+        
         // val x = (request.body \ "answer").asOpt[String].drop(0).head
-        val x = (request.body \ "answer").writes[Int]
-        println(x)
-        println("yah yeet")
+        val userData = request.body
+        if ((userData \ "regAsAdmin").asOpt[Boolean].get) {
+            if ((userData \ "adminPassword").asOpt[String].get == "1234") {
+                //register as admin
+                println("admin priv")
+            }
+            else println("false admin attempt")
+        } else {
+            println("User registered!")
+        }
         Ok
     }
 }
