@@ -28,6 +28,7 @@ class SubmitController @Inject()(cc: ControllerComponents) extends AbstractContr
         // val email = body.get("email").get(0)
         // val password = body.get("password").get(0)
         // User.createUser(firstName, lastName, userName, email, password, false)
+        // println(Json.stringify(request))
         println("yah yeet")
         Ok
     }
