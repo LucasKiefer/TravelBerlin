@@ -43,7 +43,6 @@ class RegisterButton extends Component {
     close = () => this.setState({ open: false, regAsAdmin: false, firstName: "", lastName:"", email:"", password:"",regAsAdmin:false, adminPassword:""})
     handleChecked = (events) => {
         this.setState({regAsAdmin: !this.state.regAsAdmin})
-        console.log(this.state)
     }
 
     handleInputChange(event) {
@@ -54,7 +53,6 @@ class RegisterButton extends Component {
         this.setState({
           [name]: value
         });
-        console.log(this.state)
       }
 
     render() {
