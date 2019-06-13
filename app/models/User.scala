@@ -25,7 +25,7 @@ class User() {
 object User {
 
     def createUser(firstName: String, lastName: String, userName: String, email: String, password: String,
-                   isAdmin: Boolean) = {
+                   isAdmin: Boolean): Unit = {
 
         try {
             val serviceAccount = new FileInputStream(
