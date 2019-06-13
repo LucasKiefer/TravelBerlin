@@ -33,8 +33,8 @@ class SubmitController @Inject()(cc: ControllerComponents) extends AbstractContr
         // val email = body.get("email").get(0)
         // val password = body.get("password").get(0)
         // User.createUser(firstName, lastName, username, email, password, false)
-        val x = (request.body \ "answer").asOpt[String].drop(0).head
-        println(x)
+        // val x = (request.body \ "answer").asOpt[String].drop(0).head
+        println(request.body)
         println("yah yeet")
         Ok
     }
