@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {Modal, Form, Checkbox} from 'semantic-ui-react'
-import Client from '../Client'
 
 
 function sendForm(state) {
@@ -37,7 +36,6 @@ class RegisterButton extends Component {
         this.show = this.show.bind(this);
         this.close = this.close.bind(this);
         this.handleChecked = this.handleChecked.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
     }
     
@@ -57,26 +55,6 @@ class RegisterButton extends Component {
           [name]: value
         });
         console.log(this.state)
-      }
-
-    handleSubmit(event) {
-        event.preventDefault();
-        const data = new FormData(event.target);
-        
-        // fetch('/register', {
-        //     method: 'POST',
-        //     body: data,
-        // });
-
-    //     (async () => {
-    //         const rawResponse = await fetch('/register', {
-    //           method: 'POST',
-    //           body: data//JSON.stringify(data)
-    //         });
-    //         const content = await rawResponse.json();
-          
-    //         console.log(content);
-    //       })();
       }
 
     render() {
@@ -103,7 +81,7 @@ class RegisterButton extends Component {
                     <Form.Field control={Checkbox} name="regAsAdmin" onChange={this.handleChecked} label='Register as Admin'/>
 
                     {this.state.regAsAdmin && <Form.Input name="adminPassword" fluid label='Admin Password' placeholder='Admin Password' type="password" onChange={this.handleInputChange}/>}
-                    <Form.Button type='submit' onClick={sendForm(this.state)}>Register</Form.Button>
+                    <Form.Button type='submit' onClick= {() => { sendForm(this.state) }}>Register</Form.Button>
                 </Form>
             </Modal.Description>
             </Modal.Content>
