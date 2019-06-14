@@ -1,33 +1,10 @@
 import React, {Component} from 'react'
 import {Modal, Form, Checkbox} from 'semantic-ui-react'
+import Client from '../Client'
+import  { Redirect } from 'react-router-dom'
+import { join } from 'path';
+import { withRouter } from 'react-router-dom';
 
-
-function sendForm(state) {
-    console.log("in client send form")
-    postData('/register', state)
-    .then(data => console.log(JSON.stringify(data))) // JSON-string from `response.json()` call
-    .catch(error => console.error(error));
-  }
-  
-  function postData(url = '', data = {}) {
-    console.log("in console post data");
-    // Default options are marked with *
-      return fetch(url, {
-          method: 'POST', // *GET, POST, PUT, DELETE, etc.
-          mode: 'cors', // no-cors, cors, *same-origin
-          cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-          credentials: 'same-origin', // include, *same-origin, omit
-          headers: {
-              'Content-Type': 'application/json',
-              // 'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          redirect: 'follow', // manual, *follow, error
-          referrer: 'no-referrer', // no-referrer, *client
-          body: JSON.stringify(data), // body data type must match "Content-Type" header
-      })
-      .then(response => response.json()); // parses JSON response into native Javascript objects 
-  }
-  
 
 class RegisterButton extends Component {
     constructor(props) {
@@ -37,6 +14,7 @@ class RegisterButton extends Component {
         this.close = this.close.bind(this);
         this.handleChecked = this.handleChecked.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.registerRedirect = this.registerRedirect.bind(this);
     }
     
     show = dimmer => () => this.setState({ dimmer, open: true})
@@ -53,7 +31,24 @@ class RegisterButton extends Component {
         this.setState({
           [name]: value
         });
-      }
+    }
+
+    registerRedirect = () => {
+       Client.sendForm(this.state, "/register").then(json => {
+           console.log(json.success)
+           if(json.success == true) {
+               console.log("in success")
+               //this.props.history.push('/profile')
+           }
+       })
+       
+
+        // if (Client.sendForm(this.state, "/register")) {
+        //     return <Redirect to='/profile'  />
+        // } else {
+        //     return
+        // }
+    }
 
     render() {
     const { open } = this.state
@@ -79,7 +74,7 @@ class RegisterButton extends Component {
                     <Form.Field control={Checkbox} name="regAsAdmin" onChange={this.handleChecked} label='Register as Admin'/>
 
                     {this.state.regAsAdmin && <Form.Input name="adminPassword" fluid label='Admin Password' placeholder='Admin Password' type="password" onChange={this.handleInputChange}/>}
-                    <Form.Button type='submit' onClick= {() => { sendForm(this.state) }}>Register</Form.Button>
+                    <Form.Button type='submit' onClick= {() => { this.registerRedirect() }}>Register</Form.Button>
                 </Form>
             </Modal.Description>
             </Modal.Content>
