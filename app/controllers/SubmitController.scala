@@ -16,17 +16,19 @@ class SubmitController @Inject()(cc: ControllerComponents) extends AbstractContr
 
     //TODO: Change this so it actually logs in
     def login = Action (parse.json) { request: Request[JsValue] =>
-        val userLogin = request.body
+        println(request.body)
+        Ok
+        // val userLogin = request.body
 
-        try {
-            val email = (userLogin \ "email").asOpt[String].get
-            val password = (userLogin \ "password").asOpt[String].get
-            val validated = ValidateUser(email, password).isValid
-            if (validated) Ok("true") else Ok("false")
-        } catch {
-            case nse: NoSuchElementException => throw(nse)
-            NotAcceptable
-        }
+        // try {
+        //     val email = (userLogin \ "email").asOpt[String].get
+        //     val password = (userLogin \ "password").asOpt[String].get
+        //     val validated = ValidateUser(email, password).isValid
+        //     if (validated) Ok("true") else Ok("false")
+        // } catch {
+        //     case nse: NoSuchElementException => throw(nse)
+        //     NotAcceptable
+        // }
     }
 
     def register = Action (parse.json) { request: Request[JsValue] =>
