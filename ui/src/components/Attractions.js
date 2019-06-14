@@ -11,8 +11,9 @@ class Attractions extends Component {
   
     async componentDidMount() {
       Client.getSummary(summary => {
+        // console.log
         this.setState({
-          title: JSON.parse(summary.content)
+          title: JSON.parse(summary.content).attractions
         });
         console.log(this.state.title[0]);
       });
