@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
 import {Modal, Form, Checkbox} from 'semantic-ui-react'
 import Client from '../Client'
-
+import  { Redirect } from 'react-router-dom'
+import { join } from 'path';
+import { withRouter } from 'react-router-dom';
 
 
 class RegisterButton extends Component {
@@ -12,6 +14,7 @@ class RegisterButton extends Component {
         this.close = this.close.bind(this);
         this.handleChecked = this.handleChecked.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.registerRedirect = this.registerRedirect.bind(this);
     }
     
     show = dimmer => () => this.setState({ dimmer, open: true})
@@ -28,7 +31,24 @@ class RegisterButton extends Component {
         this.setState({
           [name]: value
         });
-      }
+    }
+
+    registerRedirect = () => {
+       Client.sendForm(this.state, "/register").then(json => {
+           console.log(json.success)
+           if(json.success == true) {
+               console.log("in success")
+               //this.props.history.push('/profile')
+           }
+       })
+       
+
+        // if (Client.sendForm(this.state, "/register")) {
+        //     return <Redirect to='/profile'  />
+        // } else {
+        //     return
+        // }
+    }
 
     render() {
     const { open } = this.state
@@ -54,7 +74,7 @@ class RegisterButton extends Component {
                     <Form.Field control={Checkbox} name="regAsAdmin" onChange={this.handleChecked} label='Register as Admin'/>
 
                     {this.state.regAsAdmin && <Form.Input name="adminPassword" fluid label='Admin Password' placeholder='Admin Password' type="password" onChange={this.handleInputChange}/>}
-                    <Form.Button type='submit' onClick= {() => { Client.sendForm(this.state, "/register") }}>Register</Form.Button>
+                    <Form.Button type='submit' onClick= {() => { this.registerRedirect() }}>Register</Form.Button>
                 </Form>
             </Modal.Description>
             </Modal.Content>

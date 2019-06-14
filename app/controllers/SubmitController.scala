@@ -48,6 +48,6 @@ class SubmitController @Inject()(cc: ControllerComponents) extends AbstractContr
             case nse: NoSuchElementException => throw(nse)
         }
         //TODO: checks if registration was successful
-        Ok
+        Ok(Json.obj("success" -> true))
     }
 }

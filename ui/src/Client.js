@@ -25,9 +25,11 @@ function parseJSON(response) {
 
 function sendForm(state, api) {
   console.log("in client send form")
-  postData(api, state)
-  .then(data => console.log(JSON.stringify(data))) // JSON-string from `response.json()` call
+  var datatoret = ""
+  return postData(api, state)
+  .then(data => data) // JSON-string from `response.json()` call
   .catch(error => console.error(error));
+
 }
 
 function postData(url = '', data = {}) {
