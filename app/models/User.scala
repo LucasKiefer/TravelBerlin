@@ -16,15 +16,14 @@ import ExecutionContext.Implicits.global
 class User() {
     @BeanProperty var firstName: String = _
     @BeanProperty var lastName: String = _
-    @BeanProperty var userName: String = _
     @BeanProperty var email: String = _
     @BeanProperty var password: String = _
-    @BeanProperty var isAdmin: Boolean = _
+    @BeanProperty var admin: Boolean = _
 }
 
 object User {
 
-    def createUser(firstName: String, lastName: String, userName: String, email: String, password: String,
+    def createUser(firstName: String, lastName: String, email: String, password: String,
                    isAdmin: Boolean) = {
 
         try {
@@ -44,9 +43,9 @@ object User {
         val user = new User()
         user.firstName = firstName
         user.lastName = lastName
-        user.userName = userName
         user.email = email
         user.password = password
+        user.admin = isAdmin
 
         //Set user at ref location
         userRef.set(user).foreach(println)
