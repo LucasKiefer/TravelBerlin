@@ -8,6 +8,7 @@ import java.io.File
 import java.io.FileInputStream
 
 import scala.concurrent._
+import scala.concurrent.duration._
 import ExecutionContext.Implicits.global
 
 //uses this library: https://github.com/firebase4s/firebase4s
@@ -53,8 +54,6 @@ object User {
 
     def getUserByEmail(email: String): Option[User] = {
 
-        val user = User()
-
         try {
             val serviceAccount = new FileInputStream(
                 new File("./app/resources/serviceAccountsCredentials.json"))
@@ -64,17 +63,12 @@ object User {
         }
 
         val db: Database = Database.getInstance()
-        val userRef: DatabaseReference = db.ref("Users/")
+        val userRef: DatabaseReference = db.ref("Users/" + email.hashCode)
 
-        println("UserRef: " + userRef.get())
+        val futureUser: Future[Option[User]] = userRef.get()
+            .map(snapshot => snapshot.getValue(classOf[User]))
 
-        user.setAdmin(false)
-        user.setEmail("test")
-        user.setPassword("test")
-        user.setLastName("test")
-        user.setPassword("test")
-
-        val userOption: Option[User] = Option(user)
+        val userOption: Option[User] = Await.result(futureUser, 10.second)
 
         userOption
     }

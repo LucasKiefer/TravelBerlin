@@ -1,14 +1,14 @@
 package controllers
 
 import javax.inject._
-
 import play.api.libs.json.Json
 import play.api.libs.json.JsValue
-import play.api.libs.json._
 import play.api.mvc._
 import java.util.NoSuchElementException
+
 import models.User
-import utils.ValidateUser
+import utils.{ValidateUser, ValidationStatus}
+import utils.ValidationStatus.ValidationStatus
 
 //TODO: possibly put this entire think in HomeController.scala
 @Singleton
@@ -16,19 +16,30 @@ class SubmitController @Inject()(cc: ControllerComponents) extends AbstractContr
 
     //TODO: Change this so it actually logs in
     def login = Action (parse.json) { request: Request[JsValue] =>
-        println(request.body)
-        Ok
-        // val userLogin = request.body
 
-        // try {
-        //     val email = (userLogin \ "email").asOpt[String].get
-        //     val password = (userLogin \ "password").asOpt[String].get
-        //     val validated = ValidateUser(email, password).isValid
-        //     if (validated) Ok("true") else Ok("false")
-        // } catch {
-        //     case nse: NoSuchElementException => throw(nse)
-        //     NotAcceptable
-        // }
+         val userLogin = request.body
+
+         try {
+             //TODO: Need to change values in OK, also needs to put user in session
+             val email = (userLogin \ "email").asOpt[String].get
+             val password = (userLogin \ "password").asOpt[String].get
+             val validated: ValidationStatus = ValidateUser(email, password).isValid
+
+             if (validated == ValidationStatus.SUCCESSFUL) {
+                 val user: User = User.getUserByEmail(email).get
+                 Ok(Json.obj("validate" -> "success")).withSession(
+                     "email" -> user.getEmail + "firstName" -> user.getFirstName +
+                       "last_name" -> user.getLastName
+                 )
+             }
+             else if (validated == ValidationStatus.PASSWORD_INCORRECT) Ok(
+                 Json.obj("validate" -> "password incorrect"))
+             else Ok(Json.obj("validate" -> "account not found"))
+
+         } catch {
+             case nse: NoSuchElementException => throw(nse)
+             Ok(Json.obj("validate" -> "form not filled"))
+         }
     }
 
     def register = Action (parse.json) { request: Request[JsValue] =>
