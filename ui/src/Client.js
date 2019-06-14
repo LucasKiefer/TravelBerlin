@@ -8,9 +8,24 @@ function getSummary(cb) {
     .then(cb);
 }
 
-function sendForm() {
+function checkStatus(response) {
+  if (response.status >= 200 && response.status < 300) {
+    return response;
+  }
+  const error = new Error(`HTTP Error ${response.statusText}`);
+  error.status = response.statusText;
+  error.response = response;
+  console.log(error); // eslint-disable-line no-console
+  throw error;
+}
+
+function parseJSON(response) {
+  return response.json();
+}
+
+function sendForm(state, api) {
   console.log("in client send form")
-  postData('/register', {answer: 42})
+  postData(api, state)
   .then(data => console.log(JSON.stringify(data))) // JSON-string from `response.json()` call
   .catch(error => console.error(error));
 }
@@ -34,20 +49,8 @@ function postData(url = '', data = {}) {
     .then(response => response.json()); // parses JSON response into native Javascript objects 
 }
 
-function checkStatus(response) {
-  if (response.status >= 200 && response.status < 300) {
-    return response;
-  }
-  const error = new Error(`HTTP Error ${response.statusText}`);
-  error.status = response.statusText;
-  error.response = response;
-  console.log(error); // eslint-disable-line no-console
-  throw error;
-}
 
-function parseJSON(response) {
-  return response.json();
-}
 
-const Client = { getSummary };
+const Client = { getSummary, sendForm };
 export default Client;
+

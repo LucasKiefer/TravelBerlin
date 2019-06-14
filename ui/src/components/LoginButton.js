@@ -1,32 +1,6 @@
 import React, {Component} from 'react'
 import {Modal, Button, Form} from 'semantic-ui-react'
-
-
-function sendForm(state) {
-    console.log("in client send form")
-    postData('/login', state)
-    .then(data => console.log(JSON.stringify(data))) // JSON-string from `response.json()` call
-    .catch(error => console.error(error));
-  }
-  
-  function postData(url = '', data = {}) {
-    console.log("in console post data");
-    // Default options are marked with *
-      return fetch(url, {
-          method: 'POST', // *GET, POST, PUT, DELETE, etc.
-          mode: 'cors', // no-cors, cors, *same-origin
-          cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-          credentials: 'same-origin', // include, *same-origin, omit
-          headers: {
-              'Content-Type': 'application/json',
-              // 'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          redirect: 'follow', // manual, *follow, error
-          referrer: 'no-referrer', // no-referrer, *client
-          body: JSON.stringify(data), // body data type must match "Content-Type" header
-      })
-      .then(response => response.json()); // parses JSON response into native Javascript objects 
-  }
+import Client from "../Client"
 
 class LoginButton extends Component {
     constructor(props) {
@@ -62,7 +36,7 @@ class LoginButton extends Component {
                     <Form.Field>
                         <Form.Input required fluid name="password" label='Password' placeholder='Password' type="password" value={this.state.password} onChange={this.handleInputChange}/>
                     </Form.Field>
-                    <Form.Button type='submit' onClick= {() => { sendForm(this.state) }}>Login</Form.Button>
+                    <Form.Button type='submit' onClick= {() => { Client.sendForm(this.state, "/login") }}>Login</Form.Button>
                 </Form>
             </Modal.Description>
             </Modal.Content>
