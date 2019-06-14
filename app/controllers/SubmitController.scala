@@ -14,13 +14,11 @@ import utils.ValidationStatus.ValidationStatus
 @Singleton
 class SubmitController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
-    //TODO: Change this so it actually logs in
     def login = Action (parse.json) { request: Request[JsValue] =>
 
          val userLogin = request.body
 
          try {
-             //TODO: Need to change values in OK, also needs to put user in session
              val email = (userLogin \ "email").asOpt[String].get
              val password = (userLogin \ "password").asOpt[String].get
              val validated: ValidationStatus = ValidateUser(email, password).isValid
