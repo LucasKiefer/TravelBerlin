@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { Menu, Button } from 'semantic-ui-react'
 import LoginButton from './LoginButton.js'
 import RegisterButton from './RegisterButton.js';
+import { withRouter } from 'react-router-dom';
 
-export default class NavBar extends Component {
+class NavBar extends Component {
   constructor(props) {
     super(props)
     this.state = {"loggedin": false}
@@ -22,7 +23,7 @@ export default class NavBar extends Component {
     const { activeItem } = this.state
     let upperRight;
     if(this.state.loggedin) {
-        upperRight = <Button>Profile</Button>
+        upperRight = <Button onClick={() => this.props.history.push('/profile')}>Profile</Button>
     } else {
         upperRight = <div><RegisterButton setLoginTrue = {this.setLoginTrue} ></RegisterButton><LoginButton setLoginTrue = {this.setLoginTrue}></LoginButton></div>
     }
@@ -51,3 +52,5 @@ export default class NavBar extends Component {
     )
   }
 }
+
+export default withRouter(NavBar)

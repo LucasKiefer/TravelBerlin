@@ -8,6 +8,15 @@ function getSummary(cb) {
     .then(cb);
 }
 
+function getUser(cb) {
+  return fetch('/api/getUser', {
+    accept: "application/json"
+  })
+    .then(checkStatus)
+    .then(parseJSON)
+    .then(cb);
+}
+
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;

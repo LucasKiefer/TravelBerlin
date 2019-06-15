@@ -1,8 +1,6 @@
 import React, {Component} from 'react'
 import {Modal, Form, Checkbox, Message} from 'semantic-ui-react'
 import Client from '../Client'
-import  { Redirect } from 'react-router-dom'
-import { join } from 'path';
 import { withRouter } from 'react-router-dom';
 
 
@@ -36,7 +34,7 @@ class RegisterButton extends Component {
     registerRedirect = () => {
        Client.sendForm(this.state, "/api/register").then(json => {
            console.log(json.validate)
-           if(json.validate == "success") {
+           if(json.validate === "success") {
                console.log("in success")
                this.props.setLoginTrue()
            } else {

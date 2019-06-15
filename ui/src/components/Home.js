@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import LoginButton from './LoginButton';
-import RegisterButton from './RegisterButton';
 import Attractions from './Attractions'
 import NavBar from './NavBar';
 

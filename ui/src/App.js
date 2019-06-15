@@ -6,8 +6,6 @@ import {
 
 import Home from './components/Home.js'
 import Profile from './components/Profile.js'
-import Attractions from './components/Attractions'
-import Attraction from './components/Attraction'
 
 import Client from "./Client";
 import './App.css';
