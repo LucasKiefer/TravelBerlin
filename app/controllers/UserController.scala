@@ -52,11 +52,12 @@ class UserController @Inject()(cc: ControllerComponents) extends AbstractControl
             val lastName = (userData \ "lastName").asOpt[String].get
             val email = (userData \ "email").asOpt[String].get
             val password = (userData \ "password").asOpt[String].get
-            User.createUser(firstName, lastName, email, password, regAsAdmin)
+            val createSuccessful = User.createUser(firstName, lastName, email, password, regAsAdmin)
+            if (createSuccessful) Ok(Json.obj("validate" -> "successful"))
+            else Ok(Json.obj("validate" -> "email used"))
         } catch {
             case nse: NoSuchElementException => throw(nse)
+            Ok(Json.obj("validate" -> "form not filled"))
         }
-        //TODO: checks if registration was successful
-        Ok(Json.obj("success" -> true))
     }
 }

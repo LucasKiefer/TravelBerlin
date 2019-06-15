@@ -26,7 +26,7 @@ object User {
 
     //TODO: Maybe change this so it returns if the createUser attempt is successful
     def createUser(firstName: String, lastName: String, email: String, password: String,
-                   isAdmin: Boolean) = {
+                   isAdmin: Boolean): Boolean = {
 
         try {
             val serviceAccount = new FileInputStream(
@@ -40,16 +40,25 @@ object User {
         val db: Database = Database.getInstance()
         val userRef: DatabaseReference = db.ref("Users/" + email.hashCode)
 
-        //Create user
-        val user = new User()
-        user.setFirstName(firstName)
-        user.setLastName(lastName)
-        user.setEmail(email)
-        user.setPassword(password)
-        user.setAdmin(isAdmin)
+        //Check if user already exists
+        val userOption: Option[User] = getUserByEmail(email)
+        userOption match{
+            case None => {
+                //Create user
+                val user = new User()
+                user.setFirstName(firstName)
+                user.setLastName(lastName)
+                user.setEmail(email)
+                user.setPassword(password)
+                user.setAdmin(isAdmin)
 
-        //Set user at ref location
-        userRef.set(user).foreach(println)
+                //Set user at ref location
+                userRef.set(user).foreach(println)
+
+                true
+            }
+            case _ => false
+        }
     }
 
     def getUserByEmail(email: String): Option[User] = {
