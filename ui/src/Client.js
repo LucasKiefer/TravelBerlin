@@ -9,7 +9,7 @@ function getSummary(cb) {
 }
 
 function getUser(cb) {
-  return fetch('/api/getUser', {
+  return fetch('/api/user', {
     accept: "application/json"
   })
     .then(checkStatus)
@@ -61,6 +61,6 @@ function postData(url = '', data = {}) {
 
 
 
-const Client = { getSummary, sendForm };
+const Client = { getSummary, sendForm, getUser };
 export default Client;
 

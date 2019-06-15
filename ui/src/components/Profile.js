@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Header } from 'semantic-ui-react';
 import { Modal, Card, Image, Form, Message, Dropdown, Label } from 'semantic-ui-react';
 import Center from 'react-center';
-import Client from '../Client'
+import Client from '../Client';
 
 class Profile extends Component {
     constructor(props) {
@@ -14,11 +14,18 @@ class Profile extends Component {
     close = () => this.setState({ open: false })
 
     async componentDidMount() {
-      Client.getUser(user => {
-        this.setState({
-          user: user.content
-        });
-      });
+    //   Client.getUser(user => {
+    //     console.log(user);
+    //     this.setState({
+    //       user: user.content
+    //     });
+    //   });
+
+      Client.sendForm({}, '/api/user').then(usr => {
+          console.log(usr);
+          this.setState({user: JSON.parse(usr.user)})
+        }
+      )
     }
   
     render() {
@@ -26,9 +33,9 @@ class Profile extends Component {
       for (var i = 2019; i > 1900; i--) {
         yearOptions.push({'key': i, 'value': i, 'text': i})
       }
-      
-      const { open } = this.state
-      const { value } = this.state
+
+      //TODO: make this not user.user
+      const { open } = this.state;
       return (
         <div>
           <Header as='h1'>Profile</Header>
@@ -36,7 +43,7 @@ class Profile extends Component {
             <Card>
             <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={false}/>
             <Card.Content>
-              <Card.Header>{this.state.user.firstname + this.state.user.lastname}</Card.Header>
+              <Card.Header>{this.state.user.firstName === undefined && this.state.user.lastName === undefined ? "Name" : this.state.user.firstName + " " + this.state.user.lastName}</Card.Header>
               <div>
                 <Label as='a' color='blue' tag>
                   User
@@ -46,13 +53,13 @@ class Profile extends Component {
                 </Label>
               </div>
               <Card.Description>
-                {this.state.user.birthyear}
+                {this.state.user.birthYear === undefined ? "Name" : this.state.user.birthYear}
               </Card.Description>
               <Card.Description>
-                {this.state.user.hometown}
+                {this.state.user.homeTown === undefined ? "Name" : this.state.user.homeTown}
               </Card.Description>
               <Card.Description>
-                {this.state.user.interests}
+                {this.state.user.interests === undefined ? "Name" : this.state.user.interests}
               </Card.Description>
             </Card.Content>
             </Card>

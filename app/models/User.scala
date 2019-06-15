@@ -19,9 +19,9 @@ case class User() {
     @BeanProperty var lastName: String = _
     @BeanProperty var email: String = _
     @BeanProperty var password: String = _
-    @BeanProperty var birthYear: String =_
+    @BeanProperty var birthYear: Int =_
     @BeanProperty var homeTown: String = _
-    @BeanProperty var interests: String = _
+    @BeanProperty var interests: List[String] = _
     @BeanProperty var admin: Boolean = _
 }
 
@@ -29,7 +29,7 @@ object User {
 
     //TODO: Maybe change this so it returns if the createUser attempt is successful
     def createUser(firstName: String, lastName: String, email: String, password: String,
-                   isAdmin: Boolean): Boolean = {
+                   isAdmin: Boolean): Option[User] = {
 
         try {
             val serviceAccount = new FileInputStream(
@@ -54,16 +54,16 @@ object User {
                 user.setEmail(email)
                 user.setPassword(password)
                 user.setAdmin(isAdmin)
-                user.setBirthYear("")
+                user.setBirthYear(0)
                 user.setHomeTown("")
-                user.setInterests("")
+                user.setInterests(List(""))
 
                 //Set user at ref location
-                userRef.set(user).foreach(println)
+                val storedUser: User = Await.result(userRef.set(user), 10.second)
 
-                true
+                Option(storedUser)
             }
-            case _ => false
+            case _ => None
         }
     }
 
