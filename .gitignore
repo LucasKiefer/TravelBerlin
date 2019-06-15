@@ -1,6 +1,5 @@
 logs
 target
-serviceAccountsCredentials.json
 /.idea
 /.idea_modules
 /.classpath
@@ -10,3 +9,4 @@ serviceAccountsCredentials.json
 /public
 yarn.lock
 ui/yarn.lock
+node_modules

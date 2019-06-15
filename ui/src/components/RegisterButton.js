@@ -1,33 +1,80 @@
 import React, {Component} from 'react'
 import {Modal, Form, Checkbox} from 'semantic-ui-react'
+import Client from '../Client'
+import  { Redirect } from 'react-router-dom'
+import { join } from 'path';
+import { withRouter } from 'react-router-dom';
 
 
 class RegisterButton extends Component {
-    state = { open: false, needed: true }
-    show = dimmer => () => this.setState({ dimmer, open: true })
-    close = () => this.setState({ open: false })
+    constructor(props) {
+        super(props);
+        this.state = { open: false, regAsAdmin: false, firstName: "", lastName:"", email:"", password:"", adminPassword:""};
+        this.show = this.show.bind(this);
+        this.close = this.close.bind(this);
+        this.handleChecked = this.handleChecked.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.registerRedirect = this.registerRedirect.bind(this);
+    }
+    
+    show = dimmer => () => this.setState({ dimmer, open: true})
+    close = () => this.setState({ open: false, regAsAdmin: false, firstName: "", lastName:"", email:"", password:"",regAsAdmin:false, adminPassword:""})
+    handleChecked = (events) => {
+        this.setState({regAsAdmin: !this.state.regAsAdmin})
+    }
+
+    handleInputChange(event) {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+    
+        this.setState({
+          [name]: value
+        });
+    }
+
+    registerRedirect = () => {
+       Client.sendForm(this.state, "/register").then(json => {
+           console.log(json.success)
+           if(json.success == true) {
+               console.log("in success")
+               //this.props.history.push('/profile')
+           }
+       })
+       
+
+        // if (Client.sendForm(this.state, "/register")) {
+        //     return <Redirect to='/profile'  />
+        // } else {
+        //     return
+        // }
+    }
 
     render() {
     const { open } = this.state
+
     return(
         <Modal open={open} onClose={this.close} trigger={<div onClick={(e) => e.preventDefault()} className="ui primary button" onClick={this.show('blurring')}>Register</div>}>
             <Modal.Header>Register</Modal.Header>
             <Modal.Content>
             <Modal.Description>
-                <Form>
+                <Form onSubmit={this.handleSubmit}>
                     <Form.Group widths='equal'>
-                        <Form.Input required fluid label='First name' placeholder='First name' />
-                        <Form.Input required fluid label='Last name' placeholder='Last name' />
+                        <Form.Input required fluid name='firstName' label='First name' placeholder='First name'
+            onChange={this.handleInputChange} />
+                        <Form.Input required fluid name="lastName" label='Last name' placeholder='Last name' value={this.state.lastName}
+            onChange={this.handleInputChange}/>
                     </Form.Group>
                     <Form.Field>
-                        <Form.Input required fluid label='Email' placeholder='Email' type='email' />
+                        <Form.Input required fluid name="email" label='Email' placeholder='Email' type='email' value={this.state.email} onChange={this.handleInputChange}/>
                     </Form.Field>
                     <Form.Field>
-                        <Form.Input required fluid label='Password' placeholder='Password' type="password" />
+                        <Form.Input required fluid name="password" label='Password' placeholder='Password' type="password" value={this.state.password} onChange={this.handleInputChange}/>
                     </Form.Field>
-                    <Form.Field control={Checkbox} label='Register as Admin'/>
-                    <Form.Input fluid label='Admin Password' placeholder='Admin Password' type="password" />
-                    <Form.Button type='submit'>Register</Form.Button>
+                    <Form.Field control={Checkbox} name="regAsAdmin" onChange={this.handleChecked} label='Register as Admin'/>
+
+                    {this.state.regAsAdmin && <Form.Input name="adminPassword" fluid label='Admin Password' placeholder='Admin Password' type="password" onChange={this.handleInputChange}/>}
+                    <Form.Button type='submit' onClick= {() => { this.registerRedirect() }}>Register</Form.Button>
                 </Form>
             </Modal.Description>
             </Modal.Content>

@@ -16,13 +16,13 @@ import './App.css';
 //   return <div>Current Route: {match.params.tech}</div>
 //};
 
-
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {title: ''};
   }
 
+  
   async componentDidMount() {
     Client.getSummary(summary => {
       this.setState({

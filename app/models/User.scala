@@ -8,23 +8,24 @@ import java.io.File
 import java.io.FileInputStream
 
 import scala.concurrent._
+import scala.concurrent.duration._
 import ExecutionContext.Implicits.global
 
 //uses this library: https://github.com/firebase4s/firebase4s
 
 //TODO: CHANGE THE PASSWORD!!!!!!!!
-class User() {
+case class User() {
     @BeanProperty var firstName: String = _
     @BeanProperty var lastName: String = _
-    @BeanProperty var userName: String = _
     @BeanProperty var email: String = _
     @BeanProperty var password: String = _
-    @BeanProperty var isAdmin: Boolean = _
+    @BeanProperty var admin: Boolean = _
 }
 
 object User {
 
-    def createUser(firstName: String, lastName: String, userName: String, email: String, password: String,
+    //TODO: Maybe change this so it returns if the createUser attempt is successful
+    def createUser(firstName: String, lastName: String, email: String, password: String,
                    isAdmin: Boolean) = {
 
         try {
@@ -39,16 +40,36 @@ object User {
         val db: Database = Database.getInstance()
         val userRef: DatabaseReference = db.ref("Users/" + email.hashCode)
 
-
         //Create user
         val user = new User()
-        user.firstName = firstName
-        user.lastName = lastName
-        user.userName = userName
-        user.email = email
-        user.password = password
+        user.setFirstName(firstName)
+        user.setLastName(lastName)
+        user.setEmail(email)
+        user.setPassword(password)
+        user.setAdmin(isAdmin)
 
         //Set user at ref location
         userRef.set(user).foreach(println)
+    }
+
+    def getUserByEmail(email: String): Option[User] = {
+
+        try {
+            val serviceAccount = new FileInputStream(
+                new File("./app/resources/serviceAccountsCredentials.json"))
+            App.initialize(serviceAccount, "https://travelberlin-1b28d.firebaseio.com")
+        } catch {
+            case ise: IllegalStateException => println(ise)
+        }
+
+        val db: Database = Database.getInstance()
+        val userRef: DatabaseReference = db.ref("Users/" + email.hashCode)
+
+        val futureUser: Future[Option[User]] = userRef.get()
+            .map(snapshot => snapshot.getValue(classOf[User]))
+
+        val userOption: Option[User] = Await.result(futureUser, 10.second)
+
+        userOption
     }
 }

@@ -1,11 +1,26 @@
 import React, {Component} from 'react'
 import {Modal, Button, Form} from 'semantic-ui-react'
-
+import Client from "../Client"
 
 class LoginButton extends Component {
-    state = { open: false }
+    constructor(props) {
+        super(props);
+        this.state = { open: false, email:"", password:""};
+        this.show = this.show.bind(this);
+        this.close = this.close.bind(this);
+        this.handleInputChange=this.handleInputChange.bind(this);
+    }
     show = dimmer => () => this.setState({ dimmer, open: true })
     close = () => this.setState({ open: false })
+    handleInputChange(event) {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+    
+        this.setState({
+          [name]: value
+        });
+      }
 
     render() {
     const { open } = this.state
@@ -16,12 +31,12 @@ class LoginButton extends Component {
             <Modal.Description>
                 <Form>
                     <Form.Field>
-                        <Form.Input required fluid label='Email' placeholder='Email' type='email' />
+                        <Form.Input required fluid name="email" label='Email' placeholder='Email' type='email' value={this.state.email} onChange={this.handleInputChange}/>
                     </Form.Field>
                     <Form.Field>
-                        <Form.Input required fluid label='Password' placeholder='Password' type="password" />
+                        <Form.Input required fluid name="password" label='Password' placeholder='Password' type="password" value={this.state.password} onChange={this.handleInputChange}/>
                     </Form.Field>
-                    <Button type='submit'>Login</Button>
+                    <Form.Button type='submit' onClick= {() => { Client.sendForm(this.state, "/login") }}>Login</Form.Button>
                 </Form>
             </Modal.Description>
             </Modal.Content>

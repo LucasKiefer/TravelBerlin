@@ -1,33 +1,62 @@
 package controllers
 
 import javax.inject._
-
 import play.api.libs.json.Json
 import play.api.libs.json.JsValue
 import play.api.mvc._
+import java.util.NoSuchElementException
 
 import models.User
+import utils.{ValidateUser, ValidationStatus}
+import utils.ValidationStatus.ValidationStatus
 
+//TODO: possibly put this entire think in HomeController.scala
 @Singleton
 class SubmitController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
-    //TODO: Change this so it actually logs in
-    def login = Action (parse.formUrlEncoded) { request: Request[Map[String, Seq[String]]] =>
-        val body: Map[String, Seq[String]] = request.body
-        val name = body.get("userName").get(0)
-        val password = body.get("password").get(0)
+    def login = Action (parse.json) { request: Request[JsValue] =>
 
-        Ok("Got request [" + body + "]")
+         val userLogin = request.body
+
+         try {
+             val email = (userLogin \ "email").asOpt[String].get
+             val password = (userLogin \ "password").asOpt[String].get
+             val validated: ValidationStatus = ValidateUser(email, password).isValid
+
+             if (validated == ValidationStatus.SUCCESSFUL) {
+                 val user: User = User.getUserByEmail(email).get
+                 Ok(Json.obj("validate" -> "success")).withSession(
+                     "email" -> user.getEmail + "firstName" -> user.getFirstName +
+                       "last_name" -> user.getLastName
+                 )
+             }
+             else if (validated == ValidationStatus.PASSWORD_INCORRECT) Ok(
+                 Json.obj("validate" -> "password incorrect"))
+             else Ok(Json.obj("validate" -> "account not found"))
+
+         } catch {
+             case nse: NoSuchElementException => throw(nse)
+             Ok(Json.obj("validate" -> "form not filled"))
+         }
     }
 
-    def register = Action (parse.formUrlEncoded) { request: Request[Map[String, Seq[String]]] =>
-        val body: Map[String, Seq[String]] = request.body
-        val firstName = body.get("firstName").get(0)
-        val lastName = body.get("lastName").get(0)
-        val userName = body.get("userName").get(0)
-        val email = body.get("email").get(0)
-        val password = body.get("password").get(0)
-        User.createUser(firstName, lastName, userName, email, password, false)
-        Ok
+    def register = Action (parse.json) { request: Request[JsValue] =>
+
+        val userData = request.body
+
+        try {
+            val regAsAdminAttempt = (userData \ "regAsAdmin").asOpt[Boolean].get
+            val regAsAdmin = regAsAdminAttempt & (userData \ "adminPassword").asOpt[String].get == "1234"
+            println("This is an admin: " + regAsAdmin)
+            val firstName = (userData \ "firstName").asOpt[String].get
+            val lastName = (userData \ "lastName").asOpt[String].get
+            val email = (userData \ "email").asOpt[String].get
+            val password = (userData \ "password").asOpt[String].get
+            User.createUser(firstName, lastName, email, password, regAsAdmin)
+        } catch {
+            case nse: NoSuchElementException => throw(nse)
+        }
+        //TODO: checks if registration was successful
+        Ok(Json.obj("success" -> true))
     }
 }
