@@ -44,20 +44,25 @@ class UserController @Inject()(cc: ControllerComponents) extends AbstractControl
 
         val userData = request.body
 
-        try {
-            val regAsAdminAttempt = (userData \ "regAsAdmin").asOpt[Boolean].get
-            val regAsAdmin = regAsAdminAttempt & (userData \ "adminPassword").asOpt[String].get == "1234"
-            println("This is an admin: " + regAsAdmin)
-            val firstName = (userData \ "firstName").asOpt[String].get
-            val lastName = (userData \ "lastName").asOpt[String].get
-            val email = (userData \ "email").asOpt[String].get
-            val password = (userData \ "password").asOpt[String].get
-            val createSuccessful = User.createUser(firstName, lastName, email, password, regAsAdmin)
-            if (createSuccessful) Ok(Json.obj("validate" -> "success"))
-            else Ok(Json.obj("validate" -> "email used"))
-        } catch {
-            case nse: NoSuchElementException => throw(nse)
+        val regAsAdminAttempt = (userData \ "regAsAdmin").asOpt[Boolean].get
+        val regAsAdmin = regAsAdminAttempt & (userData \ "adminPassword").asOpt[String].get == "1234"
+        println("This is an admin: " + regAsAdmin)
+        val firstName = (userData \ "firstName").asOpt[String].get
+        val lastName = (userData \ "lastName").asOpt[String].get
+        val email = (userData \ "email").asOpt[String].get
+        val password = (userData \ "password").asOpt[String].get
+        val createSuccessful = User.createUser(firstName, lastName, email, password, regAsAdmin)
+        if (firstName == "" || lastName == "" || email == "" || password == "")
             Ok(Json.obj("validate" -> "form not filled"))
+        else {
+            if (createSuccessful) {
+                val user = User.getUserByEmail(email).get
+                Ok(Json.obj("validate" -> "success")).withSession(
+                    "email" -> user.getEmail + "firstName" -> user.getFirstName +
+                      "last_name" -> user.getLastName
+                )
+            }
+            else Ok(Json.obj("validate" -> "email used"))
         }
     }
 }
