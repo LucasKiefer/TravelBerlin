@@ -38,7 +38,7 @@ class RegisterButton extends Component {
            console.log(json.success)
            if(json.success == true) {
                console.log("in success")
-               //this.props.history.push('/profile')
+               this.props.history.push('/profile')
            }
        })
        
@@ -83,4 +83,4 @@ class RegisterButton extends Component {
   }
 }
 
-export default RegisterButton
+export default withRouter(RegisterButton)
