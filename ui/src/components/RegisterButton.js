@@ -18,7 +18,7 @@ class RegisterButton extends Component {
     }
     
     show = dimmer => () => this.setState({ dimmer, open: true})
-    close = () => this.setState({ open: false, regAsAdmin: false, firstName: "", lastName:"", email:"", password:"",regAsAdmin:false, adminPassword:""})
+    close = () => this.setState({ open: false, regAsAdmin: false, firstName: "", lastName:"", email:"", password:"", adminPassword:""})
     handleChecked = (events) => {
         this.setState({regAsAdmin: !this.state.regAsAdmin})
     }

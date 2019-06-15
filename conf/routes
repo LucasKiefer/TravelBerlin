@@ -3,18 +3,16 @@
 # ~~~~
 
 # Serve index page from public directory
-GET     /                           controllers.FrontendController.index()
+GET         /                   controllers.FrontendController.index()
 
 # API routes (Prefix all API routes with apiPrefix defined in application.conf)
-# GET     /api/summary                controllers.HomeController.appSummary
-# this path should probably be changed
-GET     /api/summary            controllers.HomeController.attractions
+GET         /api/summary        controllers.HomeController.attractions
 
 # Serve static assets under public directory
-GET     /*file                      controllers.FrontendController.assetOrDefault(file)
+GET         /*file              controllers.FrontendController.assetOrDefault(file)
 
 # POST Routes
 
-POST    /login                      controllers.SubmitController.login
+POST        /login              controllers.UserController.login
 
-POST    /register                   controllers.SubmitController.register
+POST        /register           controllers.UserController.register

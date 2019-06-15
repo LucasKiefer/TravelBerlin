@@ -33,7 +33,7 @@ object User {
                 new File("./app/resources/serviceAccountsCredentials.json"))
             App.initialize(serviceAccount, "https://travelberlin-1b28d.firebaseio.com")
         } catch {
-            case ise: IllegalStateException => println(ise)
+            case ise: IllegalStateException => println("Logged error:" + ise)
         }
 
         //Get a database reference
