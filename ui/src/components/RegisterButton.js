@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Modal, Form, Checkbox} from 'semantic-ui-react'
+import {Modal, Form, Checkbox, Message} from 'semantic-ui-react'
 import Client from '../Client'
 import  { Redirect } from 'react-router-dom'
 import { join } from 'path';
@@ -9,16 +9,16 @@ import { withRouter } from 'react-router-dom';
 class RegisterButton extends Component {
     constructor(props) {
         super(props);
-        this.state = { open: false, regAsAdmin: false, firstName: "", lastName:"", email:"", password:"", adminPassword:""};
+        this.state = { open: false, regSuccess: false, regAsAdmin: false, firstName: "", lastName:"", email:"", password:"", adminPassword:""};
         this.show = this.show.bind(this);
         this.close = this.close.bind(this);
         this.handleChecked = this.handleChecked.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.registerRedirect = this.registerRedirect.bind(this);
     }
-    
+
     show = dimmer => () => this.setState({ dimmer, open: true})
-    close = () => this.setState({ open: false, regAsAdmin: false, firstName: "", lastName:"", email:"", password:"", adminPassword:""})
+    close = () => this.setState({ open: false, regFailure: false, regAsAdmin: false, firstName: "", lastName:"", email:"", password:"", adminPassword:""})
     handleChecked = (events) => {
         this.setState({regAsAdmin: !this.state.regAsAdmin})
     }
@@ -27,7 +27,7 @@ class RegisterButton extends Component {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-    
+
         this.setState({
           [name]: value
         });
@@ -39,10 +39,12 @@ class RegisterButton extends Component {
            if(json.validate == "success") {
                console.log("in success")
                this.props.setLoginTrue()
-            //    this.props.history.push('/profile')
+           } else {
+                console.log("reg failed")
+                this.setState({regFailure: true})
            }
        })
-       
+
 
         // if (Client.sendForm(this.state, "/register")) {
         //     return <Redirect to='/profile'  />
@@ -78,6 +80,10 @@ class RegisterButton extends Component {
                     <Form.Button type='submit' onClick= {() => { this.registerRedirect() }}>Register</Form.Button>
                 </Form>
             </Modal.Description>
+            {this.state.regFailure === true && <Message negative>
+                Failed to register user.
+            </Message>}
+
             </Modal.Content>
         </Modal>
     )
