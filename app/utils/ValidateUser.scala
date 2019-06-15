@@ -11,7 +11,7 @@ case class ValidateUser(email: String, password: String) {
       case None => ValidationStatus.ACCOUNT_NOT_FOUND
       case Some(user: User) => {
         //TODO: do some actual password checking/hashing here later
-        if (password == user.getPassword) ValidationStatus.SUCCESSFUL else ValidationStatus.PASSWORD_INCORRECT
+        if (password == user.getPassword) ValidationStatus.SUCCESS else ValidationStatus.PASSWORD_INCORRECT
       }
     }
   }
@@ -19,5 +19,5 @@ case class ValidateUser(email: String, password: String) {
 
 object ValidationStatus extends Enumeration {
   type ValidationStatus = Value
-  val ACCOUNT_NOT_FOUND, PASSWORD_INCORRECT, SUCCESSFUL = Value
+  val ACCOUNT_NOT_FOUND, PASSWORD_INCORRECT, SUCCESS = Value
 }

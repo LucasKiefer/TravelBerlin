@@ -27,7 +27,7 @@ class LoginButton extends Component {
       }
 
     registerRedirect = () => {
-       Client.sendForm(this.state, "/login").then(json => {
+       Client.sendForm(this.state, "/api/login").then(json => {
            console.log(json)
            if(json.validate === "success") {
                console.log("login success")

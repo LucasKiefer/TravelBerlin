@@ -23,7 +23,7 @@ class UserController @Inject()(cc: ControllerComponents) extends AbstractControl
             val password = (userLogin \ "password").asOpt[String].get
             val validated: ValidationStatus = ValidateUser(email, password).isValid
 
-            if (validated == ValidationStatus.SUCCESSFUL) {
+            if (validated == ValidationStatus.SUCCESS) {
                 val user: User = User.getUserByEmail(email).get
                 Ok(Json.obj("validate" -> "success")).withSession(
                     "email" -> user.getEmail + "firstName" -> user.getFirstName +
