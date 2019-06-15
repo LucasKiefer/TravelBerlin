@@ -14,7 +14,7 @@ import utils.ValidationStatus.ValidationStatus
 @Singleton
 class UserController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
-    def login = Action (parse.json) { implicit request: Request[JsValue] =>
+    def login: Action[JsValue] = Action (parse.json) { implicit request: Request[JsValue] =>
 
         val userLogin = request.body
 
@@ -25,10 +25,7 @@ class UserController @Inject()(cc: ControllerComponents) extends AbstractControl
 
             if (validated == ValidationStatus.SUCCESS) {
                 val user: User = User.getUserByEmail(email).get
-                Ok(Json.obj("validate" -> "success")).withSession(
-                    "email" -> user.getEmail + "firstName" -> user.getFirstName +
-                      "last_name" -> user.getLastName
-                )
+                Ok(Json.obj("validate" -> "success")).withSession("email" -> user.getEmail)
             }
             else if (validated == ValidationStatus.PASSWORD_INCORRECT) Ok(
                 Json.obj("validate" -> "password incorrect"))
@@ -40,7 +37,7 @@ class UserController @Inject()(cc: ControllerComponents) extends AbstractControl
         }
     }
 
-    def register = Action (parse.json) { request: Request[JsValue] =>
+    def register: Action[JsValue] = Action (parse.json) { request: Request[JsValue] =>
 
         val userData = request.body
 
@@ -57,10 +54,7 @@ class UserController @Inject()(cc: ControllerComponents) extends AbstractControl
         else {
             if (createSuccessful) {
                 val user = User.getUserByEmail(email).get
-                Ok(Json.obj("validate" -> "success")).withSession(
-                    "email" -> user.getEmail + "firstName" -> user.getFirstName +
-                      "last_name" -> user.getLastName
-                )
+                Ok(Json.obj("validate" -> "success")).withSession("email" -> user.getEmail)
             }
             else Ok(Json.obj("validate" -> "email used"))
         }

@@ -19,6 +19,9 @@ case class User() {
     @BeanProperty var lastName: String = _
     @BeanProperty var email: String = _
     @BeanProperty var password: String = _
+    @BeanProperty var birthYear: String =_
+    @BeanProperty var homeTown: String = _
+    @BeanProperty var interests: String = _
     @BeanProperty var admin: Boolean = _
 }
 
@@ -51,6 +54,9 @@ object User {
                 user.setEmail(email)
                 user.setPassword(password)
                 user.setAdmin(isAdmin)
+                user.setBirthYear("")
+                user.setHomeTown("")
+                user.setInterests("")
 
                 //Set user at ref location
                 userRef.set(user).foreach(println)
