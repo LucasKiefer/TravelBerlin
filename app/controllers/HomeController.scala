@@ -41,8 +41,6 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
 
     val json: JsValue = Json.toJson(attractionListJson)
 
-    println(json)
-
     Ok(Json.obj("content" -> Json.stringify(json)))
   }
 }

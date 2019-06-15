@@ -31,6 +31,8 @@ class LoginButton extends Component {
            console.log(json)
            if(json.validate === "success") {
                console.log("login success")
+               this.props.setLoginTrue()
+            //    this.props.history.push('/profile')
                this.close()
             } else {
                console.log("login failure")
