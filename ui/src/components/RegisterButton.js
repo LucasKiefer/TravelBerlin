@@ -38,7 +38,8 @@ class RegisterButton extends Component {
            console.log(json.success)
            if(json.success == true) {
                console.log("in success")
-               this.props.history.push('/profile')
+               this.props.setLoginTrue()
+            //    this.props.history.push('/profile')
            }
        })
        
