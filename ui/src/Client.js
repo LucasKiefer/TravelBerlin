@@ -25,7 +25,6 @@ function parseJSON(response) {
 
 function sendForm(state, api) {
   console.log("in client send form")
-  var datatoret = ""
   return postData(api, state)
   .then(data => data) // JSON-string from `response.json()` call
   .catch(error => console.error(error));

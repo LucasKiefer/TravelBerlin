@@ -9,9 +9,12 @@ class LoginButton extends Component {
         this.show = this.show.bind(this);
         this.close = this.close.bind(this);
         this.handleInputChange=this.handleInputChange.bind(this);
+        this.registerRedirect = this.registerRedirect.bind(this);
     }
+
     show = dimmer => () => this.setState({ dimmer, open: true })
     close = () => this.setState({ open: false })
+
     handleInputChange(event) {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -22,6 +25,16 @@ class LoginButton extends Component {
         });
       }
 
+    registerRedirect = () => {
+       Client.sendForm(this.state, "/login").then(json => {
+           console.log(json)
+           if(json.validate === "success") {
+               console.log("login success")
+               this.props.history.push('/profile')
+           }
+       })
+    }
+ 
     render() {
     const { open } = this.state
     return(
@@ -36,7 +49,7 @@ class LoginButton extends Component {
                     <Form.Field>
                         <Form.Input required fluid name="password" label='Password' placeholder='Password' type="password" value={this.state.password} onChange={this.handleInputChange}/>
                     </Form.Field>
-                    <Form.Button type='submit' onClick= {() => { Client.sendForm(this.state, "/login") }}>Login</Form.Button>
+                    <Form.Button type='submit' onClick= {() => { this.registerRedirect() }}>Login</Form.Button>
                 </Form>
             </Modal.Description>
             </Modal.Content>
