@@ -22,7 +22,7 @@ export default class NavBar extends Component {
     const { activeItem } = this.state
     let upperRight;
     if(this.state.loggedin) {
-        upperRight = <Button>Register</Button>
+        upperRight = <Button>Profile</Button>
     } else {
         upperRight = <div><RegisterButton setLoginTrue = {this.setLoginTrue} ></RegisterButton><LoginButton setLoginTrue = {this.setLoginTrue}></LoginButton></div>
     }
