@@ -13,6 +13,8 @@ GET         /*file              controllers.FrontendController.assetOrDefault(fi
 
 # POST Routes
 
-POST        /api/login              controllers.UserController.login
+POST        /api/login          controllers.UserController.login
 
-POST        /api/register           controllers.UserController.register
+POST        /api/register       controllers.UserController.register
+
+POST        /api/edit           controllers.UserController.edit

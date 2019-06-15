@@ -65,4 +65,9 @@ class UserController @Inject()(cc: ControllerComponents) extends AbstractControl
             else Ok(Json.obj("validate" -> "email used"))
         }
     }
+
+    def edit = Action (parse.json) { request: Request[JsValue] =>
+
+      Ok(request.body)
+    }
 }
