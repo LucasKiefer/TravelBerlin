@@ -57,7 +57,7 @@ class RegisterButton extends Component {
     const { open } = this.state
 
     return(
-        <Modal open={open} onClose={this.close} trigger={<div onClick={(e) => e.preventDefault()} className="ui primary button" onClick={this.show('blurring')}>Register</div>}>
+        <Modal open={open} onClose={this.close} trigger={<div onClick={(e) => e.preventDefault()} className="ui primary button" onClick={this.show('blurring')}>Register</div>} onSubmit={() => { this.registerRedirect() }}>
             <Modal.Header>Register</Modal.Header>
             <Modal.Content>
             <Modal.Description>
@@ -77,7 +77,7 @@ class RegisterButton extends Component {
                     <Form.Field control={Checkbox} name="regAsAdmin" onChange={this.handleChecked} label='Register as Admin'/>
 
                     {this.state.regAsAdmin && <Form.Input name="adminPassword" fluid label='Admin Password' placeholder='Admin Password' type="password" onChange={this.handleInputChange}/>}
-                    <Form.Button type='submit' onClick= {() => { this.registerRedirect() }}>Register</Form.Button>
+                    <Form.Button type='submit'>Register</Form.Button>
                 </Form>
             </Modal.Description>
             {this.state.regFailure === true && <Message negative>

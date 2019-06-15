@@ -44,7 +44,7 @@ class LoginButton extends Component {
     render() {
     const { open } = this.state
     return(
-        <Modal open={open} onClose={this.close} trigger={<div onClick={(e) => e.preventDefault()} className="ui primary button" onClick={this.show('blurring')}>Login</div>}>
+        <Modal open={open} onClose={this.close} trigger={<div onClick={(e) => e.preventDefault()} className="ui primary button" onClick={this.show('blurring')}>Login</div>} onSubmit= {() => { this.registerRedirect() }}>
             <Modal.Header>Login</Modal.Header>
             <Modal.Content>
             <Modal.Description>
@@ -55,7 +55,7 @@ class LoginButton extends Component {
                     <Form.Field>
                         <Form.Input required fluid name="password" label='Password' placeholder='Password' type="password" value={this.state.password} onChange={this.handleInputChange}/>
                     </Form.Field>
-                    <Form.Button type='submit' onClick= {() => { this.registerRedirect() }}>Login</Form.Button>
+                    <Form.Button type='submit' >Login</Form.Button>
                 </Form>
             </Modal.Description>
 
