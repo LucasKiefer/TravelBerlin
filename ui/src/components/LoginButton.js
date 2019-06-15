@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
-import {Modal, Button, Form} from 'semantic-ui-react'
+import {Modal, Button, Form, Message} from 'semantic-ui-react'
 import Client from "../Client"
 import { withRouter } from 'react-router-dom';
 
 class LoginButton extends Component {
     constructor(props) {
         super(props);
-        this.state = { open: false, email:"", password:""};
+        this.state = { open: false, failedLogin: false, email:"", password:""};
         this.show = this.show.bind(this);
         this.close = this.close.bind(this);
         this.handleInputChange=this.handleInputChange.bind(this);
@@ -14,7 +14,7 @@ class LoginButton extends Component {
     }
 
     show = dimmer => () => this.setState({ dimmer, open: true })
-    close = () => this.setState({ open: false })
+    close = () => this.setState({open: false, failedLogin: false, email:"", password:""})
 
     handleInputChange(event) {
         const target = event.target;
@@ -31,7 +31,10 @@ class LoginButton extends Component {
            console.log(json)
            if(json.validate === "success") {
                console.log("login success")
-               this.props.history.push('/profile')
+               this.close()
+            } else {
+               console.log("login failure")
+               this.setState({failedLogin: true})
            }
        })
     }
@@ -53,8 +56,15 @@ class LoginButton extends Component {
                     <Form.Button type='submit' onClick= {() => { this.registerRedirect() }}>Login</Form.Button>
                 </Form>
             </Modal.Description>
+
+            {this.state.failedLogin && <Message negative>
+            Incorrect password/email
+            </Message>}
+
+            
             </Modal.Content>
         </Modal>
+        
     )
   }
 }
