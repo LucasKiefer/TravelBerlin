@@ -53,7 +53,7 @@ class UserController @Inject()(cc: ControllerComponents) extends AbstractControl
             val email = (userData \ "email").asOpt[String].get
             val password = (userData \ "password").asOpt[String].get
             val createSuccessful = User.createUser(firstName, lastName, email, password, regAsAdmin)
-            if (createSuccessful) Ok(Json.obj("validate" -> "successful"))
+            if (createSuccessful) Ok(Json.obj("validate" -> "success"))
             else Ok(Json.obj("validate" -> "email used"))
         } catch {
             case nse: NoSuchElementException => throw(nse)
