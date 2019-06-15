@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Modal, Button, Form} from 'semantic-ui-react'
 import Client from "../Client"
+import { withRouter } from 'react-router-dom';
 
 class LoginButton extends Component {
     constructor(props) {
@@ -58,4 +59,4 @@ class LoginButton extends Component {
   }
 }
 
-export default LoginButton
+export default withRouter(LoginButton)
