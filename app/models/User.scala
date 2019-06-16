@@ -21,7 +21,8 @@ case class User() {
     @BeanProperty var password: String = _
     @BeanProperty var birthYear: Int =_
     @BeanProperty var homeTown: String = _
-    @BeanProperty var interests: List[String] = _
+    //TODO: CHange this to a List[String] at some point
+    @BeanProperty var interests: String = _
     @BeanProperty var admin: Boolean = _
 }
 
@@ -56,7 +57,7 @@ object User {
                 user.setAdmin(isAdmin)
                 user.setBirthYear(0)
                 user.setHomeTown("")
-                user.setInterests(List(""))
+                user.setInterests("")
 
                 //Set user at ref location
                 val storedUser: User = Await.result(userRef.set(user), 10.second)

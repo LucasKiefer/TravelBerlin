@@ -73,7 +73,7 @@ class UserController @Inject()(cc: ControllerComponents) extends AbstractControl
                 val user: User = User.getUserByEmail(emailVal).get
 
                 case class UserJson(firstName: String, lastName: String, email: String, isAdmin: Boolean,
-                                    birthYear: Int, homeTown: String, interests: List[String])
+                                    birthYear: Int, homeTown: String, interests: String)
 
                 implicit val UserJsonWrites = new Writes[UserJson] {
                     def writes(user: UserJson) = Json.obj(
@@ -89,7 +89,7 @@ class UserController @Inject()(cc: ControllerComponents) extends AbstractControl
 
                 val userJson: UserJson = UserJson(user.firstName, user.lastName, user.email, user.admin, user.birthYear,
                     if (user.homeTown == null) "" else user.homeTown,
-                    if (user.interests == null) List() else user.interests)
+                    if (user.interests == null) "" else user.interests)
 
                 val json: JsValue = Json.toJson(userJson)
 
