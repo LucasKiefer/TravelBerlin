@@ -3,6 +3,7 @@ import { Header } from 'semantic-ui-react';
 import { Modal, Card, Image, Form, Message, Dropdown, Label } from 'semantic-ui-react';
 import Center from 'react-center';
 import Client from '../Client';
+import NavBar from './NavBar'
 
 class Profile extends Component {
     constructor(props) {
@@ -34,6 +35,8 @@ class Profile extends Component {
         yearOptions.push({'key': i, 'value': i, 'text': i})
       }
 
+      var tag = this.state.user.isAdmin ? <Label as='a' color='green' tag>Administrator</Label>: <Label as='a' color='blue' tag>User</Label>
+
       //TODO: make this not user.user
       const { open } = this.state;
       return (
@@ -45,12 +48,7 @@ class Profile extends Component {
             <Card.Content>
               <Card.Header>{this.state.user.firstName === undefined && this.state.user.lastName === undefined ? "Name" : this.state.user.firstName + " " + this.state.user.lastName}</Card.Header>
               <div>
-                <Label as='a' color='blue' tag>
-                  User
-                </Label>
-                <Label as='a' color='green' tag>
-                  Administrator
-                </Label>
+                {tag}
               </div>
               <Card.Description>
                 {this.state.user.birthYear === undefined ? "Name" : this.state.user.birthYear}

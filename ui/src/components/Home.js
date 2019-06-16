@@ -19,7 +19,7 @@ class Home extends Component {
     render() {
       return (
         <div className="Home">
-          <NavBar></NavBar>
+          {/* <NavBar></NavBar> */}
           <Attractions />
         </div>
     );
