@@ -111,7 +111,7 @@ class Profile extends Component {
           </Center>
           {this.state.isAdmin &&  <AttractionCreation  />}
 
-          <Modal open={open} onSubmit={() => { this.submitChanges() }} onClose={this.close} trigger={<div onClick={(e) => e.preventDefault()} color="facebook" onClick={this.show('blurring')}>Edit Profile</div>}>
+          <Modal open={open} onSubmit={() => { this.submitChanges() }} onClose={this.close} trigger={<div onClick={(e) => e.preventDefault()} className="ui primary button" onClick={this.show('blurring')}>Edit Profile</div>}>
             <Modal.Header>Edit Profile</Modal.Header>
             <Modal.Content>
               <Form success={this.state.formSuccess} >
