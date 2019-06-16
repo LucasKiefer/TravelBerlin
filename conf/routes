@@ -20,3 +20,5 @@ POST        /api/register       controllers.UserController.register
 POST        /api/edit           controllers.UserController.edit
 
 POST        /api/user           controllers.UserController.getUser
+
+POST        /api/logout         controllers.UserController.logout

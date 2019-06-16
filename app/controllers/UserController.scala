@@ -112,4 +112,6 @@ class UserController @Inject()(cc: ControllerComponents) extends AbstractControl
             case None => Unauthorized(Json.obj("user" -> "Not logged in"))
         }
     }
+
+    def logout: Action[AnyContent] = Action { Ok.withNewSession }
 }
