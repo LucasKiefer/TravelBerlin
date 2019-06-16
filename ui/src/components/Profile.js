@@ -3,16 +3,33 @@ import { Header } from 'semantic-ui-react';
 import { Modal, Card, Image, Form, Message, Dropdown, Label } from 'semantic-ui-react';
 import Center from 'react-center';
 import Client from '../Client';
-import NavBar from './NavBar'
+
+const options = [
+
+]
 
 class Profile extends Component {
     constructor(props) {
       super(props);
-      this.state = {title: '', user: {}};
+      this.state = {title: '', options, user: {}, firstName:"", lastName:"", birthYear:"",interests:"",homeTown:"", formSuccess: false};
+      this.handleInputChange=this.handleInputChange.bind(this);
+      this.handleInterestChange=this.handleInterestChange.bind(this);
+      this.addToOption=this.addToOption.bind(this);
+      this.show = this.show.bind(this);
+      this.close = this.close.bind(this);
     }
-  
-    show = dimmer => () => this.setState({ dimmer, open: true })
-    close = () => this.setState({ open: false })
+
+    
+
+    handleAddition = (e, { value }) => {
+      this.setState(prevState => ({
+        options: [{ text: value, value }, ...prevState.options],
+      }))
+    }
+    // /api/edit
+
+    show = dimmer => () => this.setState({ dimmer, open: true, firstName: this.state.user.firstName, lastName: this.state.user.lastName, birthYear:this.state.user.birthYear, interests: this.state.user.interests, homeTown: this.state.user.homeTown, formSuccess: false })
+    close = () => this.setState({ open: false})
 
     async componentDidMount() {
     //   Client.getUser(user => {
@@ -25,11 +42,52 @@ class Profile extends Component {
       Client.sendForm({}, '/api/user').then(usr => {
           console.log(usr);
           this.setState({user: JSON.parse(usr.user)})
+          this.state.user.interests.forEach( 
+            this.addToOption
+          )
+          
         }
       )
     }
-  
+
+    addToOption(value) {
+      let newOpt = { key: value, text: value, value: value}
+      if (!this.state.options.includes(newOpt)) {
+        this.state.options.push(newOpt)
+      }
+    }
+
+
+    handleInterestChange = (e, { value }) => this.setState({ interests: value })
+
+    handleInputChange(event) {
+      const target = event.target;
+      const value = target.value;
+      console.log(value)
+      const name = target.name;
+      
+      this.setState({
+        [name]: value
+      });
+      console.log(this.state)
+    }
+
+    submitChanges = () => {
+      const editedUser = {user:this.state.user, firstName: this.state.user.firstName, lastName: this.state.user.lastName, birthYear:this.state.user.birthYear, interests: this.state.user.interests, homeTown: this.state.user.homeTown}
+      Client.sendForm(editedUser, "/api/edit").then(json => {
+          console.log(json)
+          if(json.validate === "success") {
+              console.log("login success")
+              this.setState({formSuccess:true})
+              this.close()
+           } else {
+              console.log("login failure")
+          }
+      })
+   }
+
     render() {
+      const { currentValues } = this.state
       var yearOptions = [];
       for (var i = 2019; i > 1900; i--) {
         yearOptions.push({'key': i, 'value': i, 'text': i})
@@ -62,43 +120,51 @@ class Profile extends Component {
             </Card.Content>
             </Card>
           </Center>
-          <Modal open={open} onClose={this.close} trigger={<div onClick={(e) => e.preventDefault()} className="ui primary button" onClick={this.show('blurring')}>Edit Profile</div>}>
+
+
+          <Modal open={open} onSubmit={() => { this.submitChanges() }} onClose={this.close} trigger={<div onClick={(e) => e.preventDefault()} className="ui primary button" onClick={this.show('blurring')}>Edit Profile</div>}>
             <Modal.Header>Edit Profile</Modal.Header>
             <Modal.Content>
-              <Form success>
+              <Form success={this.state.formSuccess} >
               <Form.Group widths='equal'>
-                <Form.Input fluid label='First name' placeholder='First name' />
+                <Form.Input required fluid label='First name' placeholder='First name' value={this.state.firstName} onChange={this.handleInputChange} name="firstName"/>
+                <Form.Input required fluid label='Last name' placeholder='Last name' value={this.state.lastName} onChange={this.handleInputChange} name="lastName"/>
               </Form.Group>
               <Form.Group widths='equal'>
-                <Form.Input fluid label='Last name' placeholder='Last name' />
+                <Form.Select
+                  placeholder='Select Year'
+                  label="Birth Year"
+                  fluid
+                  search
+                  selection
+                  options={yearOptions}
+                  name="birthYear"
+                  value={this.state.birthYear}
+                />
+                <Form.Input fluid label='Hometown' placeholder='Hometown' value={this.state.homeTown} onChange={this.handleInputChange} name="homeTown"/>
               </Form.Group>
-              <Dropdown
-                placeholder='Select Year'
-                fluid
+              <Form.Dropdown
+                label="List your interests:"
+                options={this.state.options}
+                placeholder='Interests'
                 search
                 selection
-                options={yearOptions}
-              />
-              <Form.Group widths='equal'>
-                <Form.Input fluid label='Hometown' placeholder='Hometown' />
-              </Form.Group>
-              <div>
-                <Label as='a' color='blue' tag>
-                  User
-                </Label>
-                <Label as='a' color='green' tag>
-                  Administrator
-                </Label>
-              </div>
-              <Form.TextArea label='Interests' placeholder='What are you interested in?' />
-              <Form.Button>Submit</Form.Button>
+                fluid
+                multiple
+                allowAdditions
+                value={this.state.interests}
+                onAddItem={this.handleAddition}
+                onChange={this.handleInterestChange}
+                />
+              <Form.Button>Save Changes</Form.Button>
+
               <Message success header='Saved Changes' content="Your information has been saved!" />
             </Form>
             </Modal.Content>
           </Modal>
-          
+
         </div>
-        
+
       )
     }
   }
