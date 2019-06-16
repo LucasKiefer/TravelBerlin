@@ -76,7 +76,7 @@ class Profile extends Component {
     }
 
     submitChanges = () => {
-      const editedUser = {user:this.state.user.email, firstName: this.state.user.firstName, lastName: this.state.user.lastName, birthYear:this.state.user.birthYear, interests: this.state.user.interests, homeTown: this.state.user.homeTown}
+      const editedUser = {user:this.state.user.email, firstName: this.state.firstName, lastName: this.state.lastName, birthYear:this.state.birthYear, interests: this.state.interests, homeTown: this.state.homeTown}
       Client.sendForm(editedUser, "/api/edit").then(json => {
           console.log(json)
           if(json.validate === "success") {
