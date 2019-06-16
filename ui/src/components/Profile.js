@@ -3,6 +3,7 @@ import { Header } from 'semantic-ui-react';
 import { Modal, Card, Image, Form, Message, Dropdown, Label } from 'semantic-ui-react';
 import Center from 'react-center';
 import Client from '../Client';
+import AttractionCreation from './AttractionCreation'
 
 const options = [
 
@@ -11,7 +12,7 @@ const options = [
 class Profile extends Component {
     constructor(props) {
       super(props);
-      this.state = {title: '', options, user: {}, firstName:"", lastName:"", birthYear:"",interests:"",homeTown:"", formSuccess: false};
+      this.state = {title: '', options, user: {}, firstName:"", lastName:"", birthYear:"",interests:"",homeTown:"", formSuccess: false,  isAdmin: false};
       this.handleInputChange=this.handleInputChange.bind(this);
       this.handleInterestChange=this.handleInterestChange.bind(this);
       this.addToOption=this.addToOption.bind(this);
@@ -45,7 +46,7 @@ class Profile extends Component {
           this.state.user.interests.forEach( 
             this.addToOption
           )
-          
+          this.setState({isAdmin: this.state.user.isAdmin})
         }
       )
     }
@@ -60,12 +61,14 @@ class Profile extends Component {
 
     handleInterestChange = (e, { value }) => this.setState({ interests: value })
 
+    handleYearChange = (e, { value }) => this.setState({ birthYear: value })
+
     handleInputChange(event) {
       const target = event.target;
       const value = target.value;
       console.log(value)
       const name = target.name;
-      
+
       this.setState({
         [name]: value
       });
@@ -73,7 +76,7 @@ class Profile extends Component {
     }
 
     submitChanges = () => {
-      const editedUser = {user:this.state.user, firstName: this.state.user.firstName, lastName: this.state.user.lastName, birthYear:this.state.user.birthYear, interests: this.state.user.interests, homeTown: this.state.user.homeTown}
+      const editedUser = {user:this.state.user.email, firstName: this.state.user.firstName, lastName: this.state.user.lastName, birthYear:this.state.user.birthYear, interests: this.state.user.interests, homeTown: this.state.user.homeTown}
       Client.sendForm(editedUser, "/api/edit").then(json => {
           console.log(json)
           if(json.validate === "success") {
@@ -120,7 +123,7 @@ class Profile extends Component {
             </Card.Content>
             </Card>
           </Center>
-
+          {this.state.isAdmin &&  <AttractionCreation  />}
 
           <Modal open={open} onSubmit={() => { this.submitChanges() }} onClose={this.close} trigger={<div onClick={(e) => e.preventDefault()} className="ui primary button" onClick={this.show('blurring')}>Edit Profile</div>}>
             <Modal.Header>Edit Profile</Modal.Header>
@@ -140,6 +143,7 @@ class Profile extends Component {
                   options={yearOptions}
                   name="birthYear"
                   value={this.state.birthYear}
+                  onChange={this.handleYearChange}
                 />
                 <Form.Input fluid label='Hometown' placeholder='Hometown' value={this.state.homeTown} onChange={this.handleInputChange} name="homeTown"/>
               </Form.Group>
