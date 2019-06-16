@@ -112,5 +112,8 @@ class UserController @Inject()(cc: ControllerComponents) extends AbstractControl
         }
     }
 
-    def logout: Action[JsValue] = Action { Ok(Json.obj("validate" -> "success").withNewSession }
+    def logout: Action[JsValue] = Action (parse.json) { request: Request[JsValue] =>
+        Ok(Json.obj("validate" -> "success")).withNewSession
+    }
+
 }
