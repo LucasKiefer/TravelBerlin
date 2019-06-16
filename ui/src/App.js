@@ -6,6 +6,7 @@ import {
 
 import Home from './components/Home.js'
 import Profile from './components/Profile.js'
+import NavBar from './components/NavBar'
 
 import Client from "./Client";
 import './App.css';
@@ -34,6 +35,7 @@ class App extends Component {
       <Router>
         <div className="App">
           {/* <Route path="/:tech" component={Tech} /> */}
+          <NavBar />
           <Route path="/" exact render={(props) => <Home {...props} data={this.state.data} />} />
           <Route path="/profile" exact render={(props) => <Profile {...props} data={this.state.data} />} />
         </div>

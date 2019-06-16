@@ -21,7 +21,7 @@ class Home extends Component {
     render() {
       return (
         <div className="Home">
-          <NavBar></NavBar>
+          {/* <NavBar></NavBar> */}
           <Attractions />
           {this.state.isAdmin && <AttractionCreation  />}
         </div>
