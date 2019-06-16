@@ -12,7 +12,6 @@ class AttractionCreation extends Component {
   close = () => this.setState({open: false});
 
   render() {
-    const { value } = this.state
     return (
       <Modal open={this.state.open} close={this.close} trigger={<div  className="ui primary button" onClick={this.show('blurring')}>Create Attraction</div>}>
         <Modal.Content>

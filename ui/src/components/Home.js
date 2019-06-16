@@ -7,7 +7,7 @@ import Attraction from "./Attraction";
 class Home extends Component {
     constructor(props) {
       super(props);
-      this.state = {title: '', isAdmin: true};
+      this.state = {title: ''};
     }
   
     // async componentDidMount() {
@@ -21,9 +21,8 @@ class Home extends Component {
     render() {
       return (
         <div className="Home">
-          {/* <NavBar></NavBar> */}
           <Attractions />
-          {this.state.isAdmin && <AttractionCreation  />}
+          
         </div>
     );
     }

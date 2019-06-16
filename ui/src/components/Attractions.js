@@ -15,7 +15,6 @@ class Attractions extends Component {
         this.setState({
           title: JSON.parse(summary.content).attractions
         });
-        console.log(this.state.title[0]);
       });
     }
   

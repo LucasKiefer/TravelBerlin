@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Header } from 'semantic-ui-react';
-import { Modal, Card, Image, Form, Message, Dropdown, Label } from 'semantic-ui-react';
+import { Modal, Card, Image, Form, Message, Label } from 'semantic-ui-react';
 import Center from 'react-center';
 import Client from '../Client';
 import AttractionCreation from './AttractionCreation'
@@ -27,21 +27,13 @@ class Profile extends Component {
         options: [{ text: value, value }, ...prevState.options],
       }))
     }
-    // /api/edit
 
     show = dimmer => () => this.setState({ dimmer, open: true, firstName: this.state.user.firstName, lastName: this.state.user.lastName, birthYear:this.state.user.birthYear, interests: this.state.user.interests, homeTown: this.state.user.homeTown, formSuccess: false })
     close = () => this.setState({ open: false})
 
     async componentDidMount() {
-    //   Client.getUser(user => {
-    //     console.log(user);
-    //     this.setState({
-    //       user: user.content
-    //     });
-    //   });
 
       Client.sendForm({}, '/api/user').then(usr => {
-          console.log(usr);
           this.setState({user: JSON.parse(usr.user)})
           this.state.user.interests.forEach( 
             this.addToOption
@@ -66,31 +58,25 @@ class Profile extends Component {
     handleInputChange(event) {
       const target = event.target;
       const value = target.value;
-      console.log(value)
       const name = target.name;
 
       this.setState({
         [name]: value
       });
-      console.log(this.state)
     }
 
     submitChanges = () => {
       const editedUser = {user:this.state.user.email, firstName: this.state.firstName, lastName: this.state.lastName, birthYear:this.state.birthYear, interests: this.state.interests, homeTown: this.state.homeTown}
       Client.sendForm(editedUser, "/api/edit").then(json => {
-          console.log(json)
           if(json.validate === "success") {
-              console.log("login success")
               this.setState({formSuccess:true})
               this.close()
            } else {
-              console.log("login failure")
           }
       })
    }
 
     render() {
-      const { currentValues } = this.state
       var yearOptions = [];
       for (var i = 2019; i > 1900; i--) {
         yearOptions.push({'key': i, 'value': i, 'text': i})
@@ -125,7 +111,7 @@ class Profile extends Component {
           </Center>
           {this.state.isAdmin &&  <AttractionCreation  />}
 
-          <Modal open={open} onSubmit={() => { this.submitChanges() }} onClose={this.close} trigger={<div onClick={(e) => e.preventDefault()} className="ui primary button" onClick={this.show('blurring')}>Edit Profile</div>}>
+          <Modal open={open} onSubmit={() => { this.submitChanges() }} onClose={this.close} trigger={<div onClick={(e) => e.preventDefault()} color="facebook" onClick={this.show('blurring')}>Edit Profile</div>}>
             <Modal.Header>Edit Profile</Modal.Header>
             <Modal.Content>
               <Form success={this.state.formSuccess} >

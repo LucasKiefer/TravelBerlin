@@ -33,12 +33,9 @@ class RegisterButton extends Component {
 
     registerRedirect = () => {
        Client.sendForm(this.state, "/api/register").then(json => {
-           console.log(json.validate)
            if(json.validate === "success") {
-               console.log("in success")
                this.props.setLoginTrue()
            } else {
-                console.log("reg failed")
                 this.setState({regFailure: true})
            }
        })
