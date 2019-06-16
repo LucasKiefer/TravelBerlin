@@ -1,7 +1,6 @@
 package controllers
 
 import javax.inject._
-import play.api.libs.json._
 import play.api.mvc._
 import java.util.NoSuchElementException
 
@@ -113,5 +112,5 @@ class UserController @Inject()(cc: ControllerComponents) extends AbstractControl
         }
     }
 
-    def logout: Action[AnyContent] = Action { Ok.withNewSession }
+    def logout: Action[JsValue] = Action { Ok(Json.obj("validate" -> "success").withNewSession }
 }
