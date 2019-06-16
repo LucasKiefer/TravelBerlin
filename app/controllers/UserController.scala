@@ -6,6 +6,7 @@ import play.api.mvc._
 import java.util.NoSuchElementException
 
 import models.User
+import play.api.libs.json._
 import utils.{ValidateUser, ValidationStatus}
 import utils.ValidationStatus.ValidationStatus
 
@@ -57,10 +58,23 @@ class UserController @Inject()(cc: ControllerComponents) extends AbstractControl
             }
     }
 
-    //TODO: Finish this
-    def edit = Action (parse.json) { request: Request[JsValue] =>
+    def edit: Action[JsValue] = Action (parse.json) { request: Request[JsValue] =>
 
-      Ok(request.body)
+        val bodyJson = request.body
+        val email = request.session.get("email").get
+
+        val firstName: String = (bodyJson \ "firstName").validate[String].getOrElse("")
+        val lastName: String = (bodyJson \ "lastName").validate[String].getOrElse("")
+        val birthYear: Int = (bodyJson \ "birthYear").validate[Int].getOrElse(0)
+        val interests: List[String] = (bodyJson \ "interests").validate[List[String]].getOrElse(List())
+        val homeTown: String = (bodyJson \ "homeTown").validate[String].getOrElse("")
+
+        val userOption = User.editUserByEmail(email, firstName, lastName, birthYear, interests, homeTown)
+
+        userOption match {
+            case None => Ok(Json.obj("validate" -> "edit not successful"))
+            case Some(_) => Ok(Json.obj("validate" -> "success"))
+        }
     }
 
     def getUser: Action[JsValue] = Action (parse.json) { request: Request[JsValue] =>

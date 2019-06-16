@@ -46,6 +46,7 @@ object User {
 
         //Check if user already exists
         val userOption: Option[User] = getUserByEmail(email)
+
         userOption match{
             case None => {
                 //Create user
@@ -87,5 +88,40 @@ object User {
         val userOption: Option[User] = Await.result(futureUser, 10.second)
 
         userOption
+    }
+
+    def editUserByEmail(email: String, firstName: String, lastName: String, birthYear: Int, interests: List[String],
+                        homeTown: String): Option[User] = {
+
+        try {
+            val serviceAccount = new FileInputStream(
+                new File("./app/resources/serviceAccountsCredentials.json"))
+            App.initialize(serviceAccount, "https://travelberlin-1b28d.firebaseio.com")
+        } catch {
+            case ise: IllegalStateException => println("Logged error: " + ise)
+        }
+
+        val db: Database = Database.getInstance()
+        val userRef: DatabaseReference = db.ref("Users/" + email.hashCode)
+
+        val userOption: Option[User] = getUserByEmail(email)
+
+        userOption match{
+            case None => None
+            case Some(user: User) => {
+                user.setFirstName(firstName)
+                user.setLastName(lastName)
+                user.setEmail(email)
+                user.setBirthYear(birthYear)
+                user.setInterests(interests.mkString(","))
+                user.setHomeTown(homeTown)
+
+                //Set user at ref location
+                val storedUser: User = Await.result(userRef.set(user), 10.second)
+
+                Option(storedUser)
+            }
+        }
+
     }
 }
