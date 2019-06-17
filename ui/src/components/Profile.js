@@ -66,11 +66,10 @@ class Profile extends Component {
     }
 
     submitChanges = () => {
-      const editedUser = {user:this.state.user.email, firstName: this.state.firstName, lastName: this.state.lastName, birthYear:this.state.birthYear, interests: this.state.interests, homeTown: this.state.homeTown}
+      const editedUser = {email:this.state.user.email, firstName: this.state.firstName, lastName: this.state.lastName, birthYear:this.state.birthYear, interests: this.state.interests, homeTown: this.state.homeTown}
       Client.sendForm(editedUser, "/api/edit").then(json => {
           if(json.validate === "success") {
-              this.setState({formSuccess:true})
-              this.close()
+              this.setState({formSuccess:true, user: editedUser})
            } else {
           }
       })
@@ -82,7 +81,7 @@ class Profile extends Component {
         yearOptions.push({'key': i, 'value': i, 'text': i})
       }
 
-      var tag = this.state.user.isAdmin ? <Label as='a' color='green' tag>Administrator</Label>: <Label as='a' color='blue' tag>User</Label>
+      var tag = this.state.user.isAdmin ? <Label color='green' tag>Administrator</Label>: <Label color='blue' tag>User</Label>
 
       //TODO: make this not user.user
       const { open } = this.state;
