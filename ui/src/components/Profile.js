@@ -105,6 +105,9 @@ class Profile extends Component {
               <Card.Description>
                 {this.state.user.interests === undefined ? "Loading" : this.state.user.interests}
               </Card.Description>
+              <Card.Description>
+
+              </Card.Description>
             </Card.Content>
             </Card>
           </Center>

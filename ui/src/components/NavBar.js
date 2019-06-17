@@ -5,6 +5,7 @@ import RegisterButton from './RegisterButton.js';
 import { withRouter } from 'react-router-dom';
 import Client from "../Client"
 import LogoutButton from './LogoutButton'
+import cookie from 'react-cookies'
 
 class NavBar extends Component {
   constructor(props) {
@@ -38,19 +39,24 @@ class NavBar extends Component {
       })
   }
   
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+  handleItemClick = (e, { name }) => {
+    this.setState({ activeItem: name })
+    this.props.history.push('/')
+  }
 
   render() {
     const { activeItem } = this.state
     let upperRight;
     if(this.state.loggedin) {
-        upperRight = <div> <Button onClick={() => this.props.history.push('/profile')}>Profile</Button><LogoutButton setLoginFalse={this.setLoginFalse}></LogoutButton></div>
+        upperRight = <div> <Button onClick={() => {
+          this.props.history.push('/profile')
+        }}>Profile</Button><LogoutButton setLoginFalse={this.setLoginFalse}></LogoutButton></div>
     } else {
         upperRight = <div><RegisterButton setLoginTrue = {this.setLoginTrue} ></RegisterButton><LoginButton setLoginTrue = {this.setLoginTrue}></LoginButton></div>
     }
     return (
       <Menu>
-        <Menu.Item name='Home' active={activeItem === 'Home'} onClick={this.handleItemClick} href="/">
+        <Menu.Item name='Home' active={activeItem === 'Home'} onClick={this.handleItemClick}>
           Home
         </Menu.Item>
 
