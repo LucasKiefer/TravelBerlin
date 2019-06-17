@@ -11,6 +11,7 @@ class NavBar extends Component {
     super(props)
     this.state = {"loggedin": false}
     this.setLoginTrue = this.setLoginTrue.bind(this)
+    this.setLoginFalse = this.setLoginFalse.bind(this)
   }
 
   async componentDidMount() {
@@ -30,6 +31,12 @@ class NavBar extends Component {
           "loggedin": true
       })
   }
+
+  setLoginFalse() {
+      this.setState({
+          "loggedin": false
+      })
+  }
   
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
@@ -37,7 +44,7 @@ class NavBar extends Component {
     const { activeItem } = this.state
     let upperRight;
     if(this.state.loggedin) {
-        upperRight = <div> <Button onClick={() => this.props.history.push('/profile')}>Profile</Button><LogoutButton></LogoutButton></div>
+        upperRight = <div> <Button onClick={() => this.props.history.push('/profile')}>Profile</Button><LogoutButton setLoginFalse={this.setLoginFalse}></LogoutButton></div>
     } else {
         upperRight = <div><RegisterButton setLoginTrue = {this.setLoginTrue} ></RegisterButton><LoginButton setLoginTrue = {this.setLoginTrue}></LoginButton></div>
     }
