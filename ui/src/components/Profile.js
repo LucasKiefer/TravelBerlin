@@ -45,7 +45,7 @@ class Profile extends Component {
 
     addToOption(value) {
       let newOpt = { key: value, text: value, value: value}
-      if (!this.state.options.includes(newOpt)) {
+      if (!this.state.options.includes(newOpt) && value!="") {
         this.state.options.push(newOpt)
       }
     }
@@ -92,18 +92,18 @@ class Profile extends Component {
             <Card>
             <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={false}/>
             <Card.Content>
-              <Card.Header>{this.state.user.firstName === undefined && this.state.user.lastName === undefined ? "Name" : this.state.user.firstName + " " + this.state.user.lastName}</Card.Header>
+              <Card.Header>{this.state.user.firstName === undefined && this.state.user.lastName === undefined ? "Loading" : this.state.user.firstName + " " + this.state.user.lastName}</Card.Header>
               <div>
                 {tag}
               </div>
               <Card.Description>
-                {this.state.user.birthYear === undefined ? "Name" : this.state.user.birthYear}
+                {this.state.user.birthYear === undefined ? "Loading" : (this.state.user.birthYear === 0 ? "" : this.state.user.birthYear) }
               </Card.Description>
               <Card.Description>
-                {this.state.user.homeTown === undefined ? "Name" : this.state.user.homeTown}
+                {this.state.user.homeTown === undefined ? "Loading" : this.state.user.homeTown}
               </Card.Description>
               <Card.Description>
-                {this.state.user.interests === undefined ? "Name" : this.state.user.interests}
+                {this.state.user.interests === undefined ? "Loading" : this.state.user.interests}
               </Card.Description>
             </Card.Content>
             </Card>
