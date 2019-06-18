@@ -7,14 +7,21 @@ class LoginButton extends Component {
     constructor(props) {
         super(props);
     }
- 
-    logout() {
-        Client.sendForm(this.state, "/api/logout")
-    }
+
+    logoutRedirect = () => {
+        Client.sendForm(this.state, "/api/logout").then(json => {
+            if(json.validate === "success") {
+                this.props.setLoginFalse()
+                this.props.history.push('/')
+             } else {
+                this.setState({failedLogin: true})
+            }
+        })
+     }
 
     render() {
     return(
-        <Button onClick={this.logout} color="teal">Logout</Button>
+        <Button onClick={this.logoutRedirect} color="teal">Logout</Button>
     )
   }
 }

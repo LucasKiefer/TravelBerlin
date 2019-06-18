@@ -41,7 +41,7 @@ class LoginButton extends Component {
     render() {
     const { open } = this.state
     return(
-        <Modal open={open} onClose={this.close} trigger={<div onClick={(e) => e.preventDefault()} className="ui primary button" onClick={this.show('blurring')}>Login</div>} onSubmit= {() => { this.registerRedirect() }}>
+        <Modal open={open} onClose={this.close} trigger={<div onClick={(e) => {e.preventDefault()}} className="ui primary button" onClick={this.show('blurring')}>Login</div>} onSubmit= {() => { this.registerRedirect() }}>
             <Modal.Header>Login</Modal.Header>
             <Modal.Content>
             <Modal.Description>
