@@ -13,6 +13,9 @@ import ExecutionContext.Implicits.global
 
 //uses this library: https://github.com/firebase4s/firebase4s
 
+import io.github.nremond._
+//this import is a hashing library: https://github.com/nremond/pbkdf2-scala
+
 //TODO: CHANGE THE PASSWORD!!!!!!!!
 case class User() {
     @BeanProperty var firstName: String = _
@@ -54,7 +57,7 @@ object User {
                 user.setFirstName(firstName)
                 user.setLastName(lastName)
                 user.setEmail(email)
-                user.setPassword(password)
+                user.setPassword(SecureHash.createHash(password))
                 user.setAdmin(isAdmin)
                 user.setBirthYear(0)
                 user.setHomeTown("")
