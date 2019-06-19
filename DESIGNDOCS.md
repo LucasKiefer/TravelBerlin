@@ -60,4 +60,4 @@ The three main Scala packages in our backend are controllers, models, and utils.
 ## Additional Features:
 > Interactive and Adaptable UI: Compatible with all mainstream browsers, responsive to resizing and mobile viewing
 > Privacy and Security: passwords hashed and kept encrypted in Firebase
-> 
+> Reliability and Dedication: 6+ engineers maintaining and updating site as well as diagnosing customer issues
