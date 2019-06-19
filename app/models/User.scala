@@ -16,7 +16,6 @@ import ExecutionContext.Implicits.global
 import io.github.nremond._
 //this import is a hashing library: https://github.com/nremond/pbkdf2-scala
 
-//TODO: CHANGE THE PASSWORD!!!!!!!!
 case class User() {
     @BeanProperty var firstName: String = _
     @BeanProperty var lastName: String = _
