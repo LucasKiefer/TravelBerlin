@@ -25,3 +25,4 @@ Then in your web browser open localhost:3000
 
 # Attributions
 Thanks [Scala-Play-React-Seed](https://github.com/yohangz/scala-play-react-seed) for the project template
+
