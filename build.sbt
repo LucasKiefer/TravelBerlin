@@ -15,3 +15,4 @@ libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2
 libraryDependencies += "com.h2database" % "h2" % "1.4.196"
 libraryDependencies += "com.github.firebase4s" %% "firebase4s" % "0.0.4"
 //libraryDependencies += "com.google.firebase"
+libraryDependencies += "io.github.nremond" %% "pbkdf2-scala" % "0.6.3"

@@ -2,6 +2,8 @@ package utils
 
 import models.User
 import utils.ValidationStatus.ValidationStatus
+import io.github.nremond._
+//this import is hashing library: https://github.com/nremond/pbkdf2-scala
 
 case class ValidateUser(email: String, password: String) {
 
@@ -11,7 +13,7 @@ case class ValidateUser(email: String, password: String) {
       case None => ValidationStatus.ACCOUNT_NOT_FOUND
       case Some(user: User) => {
         //TODO: do some actual password checking/hashing here later
-        if (password == user.getPassword) ValidationStatus.SUCCESS else ValidationStatus.PASSWORD_INCORRECT
+        if (SecureHash.validatePassword(password, user.getPassword)) ValidationStatus.SUCCESS else ValidationStatus.PASSWORD_INCORRECT
       }
     }
   }
