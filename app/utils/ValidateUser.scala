@@ -12,8 +12,8 @@ case class ValidateUser(email: String, password: String) {
     userOption match {
       case None => ValidationStatus.ACCOUNT_NOT_FOUND
       case Some(user: User) => {
-        //TODO: do some actual password checking/hashing here later
-        if (SecureHash.validatePassword(password, user.getPassword)) ValidationStatus.SUCCESS else ValidationStatus.PASSWORD_INCORRECT
+        if (SecureHash.validatePassword(password, user.getPassword)) ValidationStatus.SUCCESS
+        else ValidationStatus.PASSWORD_INCORRECT
       }
     }
   }
