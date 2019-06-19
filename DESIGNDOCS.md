@@ -48,4 +48,5 @@ Case Study: Attractions Page
 
 Attractions.js uses Client.js to call /api/summary.  The scala backend Action calls firebase where the attractions are stored.  Within the Ok() response a json with all the content necessary is returned to Attractions.js.  At this point the data is parsed and passed in to a Attraction.js component.  Many of these are rendered into a responsive grid layout.
 
+[Diagram](https://drive.google.com/file/d/1m5F_HyE3f3N98T9KChDUfyPJCATNDQ0p/view?usp=sharing)
 ## Backend
