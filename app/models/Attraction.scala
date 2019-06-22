@@ -21,6 +21,12 @@ class Attraction() {
 
 object Attraction {
 
+  def createAttraction(name: String, description: String, location: String): String = {
+    val yup = name + " " + location + " " + description + " "
+    println("The thing's been created chief")
+    yup
+  }
+
   def getAttractions: List[Map[String, String]] = {
 
     try {

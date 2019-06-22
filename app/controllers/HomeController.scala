@@ -10,6 +10,23 @@ import models.Attraction
 @Singleton
 class HomeController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
+
+  def create: Action[JsValue] = Action (parse.json) { implicit request: Request[JsValue] =>
+    val attraction = request.body
+
+    val name = (attraction \ "name").asOpt[String].get
+    val description = (attraction \ "description").asOpt[String].get
+    val location = (attraction \ "location").asOpt[String].get
+
+    Attraction.createAttraction(name, description, location)
+
+    Ok(Json.obj(
+      "name" -> name,
+      "location" -> location,
+      "description" -> description
+    ))
+  }
+
   def attractions = Action {
 
     val attractionList = Attraction.getAttractions

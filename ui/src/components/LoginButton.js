@@ -28,6 +28,7 @@ class LoginButton extends Component {
 
     registerRedirect = () => {
        Client.sendForm(this.state, "/api/login").then(json => {
+         // console.log(json.toString())
            if(json.validate === "success") {
                this.props.setLoginTrue()
             //    this.props.history.push('/profile')

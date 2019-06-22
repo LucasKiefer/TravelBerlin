@@ -6,17 +6,19 @@ import { withRouter } from 'react-router-dom';
 import Client from "../Client"
 import LogoutButton from './LogoutButton'
 import cookie from 'react-cookies'
+import AttractionCreation from "./AttractionCreation";
 
 class NavBar extends Component {
   constructor(props) {
     super(props)
-    this.state = {"loggedin": false}
+    this.state = {"loggedin": false, "admin": true}
     this.setLoginTrue = this.setLoginTrue.bind(this)
     this.setLoginFalse = this.setLoginFalse.bind(this)
   }
 
   async componentDidMount() {
       Client.sendForm({}, '/api/user').then(usr => {
+        console.log(usr.toString())
           if (usr.user === "Not logged in") {
             this.setState({loggedin: false})
           } else {
@@ -48,9 +50,16 @@ class NavBar extends Component {
     const { activeItem } = this.state
     let upperRight;
     if(this.state.loggedin) {
+      if(this.state.admin) {
+        upperRight = <div> <AttractionCreation/> <Button onClick={() => {
+          this.props.history.push('/profile')
+        }}>Profile</Button><LogoutButton setLoginFalse={this.setLoginFalse}></LogoutButton></div>
+      } else {
         upperRight = <div> <Button onClick={() => {
           this.props.history.push('/profile')
         }}>Profile</Button><LogoutButton setLoginFalse={this.setLoginFalse}></LogoutButton></div>
+      }
+
     } else {
         upperRight = <div><RegisterButton setLoginTrue = {this.setLoginTrue} ></RegisterButton><LoginButton setLoginTrue = {this.setLoginTrue}></LoginButton></div>
     }
