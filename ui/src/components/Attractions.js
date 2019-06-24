@@ -23,7 +23,7 @@ class Attractions extends Component {
         <div className="Attractions">
         <StackGrid columnWidth={300} gutterWidth={50}>
           {this.state.title.filter(itm => true).map(item =>(
-               <Attraction name={item.name} description={item.description} location={item.location}/>
+               <Attraction name={item.name} description={item.description} location={item.location} imageurl={item.imageurl}/>
           ))}
         </StackGrid>
         </div>

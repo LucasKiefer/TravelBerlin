@@ -2,11 +2,13 @@ import React from 'react';
 import { Card, Icon, Image } from 'semantic-ui-react'
 
 class Attraction extends React.Component {
+
+  // attractionRedirect = () => (this.props.history.push('/'+ this.props.name))
     render() {
         return(
             <div id="blk">
                 <Card>
-                  <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={false} />
+                  <Image src={this.props.imageurl} wrapped  ui={false} />
                   <Card.Content>
                     <Card.Header>{this.props.name}</Card.Header>
                     <Card.Meta>
@@ -17,7 +19,7 @@ class Attraction extends React.Component {
                     </Card.Description>
                   </Card.Content>
                   <Card.Content extra>
-                    <a href = "http://maps.google.com">
+                    <a href = {"https://www.google.com/maps/search/?api=1&query=" + encodeURI(this.props.name)} target="_blank">
                       <Icon name='location arrow' />
                       Go here
                     </a>

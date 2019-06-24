@@ -31,7 +31,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
 
     val attractionList = Attraction.getAttractions
 
-    case class AttractionJson(name: String, location: String, description: String)
+    case class AttractionJson(name: String, location: String, description: String, imageurl: String)
 
     case class AttractionListJson(attractions: Seq[AttractionJson])
 
@@ -40,7 +40,8 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
       def writes(attraction: AttractionJson) = Json.obj(
         "name" -> attraction.name,
         "location" -> attraction.location,
-        "description" -> attraction.description
+        "description" -> attraction.description,
+        "imageurl" -> attraction.imageurl
       )
     }
 
@@ -51,7 +52,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     }
 
     val attractionSeq = for (attraction <- attractionList) yield {
-      AttractionJson(attraction("name"), attraction("location"), attraction("description"))
+      AttractionJson(attraction("name"), attraction("location"), attraction("description"), attraction("imageurl"))
     }
 
     val attractionListJson = AttractionListJson(attractionSeq)
