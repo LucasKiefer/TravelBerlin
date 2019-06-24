@@ -18,7 +18,9 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     val description = (attraction \ "description").asOpt[String].get
     val location = (attraction \ "location").asOpt[String].get
 
-    Attraction.createAttraction(name, description, location)
+    //TODO: Change the hardcoded image url
+    Attraction.createAttraction(name, description, location,
+      "https://upload.wikimedia.org/wikipedia/commons/5/5d/Berlinermauer.jpg")
 
     Ok(Json.obj(
       "name" -> name,
@@ -31,7 +33,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
 
     val attractionList = Attraction.getAttractions
 
-    case class AttractionJson(name: String, location: String, description: String, imageurl: String)
+    case class AttractionJson(name: String, location: String, description: String, imageUrl: String)
 
     case class AttractionListJson(attractions: Seq[AttractionJson])
 
@@ -41,7 +43,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
         "name" -> attraction.name,
         "location" -> attraction.location,
         "description" -> attraction.description,
-        "imageurl" -> attraction.imageurl
+        "imageUrl" -> attraction.imageUrl
       )
     }
 
@@ -52,7 +54,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     }
 
     val attractionSeq = for (attraction <- attractionList) yield {
-      AttractionJson(attraction("name"), attraction("location"), attraction("description"), attraction("imageurl"))
+      AttractionJson(attraction("name"), attraction("location"), attraction("description"), attraction("imageUrl"))
     }
 
     val attractionListJson = AttractionListJson(attractionSeq)

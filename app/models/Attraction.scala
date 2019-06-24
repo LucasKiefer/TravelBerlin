@@ -13,18 +13,41 @@ import scala.concurrent.duration._
 import scala.collection.JavaConverters._
 
 
-class Attraction() {
+case class Attraction() {
   @BeanProperty var name: String = _
   @BeanProperty var location: String = _
   @BeanProperty var description: String = _
+  @BeanProperty var imageUrl: String = _
 }
 
 object Attraction {
 
-  def createAttraction(name: String, description: String, location: String): String = {
-    val yup = name + " " + location + " " + description + " "
-    println("The thing's been created chief")
-    yup
+  def createAttraction(name: String, description: String, location: String, imageUrl: String): Option[Attraction] = {
+
+    try {
+      val serviceAccount = new FileInputStream(
+        new File("./app/resources/serviceAccountsCredentials.json"))
+      App.initialize(serviceAccount, "https://travelberlin-1b28d.firebaseio.com")
+    } catch {
+      case ise: IllegalStateException => println("Logged error:" + ise)
+    }
+
+    //Get a database reference
+    val db: Database = Database.getInstance()
+    val attractionRef: DatabaseReference = db.ref("Attractions/" + name)
+
+    //TODO: Check if an attraction already exists
+
+    //Create attraction
+    val attraction = new Attraction()
+    attraction.setName(name)
+    attraction.setDescription(description)
+    attraction.setLocation(location)
+    attraction.setImageUrl(imageUrl)
+
+    val storedAttraction: Attraction = Await.result(attractionRef.set(attraction), 10.second)
+
+    Option(storedAttraction)
   }
 
   def getAttractions: List[Map[String, String]] = {
@@ -38,7 +61,7 @@ object Attraction {
     }
 
     val db: Database = Database.getInstance()
-    val attractionRef: DatabaseReference = db.ref("Attractions")
+    val attractionRef: DatabaseReference = db.ref("Attractions/")
 
     val futureAttraction: Future[Any] = attractionRef.get()
       .map(snapshot => snapshot.getValue)
