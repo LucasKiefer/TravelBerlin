@@ -17,10 +17,9 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     val name = (attraction \ "name").asOpt[String].get
     val description = (attraction \ "description").asOpt[String].get
     val location = (attraction \ "location").asOpt[String].get
+    val imageUrl = (attraction \ "imageUrl").asOpt[String].get
 
-    //TODO: Change the hardcoded image url
-    val attractionOption = Attraction.createAttraction(name, description, location,
-      "https://upload.wikimedia.org/wikipedia/commons/5/5d/Berlinermauer.jpg")
+    val attractionOption = Attraction.createAttraction(name, description, location, imageUrl)
 
     attractionOption match {
       case Some(_) => Ok(Json.obj("validate" -> "success"))

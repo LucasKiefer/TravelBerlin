@@ -8,7 +8,7 @@ class Attraction extends React.Component {
         return(
             <div id="blk">
                 <Card>
-                  <Image src={this.props.imageUrl} wrapped  ui={false} />
+                  <Image alt={this.props.name} src={this.props.imageUrl} wrapped  ui={false} />
                   <Card.Content>
                     <Card.Header>{this.props.name}</Card.Header>
                     <Card.Meta>
