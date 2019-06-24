@@ -5,19 +5,20 @@ import Client from "../Client";
 
 
 class AttractionCreation extends Component {
-  state = {name: "", description: "", location: "", imageurl: ""}
+  state = {name: "", description: "", location: "", imageUrl: ""}
 
   handleSubmit = (e) => {
+    console.log(this.state)
     Client.sendForm(this.state, "/api/create").then(console.log).then(this.close())
   }
 
   handleName = (e) => {this.setState({name: e.target.value})}
   handleLocation = (e) => {this.setState({location: e.target.value})}
   handleDescription = (e) => {this.setState({description: e.target.value})}
-  handleImageurl = (e) => {this.setState({imageurl: e.target.imageurl})}
+  handleImageUrl = (e) => {this.setState({imageUrl: e.target.value})}
 
   show = dimmer => () => this.setState({dimmer, open: true});
-  close = () => this.setState({open: false, name: "", description: "", location: "", imageurl:""});
+  close = () => this.setState({open: false, name: "", description: "", location: "", imageUrl:""});
 
   render() {
     return (
@@ -28,7 +29,7 @@ class AttractionCreation extends Component {
               <Form.Input required fluid label='Location Name' placeholder='Location Name' value={this.state.name} onChange={this.handleName}/>
               <Form.Input required fluid label='Location Address' placeholder='Location Address' value={this.state.location} onChange={this.handleLocation}/>
             </Form.Group>
-            <Form.Input fluid type="url" label='Image URL' placeholder='Image URL' value={this.state.imageurl} onChange={this.handleImageurl}/>
+            <Form.Input required fluid type="url" label='Image URL' placeholder='Image URL' value={this.state.imageUrl} onChange={this.handleImageUrl}/>
             <Form.TextArea required label='About' placeholder='Tell us more about the attraction...' value={this.state.description} onChange={this.handleDescription}/>
             <Form.Button>Submit</Form.Button>
 

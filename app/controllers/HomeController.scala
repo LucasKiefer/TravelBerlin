@@ -17,15 +17,15 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     val name = (attraction \ "name").asOpt[String].get
     val description = (attraction \ "description").asOpt[String].get
     val location = (attraction \ "location").asOpt[String].get
+    val imageUrl = (attraction \ "imageUrl").asOpt[String].get
 
-    //TODO: Change the hardcoded image url
-    Attraction.createAttraction(name, description, location,
-      "https://upload.wikimedia.org/wikipedia/commons/5/5d/Berlinermauer.jpg")
+    Attraction.createAttraction(name, description, location, imageUrl)
 
     Ok(Json.obj(
       "name" -> name,
       "location" -> location,
-      "description" -> description
+      "description" -> description,
+      "imageUrl" -> imageUrl
     ))
   }
 
