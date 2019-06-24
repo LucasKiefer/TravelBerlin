@@ -34,20 +34,48 @@ object Attraction {
 
     //Get a database reference
     val db: Database = Database.getInstance()
-    val attractionRef: DatabaseReference = db.ref("Attractions/" + name)
+    val attractionRef: DatabaseReference = db.ref("Attractions/" + name.hashCode)
 
-    //TODO: Check if an attraction already exists
+    //Checks if an attraction already exists
+    val attractionOption = getAttractionByNameHashcode(name.hashCode)
 
-    //Create attraction
-    val attraction = new Attraction()
-    attraction.setName(name)
-    attraction.setDescription(description)
-    attraction.setLocation(location)
-    attraction.setImageUrl(imageUrl)
+    attractionOption match {
+      case None => {
+        //Create attraction
+        val attraction = new Attraction()
+        attraction.setName(name)
+        attraction.setDescription(description)
+        attraction.setLocation(location)
+        attraction.setImageUrl(imageUrl)
 
-    val storedAttraction: Attraction = Await.result(attractionRef.set(attraction), 10.second)
+        val storedAttraction: Attraction = Await.result(attractionRef.set(attraction), 10.second)
 
-    Option(storedAttraction)
+        Option(storedAttraction)
+      }
+      case _ => None
+    }
+  }
+
+  def getAttractionByNameHashcode(nameHash: Int): Option[Attraction] = {
+
+    try {
+      val serviceAccount = new FileInputStream(
+        new File("./app/resources/serviceAccountsCredentials.json"))
+      App.initialize(serviceAccount, "https://travelberlin-1b28d.firebaseio.com")
+    } catch {
+      case ise: IllegalStateException => println("Logged error:" + ise)
+    }
+
+    //Get a database reference
+    val db: Database = Database.getInstance()
+    val attractionRef: DatabaseReference = db.ref("Attractions/" + nameHash)
+
+    val futureAttraction: Future[Option[Attraction]] = attractionRef.get()
+        .map(snapshot => snapshot.getValue(classOf[Attraction]))
+
+    val attractionOption = Await.result(futureAttraction, 10.second)
+
+    attractionOption
   }
 
   def getAttractions: List[Map[String, String]] = {
