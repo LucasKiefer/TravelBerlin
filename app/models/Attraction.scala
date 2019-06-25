@@ -103,4 +103,35 @@ object Attraction {
 
     attractionsList
   }
+
+  def editAttractionByHashcode(nameHash: Int, name: String, description: String, location: String,
+                               imageUrl: String): Option[Attraction] = {
+
+    try {
+      val serviceAccount = new FileInputStream(
+        new File("./app/resources/serviceAccountsCredentials.json"))
+      App.initialize(serviceAccount, "https://travelberlin-1b28d.firebaseio.com")
+    } catch {
+      case ise: IllegalStateException => println("Logged error: " + ise)
+    }
+
+    val db: Database = Database.getInstance()
+    val attractionRef: DatabaseReference = db.ref("Attractions/")
+
+    val attractionOption = getAttractionByNameHashcode(nameHash)
+
+    attractionOption match {
+      case None => None
+      case Some(attraction: Attraction) => {
+        attraction.setName(name)
+        attraction.setDescription(description)
+        attraction.setLocation(location)
+        attraction.setImageUrl(imageUrl)
+
+        val storedAttraction = Await.result(attractionRef.set(attraction), 10.second)
+
+        Option(storedAttraction)
+      }
+    }
+  }
 }
