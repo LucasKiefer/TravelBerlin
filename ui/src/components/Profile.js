@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import { Header } from 'semantic-ui-react';
-import { Modal, Card, Image, Form, Message, Label } from 'semantic-ui-react';
+import {Header, Modal, Card, Image, Form, Message, Label } from 'semantic-ui-react';
 import Center from 'react-center';
 import Client from '../Client';
 import AttractionCreation from './AttractionCreation'
@@ -45,7 +44,7 @@ class Profile extends Component {
 
     addToOption(value) {
       let newOpt = { key: value, text: value, value: value}
-      if (!this.state.options.includes(newOpt) && value!="") {
+      if (!this.state.options.includes(newOpt) && value!=="") {
         this.state.options.push(newOpt)
       }
     }

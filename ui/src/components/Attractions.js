@@ -17,6 +17,14 @@ class Attractions extends Component {
         });
       });
     }
+    async componentDidUpdate() {
+      Client.getSummary(summary => {
+        // console.log
+        this.setState({
+          title: JSON.parse(summary.content).attractions
+        });
+      });
+    }
   
     render() {
       return (

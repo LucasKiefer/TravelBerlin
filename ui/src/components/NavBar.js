@@ -11,18 +11,18 @@ import AttractionCreation from "./AttractionCreation";
 class NavBar extends Component {
   constructor(props) {
     super(props)
-    this.state = {"loggedin": false, "admin": true}
+    this.state = {"loggedin": false, "admin": false}
     this.setLoginTrue = this.setLoginTrue.bind(this)
     this.setLoginFalse = this.setLoginFalse.bind(this)
   }
 
   async componentDidMount() {
       Client.sendForm({}, '/api/user').then(usr => {
-        console.log(usr.toString())
+        console.log(usr.user)
           if (usr.user === "Not logged in") {
             this.setState({loggedin: false})
           } else {
-            this.setState({loggedin: true})
+            this.setState({loggedin: true, admin: JSON.parse(usr.user).isAdmin})
           }
 
         }
@@ -30,15 +30,29 @@ class NavBar extends Component {
     }
 
   setLoginTrue() {
-      this.setState({
-          "loggedin": true
-      })
+    Client.sendForm({}, '/api/user').then(usr => {
+      console.log(usr.user)
+        if (usr.user === "Not logged in") {
+          this.setState({loggedin: false})
+        } else {
+          this.setState({loggedin: true, admin: JSON.parse(usr.user).isAdmin})
+        }
+
+      }
+    )
   }
 
   setLoginFalse() {
-      this.setState({
-          "loggedin": false
-      })
+      Client.sendForm({}, '/api/user').then(usr => {
+        console.log(usr.user)
+          if (usr.user === "Not logged in") {
+            this.setState({loggedin: false})
+          } else {
+            this.setState({loggedin: true, admin: JSON.parse(usr.user).isAdmin})
+          }
+
+        }
+    )
   }
   
   handleItemClick = (e, { name }) => {
