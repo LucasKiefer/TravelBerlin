@@ -1,0 +1,66 @@
+{
+	"attractions": [
+		{
+			"location": "https://goo.gl/maps/mzErVbMVr2z6xFMQA",
+			"name": "Berlin Wall",
+			"imgUrl": "https://unsplash.com/photos/rdov_LRsXpQ",
+            "description": "Memorial for the Wall that stood in Berlin from the 60’s to the end of the 80’s",
+            "detailedDescription": "In the Cold War, the most iconic symbol of separation between the Soviet East Berlin and the Western-controlled West Berlin was the Berlin Wall. It stood several feet tall and heavily guarded, making it incredibly difficult for those who wished to escape from East to West Berlin. Several escape attempts were well-documented, which were done in incredibly unique ways. This included stowing away in small cars, building underground tunnels, ziplining, and even a hot air balloon. One can read about this at public museums for the wall, which one can see in detail at the Black Box memorial, Checkpoint Charlie (Kochstrasße/Checkpoint Charlie station for U6 route) or the Berlin Wall Memorial. At the Memorial, one can walk on a street right next to Bernauer Strasße to see a progression of historical signs about the monument. From noting the significance of the escape attempts to the history of the conflicts inside and outside of Germany, the signs do justice to those who want to better understand the true impact that the wall has on those who have been affected by its construction and enforcement. One interesting feature that may go unnoticed for a quick traveler is the audio buttons on some of the signs, which each narrate or play a couple minutes of historically significant tidbits from the conflict, in English or German. Additionally, for those who struggle to see the wall at first, the more populated areas of the memorial near the Bernauer Straße have sections of the wall for visitors to see. If the memorial did not satisfy the thirst for knowledge, one can see the East Side Gallery for incredible street art on parts of the wall or the Checkpoint Charlie memorial. Ultimately, there is something there for everyone to see, either by foot or bike, and the memorial stands as an important symbol of a conflict of a past era."
+		},
+		{
+			"location": "https://goo.gl/maps/hKnMwL5UwM9QTedLA",
+			"name": "Templehof Airfield",
+			"imgUrl": "https://unsplash.com/photos/cOUKgY3QRb0",
+			"description": "The Templehof Airfield, before becoming one of the first airports in Berlin, was the site of various marches led by the Prussians, and later Germans up until World War I. With a central location and high demand, this airport became one of the busiest airports in the world. In fact, this airport was quite iconic as a pre-World War airport in the beginning of its time, actively operating until 2008 when it was replaced in function by the Tegel and Schoenfeld Airports. By walking through Templehof, you can get a glimpse of much of the history, most notably the area where the famous airlift took place, in which US and UK forces helped to deliver supplies to West Berlin. A memorial stands proudly to commemorate the lives lost in the effort, at the front of the airport, which is a notable detour to see. When you visit Templehof, you can walk or bike (with several rental options nearby), to your heart's content at the largest urban park in Berlin. Several informative signs are littered throughout the park, either highlighting important sites on the field in both German and English, or noting various remnants of the past, such as planes and practice areas. In addition, various boards examining the presence of flora and fauna exist, for those who are curious about nature. Some interesting additions that the regular traveler may not notice at first sight are the small skate park and mini garden on the site, both of which are cool sites for the curious traveler. In recent years, Templehof Airport served as a refugee camp, not disturbing the park's function, and the largest of its kind in Europe. Templehof, essentially, is one of the many examples of how Berlin has taken a place so tied to the pain of the past and adapted it for a new time."
+        },
+        {
+			"location": "https://goo.gl/maps/748Ygg3ic5fhq1uo8",
+			"name": "Reichstag",
+			"imgUrl": "https://unsplash.com/photos/dFeOdGPk2hc",
+			"description": "The Reichstag, located in the lively center of Berlin, is an important sight to see for all who wish to see Berlin, or those who simply wish to return to an important landmark in the city. It serves as the parliamentary seat in Berlin, a role it has played only for the past 20 years. The Reichstag was completed in 1894, "
+        },
+        {
+			"location": "https://goo.gl/maps/7gqGePtsifEqd5yR8",
+			"name": "Brandenburg Gate",
+			"imgUrl": "https://unsplash.com/photos/fv0yV5-Pbjc",
+			"description": ""
+        },
+        {
+			"location": "https://goo.gl/maps/TwX7oRLDXDspveJS8",
+			"name": "Holocaust Memorial",
+			"imgUrl": "https://unsplash.com/photos/LdVE8gpMhgQ",
+			"description": ""
+        },
+        {
+			"location": "https://goo.gl/maps/G46qsAgRoo1kVyP26",
+			"name": "Museum Island",
+			"imgUrl": "https://commons.wikimedia.org/wiki/File:Berlin_Museumsinsel_Fernsehturm.jpg#/media/File:Berlin_Museumsinsel_Fernsehturm.jpg",
+			"description": ""
+        },
+        {
+			"location": "https://goo.gl/maps/ZTxz6tL2Ee7WW5ap9",
+			"name": "Checkpoint Charlie",
+			"imgUrl": "https://unsplash.com/photos/-uKblepoT6U",
+			"description": ""
+        },
+        {
+			"location": "https://goo.gl/maps/28VeeFEDHW3qwM2FA",
+			"name": "Berlin Cathedral",
+			"imgUrl": "https://unsplash.com/photos/teGUtvdTiQ8",
+			"description": ""
+        },
+        {
+			"location": "https://goo.gl/maps/DX927XKZwov8888E8",
+			"name": "Berliner Fernsehturm",
+			"imgUrl": "https://unsplash.com/photos/fAGQfeHgowY",
+			"description": ""
+        },
+        {
+			"location": "https://goo.gl/maps/peSnGLS3CM6aQF6u6",
+			"name": "Clärchens Ballhaus",
+			"imgUrl": "https://images.app.goo.gl/yB2ebABndv9JxeX28",
+			"description": ""
+		}
+	]
+}
+
