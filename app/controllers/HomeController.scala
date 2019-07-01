@@ -30,13 +30,13 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   def editAttraction: Action[JsValue] = Action (parse.json) { implicit request: Request[JsValue] =>
     val attraction = request.body
 
-    val nameHashcode = (attraction \ "nameHash").asOpt[Int].get
+    val id = (attraction \ "id").asOpt[Int].get
     val name = (attraction \ "name").asOpt[String].get
     val description = (attraction \ "description").asOpt[String].get
     val location = (attraction \ "location").asOpt[String].get
     val imageUrl = (attraction \ "imageUrl").asOpt[String].get
 
-    val attractionOption = Attraction.editAttractionByHashcode(nameHashcode, name, description, location, imageUrl)
+    val attractionOption = Attraction.editAttractionByHashcode(id, name, description, location, imageUrl)
 
     attractionOption match {
       case Some(_) => Ok(Json.obj("validate" -> "success"))

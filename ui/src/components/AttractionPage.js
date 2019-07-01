@@ -11,19 +11,12 @@ class AttractionPage extends Component {
     }
 
     show = dimmer => () => this.setState({ dimmer, open: true, formSuccess: false})
-    close = () => this.setState({ open: false})
+    close = () => this.setState({ open: false, editedDescription: this.state.description, editedLocation: this.state.location, editedImageUrl: this.state.imageUrl})
   
     async componentDidMount() {
-        this.setState({
-            loading: false, name:"Berlin Wall", description:"The Berlin Wall was a guarded concrete barrier that physically and ideologically divided Berlin from 1961 to 1989. The Berlin Wall was a guarded concrete barrier that physically and ideologically divided Berlin from 1961 to 1989. The Berlin Wall was a guarded concrete barrier that physically and ideologically divided Berlin from 1961 to 1989. The Berlin Wall was a guarded concrete barrier that physically and ideologically divided Berlin from 1961 to 1989. The Berlin Wall was a guarded concrete barrier that physically and ideologically divided Berlin from 1961 to 1989. The Berlin Wall was a guarded concrete barrier that physically and ideologically divided Berlin from 1961 to 1989. The Berlin Wall was a guarded concrete barrier that physically and ideologically divided Berlin from 1961 to 1989. The Berlin Wall was a guarded concrete barrier that physically and ideologically divided Berlin from 1961 to 1989.", location:"Throughout Berlin", imageUrl:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Berlin_-_Reichstagsgeb%C3%A4ude3.jpg/2880px-Berlin_-_Reichstagsgeb%C3%A4ude3.jpg"
-        })
-        
-
-
         this.setState({editedName:this.state.name, editedDescription: this.state.description, editedImageUrl: this.state.imageUrl})
         
         Client.sendForm({}, '/api/user').then(usr => {
-            console.log(usr.user)
               if (usr.user === "Not logged in") {
                 this.setState({loggedin: false})
               } else {
@@ -37,7 +30,8 @@ class AttractionPage extends Component {
             if (attraction === "Could not find") {
               //ADD ERROR TO NOT FOUND
             } else {
-              this.setState({})
+              attraction = JSON.parse(attraction.attraction)
+              this.setState({loading: false, name:attraction.name, description: attraction.description, location: attraction.location, imageUrl:attraction.imageUrl, editedDescription: attraction.description, editedLocation: attraction.location, editedImageUrl:attraction.imageUrl})
             }
 
           }
@@ -52,15 +46,16 @@ class AttractionPage extends Component {
         this.setState({
           [name]: value
         });
-        console.log(this.state)
     }
 
     submitChanges = () => {
-        const editedAttraction = {name: this.state.name, location: this.state.editedLocation, description: this.state.editedDescription, imageUrl: this.state.editedImageUrl}
+        const editedAttraction = {id: parseInt(this.props.match.params.id), name: this.state.name, location: this.state.editedLocation, description: this.state.editedDescription, imageUrl: this.state.editedImageUrl}
         Client.sendForm(editedAttraction, "/api/editAttraction").then((json => {
+          console.log(json)
             if(json.validate === "success") {
                 this.setState({formSuccess:true, location: this.state.editedLocation, description: this.state.editedDescription, imageUrl: this.state.editedImageUrl})
              } else {
+               this.setState({formSuccess:false})
             }
         }))
      }
