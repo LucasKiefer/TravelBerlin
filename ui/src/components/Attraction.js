@@ -1,21 +1,37 @@
 import React from 'react';
 import { Card, Icon, Image } from 'semantic-ui-react'
+import { Redirect } from 'react-router'
 
 class Attraction extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {redirect:false}
+    }
+    async componentDidMount() {
+      let attractUrl ='/attraction/'.concat(this.props.id)
+      this.setState({url:attractUrl})
+    }
 
-  // attractionRedirect = () => (this.props.history.push('/'+ this.props.name))
+    attractionRedirect = () => (
+      this.setState({redirect:true, url:'/attraction/'.concat(this.props.id)})
+    )
+
     render() {
+        if (this.state.redirect) {
+          return <Redirect to={this.state.url}/>;
+        }
         return(
             <div id="blk">
-                <Card>
-                  <Image alt={this.props.name} src={this.props.imageUrl} wrapped  ui={false} />
+                <Card max-height="50px">
+                  <Image onClick={this.attractionRedirect} alt={this.props.name} src={this.props.imageUrl} wrapped  ui={false} />
                   <Card.Content>
                     <Card.Header>{this.props.name}</Card.Header>
                     <Card.Meta>
                       <span className='date'>{this.props.location}</span>
                     </Card.Meta>
                     <Card.Description>
-                      {this.props.description}
+                      {this.props.description !== undefined ?
+                         this.props.description.split(".")[0] : ""}
                     </Card.Description>
                   </Card.Content>
                   <Card.Content extra>
@@ -30,4 +46,4 @@ class Attraction extends React.Component {
     }
 }
 
-export default Attraction;
+export default Attraction
