@@ -26,49 +26,49 @@
 			"name": "Brandenburg Gate",
 			"imgUrl": "https://unsplash.com/photos/fv0yV5-Pbjc",
 			"imgAddress":"https://images.unsplash.com/photo-1506760610100-1af6025cf0c7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1504&q=80",
-			"detailedDescription": ""
+			"detailedDescription": "Previously the symbol of German division during the Cold War, the Brandenburg gate is now a national symbol of peace and unity and perhaps the most famous monument in Berlin. Though erected in 1791 as a testiment to peace, the Gate has seen various regimes and conquests, from Napoleon to the Nazis. When the Berlin Wall seperated East and West Berlin, this gate  was adjacent to the wall and represented division. Now, tourists from around the world come to see this magnificent monument inspired by the gateway to the Acropolis in Athens with the goddess Victoria riding a chariot."
         },
         {
 			"location": "Cora-Berliner-Straße 1, 10117 Berlin",
 			"name": "Holocaust Memorial",
 			"imgUrl": "https://unsplash.com/photos/LdVE8gpMhgQ",
 			"imgAddress":"https://images.unsplash.com/photo-1533071834859-e4c61b8bcc5b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
-			"detailedDescription": ""
+			"detailedDescription": "Completed in 2004, the Memorial to the Murdered Jews of Europe(also known as the Holocaust Memorial), is a memorial to the Jewish victims of the Holocaust. The monument consists of 2,711 concrete slab-like columns of various heights on a hily landscape that covers 1.9 hectacres. The monument invokes a sense of loneliness and despair to the visitor due to the similarity to a cemetary. The monument is located near the Brandenburg Gate and is adjacent to Tiergarten, sitting in the center of Berlin."
         },
         {
 			"location": "Bodestraße 1, 10178 Berlin",
 			"name": "Museum Island",
 			"imgUrl": "https://commons.wikimedia.org/wiki/File:Berlin_Museumsinsel_Fernsehturm.jpg#/media/File:Berlin_Museumsinsel_Fernsehturm.jpg",
 			"imgAddress":"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Berlin_Museumsinsel_Fernsehturm.jpg/2560px-Berlin_Museumsinsel_Fernsehturm.jpg",
-			"detailedDescription": ""
+			"detailedDescription": "A UNESCO World Heritage site, Museum island is an island on the Spree river in the center of Berlin that contains five world renowned museums as well as the Berin Cathedral. The museums are celebrated for their various and unique exhibits, such as the bust of the Egyptian Queen Nefertiti and the reconstruction of the Ishtar Gate. When visiting Berlin, the Museum Island is a must see for anyone interested in ancient history and the architecture and artifacts of those times."
         },
         {
 			"location": "Friedrichstraße 43-45, 10117 Berlin",
 			"name": "Checkpoint Charlie",
 			"imgUrl": "https://unsplash.com/photos/-uKblepoT6U",
 			"imgAddress":"https://images.unsplash.com/photo-1560929590-ab2c5b0482a9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80",
-			"detailedDescription": ""
+			"detailedDescription": "Checkpoint Charlie is a must-see for people interested in exploring the role of Berlin in the Cold War. Checkpoint Charlie was the third checkpoint opened by the Allies in and around Berlin. The site has become famous through many movies involving espionage and tensions in Berlin during that time, and for good reason. In October of 1961, American and Soviet tanks took position on either side and faced each other with weapons ready to fire. This location represents the tense and close-call situations in this area, and tourists can take pictures with soldiers dressed up from that time. "
         },
         {
 			"location": "https://goo.gl/maps/28VeeFEDHW3qwM2FA",
 			"name": "Berlin Cathedral",
 			"imgUrl": "https://unsplash.com/photos/teGUtvdTiQ8",
 			"imgAddress":"https://images.unsplash.com/photo-1538685634737-24b83e3fa2f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
-			"detailedDescription": ""
+			"detailedDescription": "Berlin Cathedral is the common name for the Supreme Parish and Collegiate Church. Located on Museum Island, the present Berlin Cathedral was inaugarated in 1905 and was designed by Julius and Otto Raschdorff. The building at the time was considered to be a Protestant counterweight to the St. Peter's Basilica of the Vatican. The church experienced damage during the Allied bombings of the 1940s but recontruction began in 1975 and now the Cathedral can be visited as a museum of its history or for service on Sundays."
         },
         {
 			"location": "Panoramastraße 1A, 10178 Berlin",
 			"name": "Berliner Fernsehturm",
 			"imgUrl": "https://unsplash.com/photos/fAGQfeHgowY",
 			"imgAddress":"https://images.unsplash.com/photo-1554660144-e1a5e2170d78?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80",
-			"detailedDescription": ""
+			"detailedDescription": "The Berliner Fernsehturm(Berlin Television Tower in English) is easily the most visible building in all of Berlin, despite where you are. Finished in 1969 by the Communist German Deomcratic Republic as a symbol of power, it stands at a whopping 368 meters as the tallest structure in Germany, and the third tallest in the European Union. The tower functions as the location of several radio and television broadcasting stations, and contains a bar and a rotating restaurant at 203 meters. Originally a symbol of the divisive communist regime of East Germany, now the tower represents a reunited Berlin."
         },
         {
 			"location": "Auguststraße 24, 10117 Berlin",
 			"name": "Clärchens Ballhaus",
 			"imgUrl": "https://images.app.goo.gl/yB2ebABndv9JxeX28",
 			"imgAddress":"https://www.ballhaus.de/files/Claerchens_Ballhaus/Slideshows/Ballsaal/Cl%C3%A4rchensBallhaus_Pressefotos_Ballsaal_BerndSch%C3%B6nberger_KLEIN_03.jpg",
-			"detailedDescription": ""
+			"detailedDescription": "The Clärchens Ballhaus is a dance hall with a restaurant. Marked and protected as a cultural monument, the Clärchens Ballhaus is one of the last surviving ball houses from the period around 19000. This dance hall has been featured in films and literature and acts as a window into the past for any tourist interested in how the Berliners lived during those times."
 		}
 	]
 }
