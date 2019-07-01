@@ -23,4 +23,8 @@ POST        /api/user           controllers.UserController.getUser
 
 POST        /api/logout         controllers.UserController.logout
 
-POST        /api/create        controllers.HomeController.create
+POST        /api/create         controllers.HomeController.create
+
+POST        /api/editAttraction  controllers.HomeController.editAttraction
+
+POST        /api/getAttraction  controllers.HomeController.getAttraction

@@ -27,41 +27,55 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     }
   }
 
-  def editAttraction: Action[JsValue] = Action (parse.json) { implicit request: Request[JsValue] =>
-    val attraction = request.body
+    def editAttraction: Action[JsValue] = Action (parse.json) { implicit request: Request[JsValue] =>
+      val attraction = request.body
 
-    val nameHashcode = (attraction \ "nameHash").asOpt[Int].get
-    val name = (attraction \ "name").asOpt[String].get
-    val description = (attraction \ "description").asOpt[String].get
-    val location = (attraction \ "location").asOpt[String].get
-    val imageUrl = (attraction \ "imageUrl").asOpt[String].get
+      val nameHashcode = (attraction \ "nameHash").asOpt[Int].get
+      val name = (attraction \ "name").asOpt[String].get
+      val description = (attraction \ "description").asOpt[String].get
+      val location = (attraction \ "location").asOpt[String].get
+      val imageUrl = (attraction \ "imageUrl").asOpt[String].get
 
-    val attractionOption = Attraction.editAttractionByHashcode(nameHashcode, name, description, location, imageUrl)
+      val attractionOption = Attraction.editAttractionByHashcode(nameHashcode, name, description, location, imageUrl)
 
-    attractionOption match {
-      case Some(_) => Ok(Json.obj("validate" -> "success"))
-      case None => Ok(Json.obj("validate" -> "attraction does not exist"))
-    }
-
-    Ok(Json.obj("validate" -> "success"))
-  }
-
-  def getAttraction: Action[JsValue] = Action (parse.json) { implicit request: Request[JsValue] =>
-    val nameHash = (request.body \ "nameHash").asOpt[Int].get
-
-    val attractionOption = Attraction.getAttractionByNameHashcode(nameHash)
-
-    attractionOption match {
-      case Some(attraction: Attraction) => {
-
-        //put json writer here
-        Ok(Json.obj("attraction" -> "test"))
+      attractionOption match {
+        case Some(_) => Ok(Json.obj("validate" -> "success"))
+        case None => Ok(Json.obj("validate" -> "attraction does not exist"))
       }
-      case None => Ok(Json.obj("attraction" -> "does not exist"))
-    }
-  }
 
-  def attractions = Action {
+      Ok(Json.obj("validate" -> "success"))
+    }
+
+    def getAttraction: Action[JsValue] = Action (parse.json) { request: Request[JsValue] =>
+        val bodyJson = request.body
+        val nameHash: Int = (bodyJson \ "id").validate[Int].getOrElse(0)
+        nameHash match {
+            case 0 => Unauthorized(Json.obj("attraction" -> "Could not find"))
+            case name: Int => {
+
+                val attraction: Attraction = Attraction.getAttractionByNameHashcode(name.##).get
+
+                case class AttractionJson(name: String, description: String, loaction: String, imageUrl: String)
+
+                implicit val AttractionJsonWrites = new Writes[AttractionJson] {
+                    def writes(user: AttractionJson) = Json.obj(
+                        "name" -> attraction.name,
+                        "description" -> attraction.description,
+                        "location" -> user.loaction,
+                        "imageUrl" -> user.imageUrl,
+                    )
+                }
+                val attractionJson: AttractionJson = AttractionJson(attraction.name, attraction.description,
+                    attraction.location, attraction.imageUrl)
+
+                val json: JsValue = Json.toJson(attractionJson)
+
+                Ok(Json.obj("attraction" -> Json.stringify(json)))
+            }
+        }
+    }
+
+    def attractions = Action {
 
     val attractionList = Attraction.getAttractions
 
