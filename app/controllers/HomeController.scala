@@ -48,8 +48,6 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     def getAttraction: Action[JsValue] = Action (parse.json) { request: Request[JsValue] =>
         val bodyJson = request.body
         val nameHash: Int = (bodyJson \ "id").validate[Int].getOrElse(0)
-
-        println("Received in getAttraction: " + bodyJson)
         nameHash match {
             case 0 => Unauthorized(Json.obj("attraction" -> "Could not find"))
             case name: Int => {
