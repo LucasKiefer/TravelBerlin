@@ -27,17 +27,52 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     }
   }
 
+  def editAttraction: Action[JsValue] = Action (parse.json) { implicit request: Request[JsValue] =>
+    val attraction = request.body
+
+    val nameHashcode = (attraction \ "nameHash").asOpt[Int].get
+    val name = (attraction \ "name").asOpt[String].get
+    val description = (attraction \ "description").asOpt[String].get
+    val location = (attraction \ "location").asOpt[String].get
+    val imageUrl = (attraction \ "imageUrl").asOpt[String].get
+
+    val attractionOption = Attraction.editAttractionByHashcode(nameHashcode, name, description, location, imageUrl)
+
+    attractionOption match {
+      case Some(_) => Ok(Json.obj("validate" -> "success"))
+      case None => Ok(Json.obj("validate" -> "attraction does not exist"))
+    }
+
+    Ok(Json.obj("validate" -> "success"))
+  }
+
+  def getAttraction: Action[JsValue] = Action (parse.json) { implicit request: Request[JsValue] =>
+    val nameHash = (request.body \ "nameHash").asOpt[Int].get
+
+    val attractionOption = Attraction.getAttractionByNameHashcode(nameHash)
+
+    attractionOption match {
+      case Some(attraction: Attraction) => {
+
+        //put json writer here
+        Ok(Json.obj("attraction" -> "test"))
+      }
+      case None => Ok(Json.obj("attraction" -> "does not exist"))
+    }
+  }
+
   def attractions = Action {
 
     val attractionList = Attraction.getAttractions
 
-    case class AttractionJson(name: String, location: String, description: String, imageUrl: String)
+    case class AttractionJson(nameHash: Int, name: String, location: String, description: String, imageUrl: String)
 
     case class AttractionListJson(attractions: Seq[AttractionJson])
 
     //TODO: Fix warnings
     implicit val AttractionJsonWrites = new Writes[AttractionJson] {
       def writes(attraction: AttractionJson) = Json.obj(
+        "nameHash" -> attraction.nameHash,
         "name" -> attraction.name,
         "location" -> attraction.location,
         "description" -> attraction.description,
@@ -52,7 +87,8 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     }
 
     val attractionSeq = for (attraction <- attractionList) yield {
-      AttractionJson(attraction("name"), attraction("location"), attraction("description"), attraction("imageUrl"))
+      AttractionJson(attraction("name").hashCode, attraction("name"), attraction("location"),
+        attraction("description"), attraction("imageUrl"))
     }
 
     val attractionListJson = AttractionListJson(attractionSeq)

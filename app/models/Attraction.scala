@@ -115,10 +115,10 @@ object Attraction {
       case ise: IllegalStateException => println("Logged error: " + ise)
     }
 
-    val db: Database = Database.getInstance()
-    val attractionRef: DatabaseReference = db.ref("Attractions/")
-
     val attractionOption = getAttractionByNameHashcode(nameHash)
+
+    val db: Database = Database.getInstance()
+    val attractionRef: DatabaseReference = db.ref("Attractions/" + attractionOption.get.name.hashCode)
 
     attractionOption match {
       case None => None
