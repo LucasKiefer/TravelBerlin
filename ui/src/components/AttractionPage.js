@@ -32,21 +32,16 @@ class AttractionPage extends Component {
     
             }
         )
-        Client.sendForm({id: this.props.match.params.id}, '/api/getAttraction').then(attraction => {
+        Client.sendForm({id: parseInt(this.props.match.params.id)}, '/api/getAttraction').then(attraction => {
           console.log(attraction)
-            // if (usr.user === "") {
-            //   this.setState({loggedin: false})
-            // } else {
-            //   this.setState({loggedin: true, admin: JSON.parse(usr.user).isAdmin})
-            // }
-  
+            if (attraction === "Could not find") {
+              //ADD ERROR TO NOT FOUND
+            } else {
+              this.setState({})
+            }
+
           }
       )
-      // Client.getAttraction(this.props.match.params.id, summary => {
-      //   this.setState({
-      //     attraction: summary.content
-      //   });
-      // });
     }
 
     handleInputChange(event) {
