@@ -2,7 +2,7 @@
 Welcome to your one-stop shop for cool Berlin attractions provided by experienced and vetted Berlin locals. Login online to explore in real life!
 
 # Current Stage of Development
-Our team is working diligently to get these sites to your fingertips as soon as possible. However, we still want you onboard! Right now, you can create a profile and edit if you need to change it in the future. We plan to add detailed attraction views, ability for users to weigh in on the attractions, and much more.
+Our team is working diligently to get these sites to your fingertips as soon as possible. However, we still want you onboard! Right now, you can create a profile, edit it and view attractions. We plan to add the ability for users to weigh in on the attractions, and much more.
 
 # Project Overview
 ```
