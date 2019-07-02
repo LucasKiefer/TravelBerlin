@@ -1,65 +1,74 @@
 {
 	"attractions": [
 		{
-			"location": "https://goo.gl/maps/mzErVbMVr2z6xFMQA",
+			"location": "hBernauer Str. 111, 13355 Berlin",
 			"name": "Berlin Wall",
 			"imgUrl": "https://unsplash.com/photos/rdov_LRsXpQ",
-            "description": "Memorial for the Wall that stood in Berlin from the 60’s to the end of the 80’s",
+			"imgAddress": "https://images.unsplash.com/photo-1549593999-ca75335dc059?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1334&q=80",
             "detailedDescription": "In the Cold War, the most iconic symbol of separation between the Soviet East Berlin and the Western-controlled West Berlin was the Berlin Wall. It stood several feet tall and heavily guarded, making it incredibly difficult for those who wished to escape from East to West Berlin. Several escape attempts were well-documented, which were done in incredibly unique ways. This included stowing away in small cars, building underground tunnels, ziplining, and even a hot air balloon. One can read about this at public museums for the wall, which one can see in detail at the Black Box memorial, Checkpoint Charlie (Kochstrasße/Checkpoint Charlie station for U6 route) or the Berlin Wall Memorial. At the Memorial, one can walk on a street right next to Bernauer Strasße to see a progression of historical signs about the monument. From noting the significance of the escape attempts to the history of the conflicts inside and outside of Germany, the signs do justice to those who want to better understand the true impact that the wall has on those who have been affected by its construction and enforcement. One interesting feature that may go unnoticed for a quick traveler is the audio buttons on some of the signs, which each narrate or play a couple minutes of historically significant tidbits from the conflict, in English or German. Additionally, for those who struggle to see the wall at first, the more populated areas of the memorial near the Bernauer Straße have sections of the wall for visitors to see. If the memorial did not satisfy the thirst for knowledge, one can see the East Side Gallery for incredible street art on parts of the wall or the Checkpoint Charlie memorial. Ultimately, there is something there for everyone to see, either by foot or bike, and the memorial stands as an important symbol of a conflict of a past era."
 		},
 		{
-			"location": "https://goo.gl/maps/hKnMwL5UwM9QTedLA",
+			"location": "Platz der Luftbrücke 5, 12101 Berlin",
 			"name": "Templehof Airfield",
 			"imgUrl": "https://unsplash.com/photos/cOUKgY3QRb0",
-			"description": "The Templehof Airfield, before becoming one of the first airports in Berlin, was the site of various marches led by the Prussians, and later Germans up until World War I. With a central location and high demand, this airport became one of the busiest airports in the world. In fact, this airport was quite iconic as a pre-World War airport in the beginning of its time, actively operating until 2008 when it was replaced in function by the Tegel and Schoenfeld Airports. By walking through Templehof, you can get a glimpse of much of the history, most notably the area where the famous airlift took place, in which US and UK forces helped to deliver supplies to West Berlin. A memorial stands proudly to commemorate the lives lost in the effort, at the front of the airport, which is a notable detour to see. When you visit Templehof, you can walk or bike (with several rental options nearby), to your heart's content at the largest urban park in Berlin. Several informative signs are littered throughout the park, either highlighting important sites on the field in both German and English, or noting various remnants of the past, such as planes and practice areas. In addition, various boards examining the presence of flora and fauna exist, for those who are curious about nature. Some interesting additions that the regular traveler may not notice at first sight are the small skate park and mini garden on the site, both of which are cool sites for the curious traveler. In recent years, Templehof Airport served as a refugee camp, not disturbing the park's function, and the largest of its kind in Europe. Templehof, essentially, is one of the many examples of how Berlin has taken a place so tied to the pain of the past and adapted it for a new time."
+			"imgAddress": "https://images.unsplash.com/photo-1504275788242-cd8e52ac6151?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80",
+			"detailedDescription": "The Templehof Airfield, before becoming one of the first airports in Berlin, was the site of various marches led by the Prussians, and later Germans up until World War I. With a central location and high demand, this airport became one of the busiest airports in the world. In fact, this airport was quite iconic as a pre-World War airport in the beginning of its time, actively operating until 2008 when it was replaced in function by the Tegel and Schoenfeld Airports. By walking through Templehof, you can get a glimpse of much of the history, most notably the area where the famous airlift took place, in which US and UK forces helped to deliver supplies to West Berlin. A memorial stands proudly to commemorate the lives lost in the effort, at the front of the airport, which is a notable detour to see. When you visit Templehof, you can walk or bike (with several rental options nearby), to your heart's content at the largest urban park in Berlin. Several informative signs are littered throughout the park, either highlighting important sites on the field in both German and English, or noting various remnants of the past, such as planes and practice areas. In addition, various boards examining the presence of flora and fauna exist, for those who are curious about nature. Some interesting additions that the regular traveler may not notice at first sight are the small skate park and mini garden on the site, both of which are cool sites for the curious traveler. In recent years, Templehof Airport served as a refugee camp, not disturbing the park's function, and the largest of its kind in Europe. Templehof, essentially, is one of the many examples of how Berlin has taken a place so tied to the pain of the past and adapted it for a new time."
         },
         {
-			"location": "https://goo.gl/maps/748Ygg3ic5fhq1uo8",
+			"location": "Platz der Republik 110557 Berlin",
 			"name": "Reichstag",
 			"imgUrl": "https://unsplash.com/photos/dFeOdGPk2hc",
-			"description": "The Reichstag, located in the lively center of Berlin, is an important sight to see for all who wish to see Berlin, or those who simply wish to return to an important landmark in the city. It serves as the parliamentary seat in Berlin, a role it has played only for the past 20 years. The Reichstag was completed in 1894, "
+			"imgAddress":"https://images.unsplash.com/photo-1552035496-08efc7baf40e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1332&q=80",
+			"detailedDescription": "The Reichstag, located in the lively center of Berlin, is an important sight to see for all who wish to see Berlin, or those who simply wish to return to an important landmark in the city. It serves as the parliamentary seat in Berlin, a role it has played only for the past 20 years. The Reichstag was completed in 1894, initially to "
         },
         {
-			"location": "https://goo.gl/maps/7gqGePtsifEqd5yR8",
+			"location": "Pariser Platz, 10117 Berlin",
 			"name": "Brandenburg Gate",
 			"imgUrl": "https://unsplash.com/photos/fv0yV5-Pbjc",
-			"description": ""
+			"imgAddress":"https://images.unsplash.com/photo-1506760610100-1af6025cf0c7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1504&q=80",
+			"detailedDescription": "Previously the symbol of German division during the Cold War, the Brandenburg gate is now a national symbol of peace and unity and perhaps the most famous monument in Berlin. Though erected in 1791 as a testiment to peace, the Gate has seen various regimes and conquests, from Napoleon to the Nazis. When the Berlin Wall seperated East and West Berlin, this gate  was adjacent to the wall and represented division. Now, tourists from around the world come to see this magnificent monument inspired by the gateway to the Acropolis in Athens with the goddess Victoria riding a chariot."
         },
         {
-			"location": "https://goo.gl/maps/TwX7oRLDXDspveJS8",
+			"location": "Cora-Berliner-Straße 1, 10117 Berlin",
 			"name": "Holocaust Memorial",
 			"imgUrl": "https://unsplash.com/photos/LdVE8gpMhgQ",
-			"description": ""
+			"imgAddress":"https://images.unsplash.com/photo-1533071834859-e4c61b8bcc5b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
+			"detailedDescription": "Completed in 2004, the Memorial to the Murdered Jews of Europe(also known as the Holocaust Memorial), is a memorial to the Jewish victims of the Holocaust. The monument consists of 2,711 concrete slab-like columns of various heights on a hily landscape that covers 1.9 hectacres. The monument invokes a sense of loneliness and despair to the visitor due to the similarity to a cemetary. The monument is located near the Brandenburg Gate and is adjacent to Tiergarten, sitting in the center of Berlin."
         },
         {
-			"location": "https://goo.gl/maps/G46qsAgRoo1kVyP26",
+			"location": "Bodestraße 1, 10178 Berlin",
 			"name": "Museum Island",
 			"imgUrl": "https://commons.wikimedia.org/wiki/File:Berlin_Museumsinsel_Fernsehturm.jpg#/media/File:Berlin_Museumsinsel_Fernsehturm.jpg",
-			"description": ""
+			"imgAddress":"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Berlin_Museumsinsel_Fernsehturm.jpg/2560px-Berlin_Museumsinsel_Fernsehturm.jpg",
+			"detailedDescription": "A UNESCO World Heritage site, Museum island is an island on the Spree river in the center of Berlin that contains five world renowned museums as well as the Berin Cathedral. The museums are celebrated for their various and unique exhibits, such as the bust of the Egyptian Queen Nefertiti and the reconstruction of the Ishtar Gate. When visiting Berlin, the Museum Island is a must see for anyone interested in ancient history and the architecture and artifacts of those times."
         },
         {
-			"location": "https://goo.gl/maps/ZTxz6tL2Ee7WW5ap9",
+			"location": "Friedrichstraße 43-45, 10117 Berlin",
 			"name": "Checkpoint Charlie",
 			"imgUrl": "https://unsplash.com/photos/-uKblepoT6U",
-			"description": ""
+			"imgAddress":"https://images.unsplash.com/photo-1560929590-ab2c5b0482a9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80",
+			"detailedDescription": "Checkpoint Charlie is a must-see for people interested in exploring the role of Berlin in the Cold War. Checkpoint Charlie was the third checkpoint opened by the Allies in and around Berlin. The site has become famous through many movies involving espionage and tensions in Berlin during that time, and for good reason. In October of 1961, American and Soviet tanks took position on either side and faced each other with weapons ready to fire. This location represents the tense and close-call situations in this area, and tourists can take pictures with soldiers dressed up from that time. "
         },
         {
 			"location": "https://goo.gl/maps/28VeeFEDHW3qwM2FA",
 			"name": "Berlin Cathedral",
 			"imgUrl": "https://unsplash.com/photos/teGUtvdTiQ8",
-			"description": ""
+			"imgAddress":"https://images.unsplash.com/photo-1538685634737-24b83e3fa2f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
+			"detailedDescription": "Berlin Cathedral is the common name for the Supreme Parish and Collegiate Church. Located on Museum Island, the present Berlin Cathedral was inaugarated in 1905 and was designed by Julius and Otto Raschdorff. The building at the time was considered to be a Protestant counterweight to the St. Peter's Basilica of the Vatican. The church experienced damage during the Allied bombings of the 1940s but recontruction began in 1975 and now the Cathedral can be visited as a museum of its history or for service on Sundays."
         },
         {
-			"location": "https://goo.gl/maps/DX927XKZwov8888E8",
+			"location": "Panoramastraße 1A, 10178 Berlin",
 			"name": "Berliner Fernsehturm",
 			"imgUrl": "https://unsplash.com/photos/fAGQfeHgowY",
-			"description": ""
+			"imgAddress":"https://images.unsplash.com/photo-1554660144-e1a5e2170d78?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80",
+			"detailedDescription": "The Berliner Fernsehturm(Berlin Television Tower in English) is easily the most visible building in all of Berlin, despite where you are. Finished in 1969 by the Communist German Deomcratic Republic as a symbol of power, it stands at a whopping 368 meters as the tallest structure in Germany, and the third tallest in the European Union. The tower functions as the location of several radio and television broadcasting stations, and contains a bar and a rotating restaurant at 203 meters. Originally a symbol of the divisive communist regime of East Germany, now the tower represents a reunited Berlin."
         },
         {
-			"location": "https://goo.gl/maps/peSnGLS3CM6aQF6u6",
+			"location": "Auguststraße 24, 10117 Berlin",
 			"name": "Clärchens Ballhaus",
 			"imgUrl": "https://images.app.goo.gl/yB2ebABndv9JxeX28",
-			"description": ""
+			"imgAddress":"https://www.ballhaus.de/files/Claerchens_Ballhaus/Slideshows/Ballsaal/Cl%C3%A4rchensBallhaus_Pressefotos_Ballsaal_BerndSch%C3%B6nberger_KLEIN_03.jpg",
+			"detailedDescription": "The Clärchens Ballhaus is a dance hall with a restaurant. Marked and protected as a cultural monument, the Clärchens Ballhaus is one of the last surviving ball houses from the period around 19000. This dance hall has been featured in films and literature and acts as a window into the past for any tourist interested in how the Berliners lived during those times."
 		}
 	]
 }
