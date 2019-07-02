@@ -23,7 +23,7 @@ class Attraction extends React.Component {
         return(
             <div id="blk">
                 <Card max-height="50px">
-                  <Image onClick={this.attractionRedirect} alt={this.props.name} src={this.props.imageUrl} wrapped  ui={false} />
+                  <Image id="atracImg" onClick={this.attractionRedirect} alt={this.props.name} src={this.props.imageUrl} wrapped  ui={false} />
                   <Card.Content>
                     <Card.Header>{this.props.name}</Card.Header>
                     <Card.Meta>
