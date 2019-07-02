@@ -110,7 +110,7 @@ class Profile extends Component {
             </Card.Content>
             </Card>
           </Center>
-          {this.state.isAdmin &&  <AttractionCreation  />}
+          {/* {this.state.isAdmin &&  <AttractionCreation  />} */}
 
           <Modal open={open} onSubmit={() => { this.submitChanges() }} onClose={this.close} trigger={<div onClick={(e) => e.preventDefault()} className="ui primary button" onClick={this.show('blurring')}>Edit Profile</div>}>
             <Modal.Header>Edit Profile</Modal.Header>

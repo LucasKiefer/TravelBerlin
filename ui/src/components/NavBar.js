@@ -26,7 +26,7 @@ class NavBar extends Component {
           }
 
         }
-      )
+      ).catch(console.log)
     }
 
   setLoginTrue() {

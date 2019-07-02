@@ -11,7 +11,6 @@ class Attractions extends Component {
   
     async componentDidMount() {
       Client.getSummary(summary => {
-        // console.log
         this.setState({
           title: JSON.parse(summary.content).attractions
         });
@@ -19,7 +18,6 @@ class Attractions extends Component {
     }
     async componentDidUpdate() {
       Client.getSummary(summary => {
-        // console.log
         this.setState({
           title: JSON.parse(summary.content).attractions
         });
@@ -29,9 +27,9 @@ class Attractions extends Component {
     render() {
       return (
         <div className="Attractions">
-        <StackGrid columnWidth={300} gutterWidth={50}>
+        <StackGrid columnWidth={300} gutterWidth={50} gutterHeight={0}>
           {this.state.title.filter(itm => true).map(item =>(
-               <Attraction name={item.name} description={item.description} location={item.location} imageUrl={item.imageUrl}/>
+               <Attraction id={item.id} name={item.name} description={item.description} location={item.location} imageUrl={item.imageUrl}/>
           ))}
         </StackGrid>
         </div>
