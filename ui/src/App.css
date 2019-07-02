@@ -11,6 +11,10 @@
   to { transform: rotate(360deg); }
 }
 
+#blk{
+  height: 475px;
+}
+
 #atracImg {
   cursor: pointer;
 }

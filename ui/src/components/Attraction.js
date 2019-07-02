@@ -1,6 +1,7 @@
 import React from 'react';
-import { Card, Icon, Image } from 'semantic-ui-react'
+import { Card, Icon, Image} from 'semantic-ui-react'
 import { Redirect } from 'react-router'
+// import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
 
 class Attraction extends React.Component {
     constructor(props) {
@@ -22,16 +23,18 @@ class Attraction extends React.Component {
         }
         return(
             <div id="blk">
-                <Card max-height="50px">
-                  <Image id="atracImg" onClick={this.attractionRedirect} alt={this.props.name} src={this.props.imageUrl} wrapped  ui={false} />
+                <Card fluid="true">
+                    <Image onClick={this.attractionRedirect} alt={this.props.name} src={this.props.imageUrl} />
                   <Card.Content>
                     <Card.Header>{this.props.name}</Card.Header>
                     <Card.Meta>
                       <span className='date'>{this.props.location}</span>
                     </Card.Meta>
-                    <Card.Description>
+                    <Card.Description height="900">
+                      <div height = "900px">
                       {this.props.description !== undefined ?
-                         this.props.description.split(".")[0] : ""}
+                        this.props.description.split(".")[0] : ""}
+                      </div>
                     </Card.Description>
                   </Card.Content>
                   <Card.Content extra>
