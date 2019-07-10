@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Client from '../Client'
 import Center from 'react-center';
-import { Divider, Segment, Item, Header, Modal, Card, Image, Form, Message, Label, ModalDescription } from 'semantic-ui-react';
+import { TextArea, Button, Divider, Segment, Item, Header, Modal, Card, Image, Form, Message, Label, ModalDescription, Comment, Icon, Rating } from 'semantic-ui-react';
 
 class AttractionPage extends Component {
     constructor(props) {
@@ -9,6 +9,8 @@ class AttractionPage extends Component {
       this.state = {title: '',loading:true};
       this.handleInputChange=this.handleInputChange.bind(this);
     }
+    reviewShow = dimmer => () => this.setState({ dimmer, reviewOpen: true, reviewFormSuccess: false})
+    reviewClose = () => this.setState({ reviewOpen: false})
 
     show = dimmer => () => this.setState({ dimmer, open: true, formSuccess: false})
     close = () => this.setState({ open: false, editedDescription: this.state.description, editedLocation: this.state.location, editedImageUrl: this.state.imageUrl})
@@ -59,6 +61,17 @@ class AttractionPage extends Component {
             }
         }))
      }
+
+     getRatings = (rating) => {
+       let icons = []
+       for (let i=0; i<rating;i++) {
+         icons.push(<Icon name="star" color="yellow"></Icon>)
+       }
+       for (let i=rating; i<5;i++) {
+        icons.push(<Icon name="star outline" color="gray"></Icon>)
+      }
+       return icons
+     }
   
     render() {
       return (
@@ -74,8 +87,68 @@ class AttractionPage extends Component {
                             <Item.Description size="16">
                                 {this.state.description}
                             </Item.Description>
+                            <Comment.Group size="large">
+                            <Header as='h3' dividing>
+                              Ratings
+                            </Header>
+                              <Comment>
+                                  <Comment.Content>
+                                    <Comment.Author as='a'>Matt</Comment.Author>
+                                    <Comment.Metadata>
+                                      {this.getRatings(3)}
+                                    </Comment.Metadata>
+                                    <Comment.Text>How artistic! sadlfk;j als;df lsdk;fskdfa;sflskda;f l;kdsf assl dfjk al asldfkjasldfkjfklasdfl;asj dflaskj dflaskj dljks fl;ajsdfjuoxvmkc smadofijqwe sadjlkf asoijczklxc sdfj osadkf maslkdfj wer nsdflkjasl dkfjas;ljdf alsfskldfl;asjd f</Comment.Text>
+                                    
+                                    <Comment.Actions>
+                                      {this.state.admin &&//USERS ARE EQUAL
+                                        <Comment.Action color="red"><Icon name="edit"></Icon>Edit</Comment.Action>
+                                      }
+                                      {this.state.admin && 
+                                        <Comment.Action color="red"><Icon name="delete" color="red"></Icon>Delete</Comment.Action>
+                                      }
+                                    </Comment.Actions>
+                                  </Comment.Content>
+                              </Comment>
+                              <Comment>
+                                  <Comment.Content>
+                                    <Comment.Author as='a'>George</Comment.Author>
+                                    <Comment.Metadata>
+                                      {this.getRatings(5)}
+                                    </Comment.Metadata>
+                                    <Comment.Text>wqerowiuerqwopierupwoqieru owqpe iuroqwpiuer qowpeiru oqpw iruqwopeiru wqoepir uqwopeiruqwopeiruqwopeiruwqope iuoui roqpweuir poqweiuropqweiurpoqwieuropqiuwer opqwiueroqwiueropiqwueo uowpq eiruoqpweiruqowperuoqpwieruqpowuerpoqwiero u</Comment.Text>
+                                    
+                                    <Comment.Actions>
+                                      {this.state.admin &&//USERS ARE EQUAL
+                                        <Comment.Action color="red"><Icon name="edit"></Icon>Edit</Comment.Action>
+                                      }
+                                      {this.state.admin && 
+                                        <Comment.Action color="red"><Icon name="delete" color="red"></Icon>Delete</Comment.Action>
+                                      }
+                                    </Comment.Actions>
+                                    
+                                  </Comment.Content>
+                              </Comment>
+                              {this.state.loggedin &&
+
+                                <Modal open={this.state.reviewOpen} onSubmit={() => { this.submitChanges() }} onClose={this.reviewClose} trigger={<div onClick={(e) => e.preventDefault()} className="ui primary button" onClick={this.reviewShow('blurring')}>Add Review</div>}>
+                                <Modal.Header>Add Review</Modal.Header>
+                                <Modal.Content>
+                                <Form reply>
+                                  <Form.Field control={TextArea} label='Content' placeholder='What did you think?' />
+                                  <Rating label="Rating" maxRating={5} defaultRating={0} icon="star" size='large' color="black" clearable/>
+                                  <br></br>
+                                  <Button content='Add Review' labelPosition='left' icon='edit' primary />
+                                </Form>
+                                </Modal.Content>
+                                </Modal>
+
+
+                              
+                              }
+                            </Comment.Group>
                         </Item.Content>
                     </Item>
+                    
                 </Item.Group>
                 <Center>
                 {this.state.admin &&
@@ -93,9 +166,12 @@ class AttractionPage extends Component {
                 </Modal.Content>
             </Modal>
           }
+          
           </Center>
+          
+          
             </Segment>
-        </div>
+      </div>
     );
     }
   }
