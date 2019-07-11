@@ -30,13 +30,13 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   def editAttraction: Action[JsValue] = Action (parse.json) { implicit request: Request[JsValue] =>
     val attraction = request.body
 
-    val nameHashcode = (attraction \ "nameHash").asOpt[Int].get
+    val id = (attraction \ "id").asOpt[Int].get
     val name = (attraction \ "name").asOpt[String].get
     val description = (attraction \ "description").asOpt[String].get
     val location = (attraction \ "location").asOpt[String].get
     val imageUrl = (attraction \ "imageUrl").asOpt[String].get
 
-    val attractionOption = Attraction.editAttractionByHashcode(nameHashcode, name, description, location, imageUrl)
+    val attractionOption = Attraction.editAttractionByHashcode(id, name, description, location, imageUrl)
 
     attractionOption match {
       case Some(_) => Ok(Json.obj("validate" -> "success"))
@@ -48,8 +48,8 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
 
   def getAttraction: Action[JsValue] = Action (parse.json) { request: Request[JsValue] =>
       val bodyJson = request.body
-      val nameHash: Int = (bodyJson \ "id").validate[Int].getOrElse(0)
-      nameHash match {
+      val id: Int = (bodyJson \ "id").validate[Int].getOrElse(0)
+      id match {
           case 0 => Unauthorized(Json.obj("attraction" -> "Could not find"))
           case name: Int => {
 
@@ -79,14 +79,14 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
 
     val attractionList = Attraction.getAttractions
 
-    case class AttractionJson(nameHash: Int, name: String, location: String, description: String, imageUrl: String)
+    case class AttractionJson(id: Int, name: String, location: String, description: String, imageUrl: String)
 
     case class AttractionListJson(attractions: Seq[AttractionJson])
 
     //TODO: Fix warnings
     implicit val AttractionJsonWrites = new Writes[AttractionJson] {
       def writes(attraction: AttractionJson) = Json.obj(
-        "nameHash" -> attraction.nameHash,
+        "id" -> attraction.id,
         "name" -> attraction.name,
         "location" -> attraction.location,
         "description" -> attraction.description,

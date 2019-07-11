@@ -38,7 +38,7 @@ class App extends Component {
         <div className="App">
           {/* <Route path="/:tech" component={Tech} /> */}
           <NavBar />
-          <Route path="/attraction/:id" component = {AttractionPage} />
+          <Route path="/attraction/:id" exact render={(props) => <AttractionPage {...props} data={this.state.data} />} />
           <Route path="/" exact render={(props) => <Home {...props} data={this.state.data} />} />
           <Route path="/profile" exact render={(props) => <Profile {...props} data={this.state.data} />} />
           
