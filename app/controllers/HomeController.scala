@@ -75,7 +75,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
       }
   }
 
-  def attractions = Action {
+  def attractions: Action[AnyContent] = Action {
 
     val attractionList = Attraction.getAttractions
 

@@ -12,13 +12,15 @@ import ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import scala.collection.JavaConverters._
 
-
 case class Attraction() {
   @BeanProperty var name: String = _
   @BeanProperty var location: String = _
   @BeanProperty var description: String = _
   @BeanProperty var imageUrl: String = _
+  @BeanProperty var comments: List[Comment] = _
 }
+
+case class Comment(authorEmail: String, comment: String)
 
 object Attraction {
 
@@ -40,7 +42,7 @@ object Attraction {
     val attractionOption = getAttractionByNameHashcode(name.hashCode)
 
     attractionOption match {
-      case None => {
+      case None =>
         //Create attraction
         val attraction = new Attraction()
         attraction.setName(name)
@@ -51,7 +53,6 @@ object Attraction {
         val storedAttraction: Attraction = Await.result(attractionRef.set(attraction), 10.second)
 
         Option(storedAttraction)
-      }
       case _ => None
     }
   }
@@ -122,7 +123,7 @@ object Attraction {
 
     attractionOption match {
       case None => None
-      case Some(attraction: Attraction) => {
+      case Some(attraction: Attraction) =>
         attraction.setName(name)
         attraction.setDescription(description)
         attraction.setLocation(location)
@@ -131,7 +132,34 @@ object Attraction {
         val storedAttraction = Await.result(attractionRef.set(attraction), 10.second)
 
         Option(storedAttraction)
-      }
+    }
+  }
+
+  def addCommentByAttractionHashcode(nameHash: Int, authorEmail: String, comment: String): Option[Attraction] = {
+
+    try {
+      val serviceAccount = new FileInputStream(
+        new File("./app/resources/serviceAccountsCredentials.json"))
+      App.initialize(serviceAccount, "https://travelberlin-1b28d.firebaseio.com")
+    } catch {
+      case ise: IllegalStateException => println("Logged error: " + ise)
+    }
+
+    val attractionOption = getAttractionByNameHashcode(nameHash)
+
+    val db: Database = Database.getInstance()
+    val attractionRef: DatabaseReference = db.ref("Attractions/" + attractionOption.get.name.hashCode)
+
+    attractionOption match {
+      case None => None
+      case Some(attraction: Attraction) =>
+        val comment = Comment(authorEmail, comment)
+        val comments: List[Comment] = comment :: attraction.getComments
+        attraction.setComments(comments)
+
+        val storedAttraction = Await.result(attractionRef.set(attraction), 10.second)
+
+        Option(storedAttraction)
     }
   }
 }
