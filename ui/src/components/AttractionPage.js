@@ -38,7 +38,7 @@ class AttractionPage extends Component {
 
           }
       )
-        Client.sendForm({name: "Berlin Wall", author: "thegod@scala.com", comment: "It's neet", rating: 4}, '/api/createReview').then(attraction => {
+        Client.sendForm({name: "Berlin Wall", author: "thegod@scala.com", comment: "It's super neet", rating: 5}, '/api/deleteComment').then(attraction => {
           // console.log(comment)
           // attraction = JSON.parse(attraction.attraction)
           // console.log(attraction.comments)

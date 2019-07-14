@@ -29,4 +29,8 @@ POST        /api/editAttraction  controllers.HomeController.editAttraction
 
 POST        /api/getAttraction  controllers.HomeController.getAttraction
 
-POST        /api/createReview   controllers.HomeController.createReview
+POST        /api/createComment   controllers.HomeController.createComment
+
+POST        /api/editComment    controllers.HomeController.editComment
+
+POST        /api/deleteComment      controllers.HomeController.deleteComment

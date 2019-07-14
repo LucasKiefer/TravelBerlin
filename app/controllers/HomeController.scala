@@ -115,7 +115,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   }
 
   
-  def createReview: Action[JsValue] = Action (parse.json) { implicit request: Request[JsValue] =>
+  def createComment: Action[JsValue] = Action (parse.json) { implicit request: Request[JsValue] =>
     // println("Create review called")
     val commentRequest = request.body
 
@@ -134,4 +134,39 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     }
   }
 
+    def editComment: Action[JsValue] = Action (parse.json) { implicit request: Request[JsValue] =>
+    // println("Create review called")
+    val commentRequest = request.body
+
+    val attractionName = (commentRequest \ "name").asOpt[String].get
+    val author = (commentRequest \ "author").asOpt[String].get
+    val comment = (commentRequest \ "comment").asOpt[String].get
+    val rating = (commentRequest \ "rating").asOpt[Int].get
+
+    // println(attractionName.##)
+
+    val attractionOption = Attraction.editComment(attractionName.##, author, comment, rating)
+
+    attractionOption match {
+      case Some(_) => Ok(Json.obj("validate" -> "success"))
+      case None => Ok(Json.obj("validate" -> "attraction already exists"))
+    }
+  }
+
+    def deleteComment: Action[JsValue] = Action (parse.json) { implicit request: Request[JsValue] =>
+    // println("Create review called")
+    val commentRequest = request.body
+
+    val attractionName = (commentRequest \ "name").asOpt[String].get
+    val author = (commentRequest \ "author").asOpt[String].get
+
+    // println(attractionName.##)
+
+    val attractionOption = Attraction.deleteComment(attractionName.##, author)
+
+    attractionOption match {
+      case Some(_) => Ok(Json.obj("validate" -> "success"))
+      case None => Ok(Json.obj("validate" -> "attraction already exists"))
+    }
+  }
 }
