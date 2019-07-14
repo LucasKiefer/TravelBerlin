@@ -28,3 +28,5 @@ POST        /api/create         controllers.HomeController.create
 POST        /api/editAttraction  controllers.HomeController.editAttraction
 
 POST        /api/getAttraction  controllers.HomeController.getAttraction
+
+POST        /api/createReview   controllers.HomeController.createReview

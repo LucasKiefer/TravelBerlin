@@ -12,15 +12,32 @@ import ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import scala.collection.JavaConverters._
 
+import collection.JavaConversions._
+
 case class Attraction() {
   @BeanProperty var name: String = _
   @BeanProperty var location: String = _
   @BeanProperty var description: String = _
   @BeanProperty var imageUrl: String = _
-  @BeanProperty var comments: List[Comment] = _
+  @BeanProperty var comments: java.util.Map[String, CommentBean] = _
 }
 
-case class Comment(authorEmail: String, comment: String)
+case class Comment(authorEmail: String, commentStr: String, rating: Int) {
+  def toBean: CommentBean = {
+    val comment = new CommentBean()
+    comment.authorEmail = authorEmail
+    comment.commentStr = commentStr
+    comment.rating = rating
+    comment
+  }
+}
+
+class CommentBean() {
+  @BeanProperty var authorEmail: String = ""
+  @BeanProperty var commentStr: String = ""
+  @BeanProperty var rating: Int = 0
+  def toCase: Comment = Comment(authorEmail, commentStr, rating)
+}
 
 object Attraction {
 
@@ -75,7 +92,8 @@ object Attraction {
         .map(snapshot => snapshot.getValue(classOf[Attraction]))
 
     val attractionOption = Await.result(futureAttraction, 10.second)
-
+    
+    println(attractionOption.getOrElse(None))
     attractionOption
   }
 
@@ -135,31 +153,85 @@ object Attraction {
     }
   }
 
-  def addCommentByAttractionHashcode(nameHash: Int, authorEmail: String, comment: String): Option[Attraction] = {
+  def addCommentByAttractionHashcode(nameHash: Int, authorEmail: String, commentStr: String, rating: Int): Option[Attraction] = {
 
-    try {
-      val serviceAccount = new FileInputStream(
-        new File("./app/resources/serviceAccountsCredentials.json"))
-      App.initialize(serviceAccount, "https://travelberlin-1b28d.firebaseio.com")
-    } catch {
-      case ise: IllegalStateException => println("Logged error: " + ise)
-    }
+    // println("in attraction.scala")
+    // try {
+    //   val serviceAccount = new FileInputStream(
+    //     new File("./app/resources/serviceAccountsCredentials.json"))
+    //   App.initialize(serviceAccount, "https://travelberlin-1b28d.firebaseio.com")
+    // } catch {
+    //   case ise: IllegalStateException => {
+    //     println("Logged error: " + ise)
+    //   }
+    // }
+
 
     val attractionOption = getAttractionByNameHashcode(nameHash)
 
+    // println("getting db")
     val db: Database = Database.getInstance()
+    // println("got db instance")
     val attractionRef: DatabaseReference = db.ref("Attractions/" + attractionOption.get.name.hashCode)
-
+    
+    // println("found database ref")
     attractionOption match {
       case None => None
       case Some(attraction: Attraction) =>
-        val comment = Comment(authorEmail, comment)
-        val comments: List[Comment] = comment :: attraction.getComments
+        val comment = Comment(authorEmail, commentStr, rating)
+        println(comment)
+        // val commentsOption: Option[List[Comment]] = Option(attraction.getComments)
+
+        // println("commentsOption: " + commentsOption)
+        // val commentList = commentsOption.getOrElse(List[Comment]())
+        // println("comment List: " + commentList)
+        // val comments: List[Comment] = comment :: commentList
+        val commentMap: java.util.Map[String, CommentBean] = Option(attraction.getComments).getOrElse(new java.util.HashMap[String, CommentBean]())
+        println("Orig Comment Map" + commentMap)
+        val comments = commentMap + (comment.##.toString -> comment.toBean)
+        println("With addition" + comments)
         attraction.setComments(comments)
+
+        // val javaAtrac = attraction
+        // javaAtrac.comments = javaAtrac.comments.asJava
+
+        // println(attraction.comments)
+
+        println("Full attraction: " + attraction)
 
         val storedAttraction = Await.result(attractionRef.set(attraction), 10.second)
 
+        println("stored attrac: "+ storedAttraction.comments)
         Option(storedAttraction)
     }
   }
+
+  // def editCommentByHashcode(nameHash: Int, authorEmail: String, comment: String): Option[Attraction] = {
+
+  //   try {
+  //     val serviceAccount = new FileInputStream(
+  //       new File("./app/resources/serviceAccountsCredentials.json"))
+  //     App.initialize(serviceAccount, "https://travelberlin-1b28d.firebaseio.com")
+  //   } catch {
+  //     case ise: IllegalStateException => println("Logged error: " + ise)
+  //   }
+
+  //   val attractionOption = getAttractionByNameHashcode(nameHash)
+
+  //   val db: Database = Database.getInstance()
+  //   val attractionRef: DatabaseReference = db.ref("Attractions/" + attractionOption.get.name.hashCode)
+
+  //   attractionOption match {
+  //     case None => None
+  //     case Some(attraction: Attraction) =>
+  //       attraction.setName(name)
+  //       attraction.setDescription(description)
+  //       attraction.setLocation(location)
+  //       attraction.setImageUrl(imageUrl)
+
+  //       val storedAttraction = Await.result(attractionRef.set(attraction), 10.second)
+
+  //       Option(storedAttraction)
+  //   }
+  // }
 }

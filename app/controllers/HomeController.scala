@@ -49,11 +49,13 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   def getAttraction: Action[JsValue] = Action (parse.json) { request: Request[JsValue] =>
       val bodyJson = request.body
       val id: Int = (bodyJson \ "id").validate[Int].getOrElse(0)
+      println(id)
       id match {
           case 0 => Unauthorized(Json.obj("attraction" -> "Could not find"))
           case name: Int => {
 
               val attraction: Attraction = Attraction.getAttractionByNameHashcode(name.##).get
+
 
               case class AttractionJson(name: String, description: String, loaction: String, imageUrl: String)
 
@@ -111,4 +113,25 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
 
     Ok(Json.obj("content" -> Json.stringify(json)))
   }
+
+  
+  def createReview: Action[JsValue] = Action (parse.json) { implicit request: Request[JsValue] =>
+    // println("Create review called")
+    val commentRequest = request.body
+
+    val attractionName = (commentRequest \ "name").asOpt[String].get
+    val author = (commentRequest \ "author").asOpt[String].get
+    val comment = (commentRequest \ "comment").asOpt[String].get
+    val rating = (commentRequest \ "rating").asOpt[Int].get
+
+    // println(attractionName.##)
+
+    val attractionOption = Attraction.addCommentByAttractionHashcode(attractionName.##, author, comment, rating)
+
+    attractionOption match {
+      case Some(_) => Ok(Json.obj("validate" -> "success"))
+      case None => Ok(Json.obj("validate" -> "attraction already exists"))
+    }
+  }
+
 }

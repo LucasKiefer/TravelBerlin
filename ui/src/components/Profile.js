@@ -65,7 +65,7 @@ class Profile extends Component {
     }
 
     submitChanges = () => {
-      const editedUser = {email:this.state.user.email, firstName: this.state.firstName, lastName: this.state.lastName, birthYear:this.state.birthYear, interests: this.state.interests, homeTown: this.state.homeTown}
+      const editedUser = {isAdmin: this.state.user.isAdmin, email:this.state.user.email, firstName: this.state.firstName, lastName: this.state.lastName, birthYear:this.state.birthYear, interests: this.state.interests, homeTown: this.state.homeTown}
       Client.sendForm(editedUser, "/api/edit").then(json => {
           if(json.validate === "success") {
               this.setState({formSuccess:true, user: editedUser})
@@ -102,7 +102,7 @@ class Profile extends Component {
                 {this.state.user.homeTown === undefined ? "Loading" : this.state.user.homeTown}
               </Card.Description>
               <Card.Description>
-                {this.state.user.interests === undefined ? "Loading" : this.state.user.interests}
+                {this.state.user.interests === undefined ? "Loading" : this.state.user.interests.join(", ").substring(1)}
               </Card.Description>
               <Card.Description>
 
