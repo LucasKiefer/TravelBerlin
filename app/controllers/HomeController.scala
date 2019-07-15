@@ -48,56 +48,57 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   }
 
   def getAttraction: Action[JsValue] = Action (parse.json) { request: Request[JsValue] =>
-      val bodyJson = request.body
-      val id: Int = (bodyJson \ "id").validate[Int].getOrElse(0)
-      id match {
-          case 0 => Unauthorized(Json.obj("attraction" -> "Could not find"))
-          case name: Int => {
+    val bodyJson = request.body
+    val id: Int = (bodyJson \ "id").validate[Int].getOrElse(0)
+    id match {
+      case 0 => Unauthorized(Json.obj("attraction" -> "Could not find"))
+      case name: Int => {
 
-            val attraction: Attraction = Attraction.getAttractionByNameHashcode(name.##).get
+        val attraction: Attraction = Attraction.getAttractionByNameHashcode(name.##).get
 
-            case class AttractionJson(name: String, description: String, location: String, imageUrl: String,
-                                      comments: Seq[CommentJson])
+        case class AttractionJson(name: String, description: String, location: String, imageUrl: String,
+                                  comments: Seq[CommentJson])
 
-            case class CommentJson(authorEmail: String, commentStr: String, rating: Int)
+        case class CommentJson(authorEmail: String, commentStr: String, rating: Int)
 
-            case class CommentListJson(comments: Seq[CommentJson])
+        case class CommentListJson(comments: Seq[CommentJson])
 
-            implicit val CommentJsonWrites = new Writes[CommentJson] {
-              def writes(comment: CommentJson) = Json.obj(
-                "authorEmail" -> comment.authorEmail,
-                "commentStr" -> comment.commentStr,
-                "rating" -> comment.rating
-              )
-            }
+        implicit val CommentJsonWrites = new Writes[CommentJson] {
+          def writes(comment: CommentJson) = Json.obj(
+            "authorEmail" -> comment.authorEmail,
+            "commentStr" -> comment.commentStr,
+            "rating" -> comment.rating
+          )
+        }
 
-            implicit val CommentListJsonWrites = new Writes[CommentListJson] {
-              def writes(commentList: CommentListJson) = Json.obj(
-                "comments" -> commentList.comments
-              )
-            }
+        implicit val CommentListJsonWrites = new Writes[CommentListJson] {
+          def writes(commentList: CommentListJson) = Json.obj(
+            "comments" -> commentList.comments
+          )
+        }
 
-            val commentSeq = (for (comment <- attraction.getComments.asScala.values) yield
-              CommentJson(comment.authorEmail, comment.commentStr, comment.rating)).toList
+        val commentSeq = (for (comment <- attraction.getComments.asScala.values) yield
+          CommentJson(comment.authorEmail, comment.commentStr, comment.rating)).toList
 
-            implicit val AttractionJsonWrites = new Writes[AttractionJson] {
-                def writes(user: AttractionJson) = Json.obj(
-                    "name" -> attraction.name,
-                    "description" -> attraction.description,
-                    "location" -> user.location,
-                    "imageUrl" -> user.imageUrl,
-                    "comments" -> commentSeq
-                )
-            }
+        implicit val AttractionJsonWrites = new Writes[AttractionJson] {
+            def writes(user: AttractionJson) = Json.obj(
+                "name" -> attraction.name,
+                "description" -> attraction.description,
+                "location" -> user.location,
+                "imageUrl" -> user.imageUrl,
+                "comments" -> commentSeq
+            )
+        }
 
-            val attractionJson: AttractionJson = AttractionJson(attraction.name, attraction.description,
-              attraction.location, attraction.imageUrl, commentSeq)
+        val attractionJson: AttractionJson = AttractionJson(attraction.name, attraction.description,
+          attraction.location, attraction.imageUrl, commentSeq)
 
-            val json: JsValue = Json.toJson(attractionJson)
+        val json: JsValue = Json.toJson(attractionJson)
 
-            Ok(Json.obj("attraction" -> Json.stringify(json)))
-          }
+
+        Ok(Json.obj("attraction" -> Json.stringify(json)))
       }
+    }
   }
 
   def attractions: Action[AnyContent] = Action {
@@ -154,8 +155,8 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     }
   }
 
-    def editComment: Action[JsValue] = Action (parse.json) { implicit request: Request[JsValue] =>
-    // println("Create review called")
+  def editComment: Action[JsValue] = Action (parse.json) { implicit request: Request[JsValue] =>
+
     val commentRequest = request.body
 
     val attractionName = (commentRequest \ "name").asOpt[String].get
@@ -171,7 +172,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     }
   }
 
-    def deleteComment: Action[JsValue] = Action (parse.json) { implicit request: Request[JsValue] =>
+  def deleteComment: Action[JsValue] = Action (parse.json) { implicit request: Request[JsValue] =>
 
     val commentRequest = request.body
 

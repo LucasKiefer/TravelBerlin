@@ -95,21 +95,6 @@ object Attraction {
         .map(snapshot => snapshot.getValue(classOf[Attraction]))
 
     val attractionOption = Await.result(futureAttraction, 10.second)
-
-//    attractionOption match {
-//      case Some(attraction) => {
-//        for (comment <- attraction.comments.values()) println(comment.getAuthorEmail)
-//        //println(attraction.comments)
-//      }
-//      case None => None
-//    }
-
-//    val attractionListWithScalaComments = for (attraction <- attractionsList) yield {
-//      println(attraction)
-//      val javaComments = Try(attraction("comments")).getOrElse(Nil)
-//      println(javaComments)
-//      if (javaComments != Nil) println(javaComments)
-//    }
     
     attractionOption
   }
@@ -170,35 +155,33 @@ object Attraction {
     }
   }
 
-  def addCommentByAttractionHashcode(nameHash: Int, authorEmail: String, commentStr: String, rating: Int): Option[Attraction] = {
+  def addCommentByAttractionHashcode(nameHash: Int, authorEmail: String, commentStr: String, rating: Int):
+    Option[Attraction] = {
 
-    // println("in attraction.scala")
-    // try {
-    //   val serviceAccount = new FileInputStream(
-    //     new File("./app/resources/serviceAccountsCredentials.json"))
-    //   App.initialize(serviceAccount, "https://travelberlin-1b28d.firebaseio.com")
-    // } catch {
-    //   case ise: IllegalStateException => {
-    //     println("Logged error: " + ise)
-    //   }
-    // }
-
+    try {
+       val serviceAccount = new FileInputStream(
+         new File("./app/resources/serviceAccountsCredentials.json"))
+       App.initialize(serviceAccount, "https://travelberlin-1b28d.firebaseio.com")
+     } catch {
+       case ise: IllegalStateException => {
+         println("Logged error: " + ise)
+       }
+     }
 
     val attractionOption = getAttractionByNameHashcode(nameHash)
 
-    // println("getting db")
     val db: Database = Database.getInstance()
-    // println("got db instance")
+
     val attractionRef: DatabaseReference = db.ref("Attractions/" + attractionOption.get.name.hashCode)
     
-    // println("found database ref")
     attractionOption match {
       case None => None
       case Some(attraction: Attraction) =>
 
         val comment = Comment(authorEmail, commentStr, rating)
 
-        val commentMap: java.util.Map[String, CommentBean] = Option(attraction.getComments).getOrElse(new java.util.HashMap[String, CommentBean]())
+        val commentMap: java.util.Map[String, CommentBean] = Option(attraction.getComments).getOrElse(
+          new java.util.HashMap[String, CommentBean]())
 
         val comments = commentMap + (comment.##.toString -> comment.toBean)
 
@@ -229,7 +212,8 @@ object Attraction {
        case None => None
        case Some(attraction: Attraction) =>
          val comment = Comment(authorEmail, commentStr, rating)
-         val commentMap: java.util.Map[String, CommentBean] = Option(attraction.getComments).getOrElse(new java.util.HashMap[String, CommentBean]())
+         val commentMap: java.util.Map[String, CommentBean] = Option(attraction.getComments).getOrElse(
+           new java.util.HashMap[String, CommentBean]())
          println("Old comment map: " + commentMap)
          commentMap(comment.##.toString) = comment.toBean
 
@@ -257,7 +241,8 @@ object Attraction {
      attractionOption match {
        case None => None
        case Some(attraction: Attraction) =>
-         val commentMap: java.util.Map[String, CommentBean] = Option(attraction.getComments).getOrElse(new java.util.HashMap[String, CommentBean]())
+         val commentMap: java.util.Map[String, CommentBean] = Option(attraction.getComments).getOrElse(
+           new java.util.HashMap[String, CommentBean]())
          println("Old comment map: " + commentMap)
          println("Hash to Remove: " + authorEmail.##.toString)
          commentMap -= authorEmail.##.toString

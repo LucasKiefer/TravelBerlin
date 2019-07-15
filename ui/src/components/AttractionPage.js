@@ -44,6 +44,7 @@ class AttractionPage extends Component {
               //ADD ERROR TO NOT FOUND
             } else {
               attraction = JSON.parse(attraction.attraction)
+              console.log(attraction)
               this.setState({loading: false, name:attraction.name, description: attraction.description, location: attraction.location, imageUrl:attraction.imageUrl, editedDescription: attraction.description, editedLocation: attraction.location, editedImageUrl:attraction.imageUrl})
             }
 
