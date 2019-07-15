@@ -6,13 +6,18 @@ import { TextArea, Button, Divider, Segment, Item, Header, Modal, Card, Image, F
 class AttractionPage extends Component {
     constructor(props) {
       super(props);
-      this.state = {title: '',loading:true, comments: this.props.comments};
+      this.state = {title: '',loading:true, comments: this.props.comments, rating:0};
       this.handleInputChange=this.handleInputChange.bind(this);
       this.handleRateChange = this.handleRateChange.bind(this);
       this.handleReviewChange = this.handleReviewChange.bind(this);
+      this.handleEditRateChange = this.handleEditRateChange.bind(this);
+      this.handleEditReviewChange = this.handleEditReviewChange.bind(this);
     }
     reviewShow = dimmer => () => this.setState({ dimmer, reviewOpen: true, reviewFormSuccess: false})
     reviewClose = () => this.setState({ reviewOpen: false})
+
+    editShow = dimmer => () => this.setState({ dimmer, editOpen: true, editFormSuccess: false})
+    editClose = () => this.setState({ editOpen: false})
 
     show = dimmer => () => this.setState({ dimmer, open: true, formSuccess: false})
     close = () => this.setState({ open: false, editedDescription: this.state.description, editedLocation: this.state.location, editedImageUrl: this.state.imageUrl})
@@ -44,16 +49,16 @@ class AttractionPage extends Component {
 
           }
       )
-        Client.sendForm({name: "Berlin Wall", author: "thegod@scala.com", comment: "It's super neet", rating: 5}, '/api/deleteComment').then(attraction => {
-          // console.log(comment)
-          // attraction = JSON.parse(attraction.attraction)
-          // console.log(attraction.comments)
-          // console.log("Edited comment")
-          // console.log(attraction)
-          // var attractionJson = JSON.parse(attraction)
-          // console.log(attractionJson)
-         }
-      )
+      //   Client.sendForm({name: "Berlin Wall", author: "thegod@scala.com", comment: "It's super neet", rating: 5}, '/api/deleteComment').then(attraction => {
+      //     // console.log(comment)
+      //     // attraction = JSON.parse(attraction.attraction)
+      //     // console.log(attraction.comments)
+      //     // console.log("Edited comment")
+      //     // console.log(attraction)
+      //     // var attractionJson = JSON.parse(attraction)
+      //     // console.log(attractionJson)
+      //    }
+      // )
     }
 
 
@@ -64,6 +69,7 @@ class AttractionPage extends Component {
         this.setState({
           [name]: value
         });
+        console.log(this.state)
     }
 
     handleReviewChange(event) {
@@ -71,16 +77,22 @@ class AttractionPage extends Component {
       console.log(this.state)
     }
 
-    handleRateChange = (e) => {
-      if(e != undefined) {
-        var rating = e.rating
-        this.setState({ rating})
-      }
+    handleEditReviewChange(event) {
+      this.setState({editDesc: event.target.value})
+      console.log(this.state)
     }
+
+    handleRateChange = (e) =>(e, { rating, maxRating }) => this.setState({ rating, maxRating })
+    handleEditRateChange = (e) =>(e, { editRating, maxRating }) => this.setState({ editRating, maxRating })
 
     deleteComment() {
       Client.sendForm({name: this.state.name, author: this.state.userEmail}, "/api/deleteComment");
     }
+
+    handleEdit = () => {
+        const comment = {name: this.state.name, author: this.state.userEmail, comment: this.state.editDesc, rating: this.state.editRating}
+        Client.sendForm(comment, "/api/editComment").then(console.log) 
+      }
 
     createComment(comments) {
       let commentRendered = []
@@ -90,16 +102,28 @@ class AttractionPage extends Component {
         commentRendered.push(
           <Comment>
             <Comment.Content>
-              <Comment.Author as='a'>{arr[0]}</Comment.Author>
+              <Comment.Author>{arr[0]}</Comment.Author>
               <Comment.Metadata>
                 {this.getRatings(arr[2])}
               </Comment.Metadata>
               <Comment.Text>{arr[1]}</Comment.Text>
               <Comment.Actions>
                 {(this.state.admin || this.state.userEmail == arr[0]) &&
-                <Comment.Action color="red"><Icon name="edit"></Icon>Edit</Comment.Action>
+                <Comment.Action color="red">
+                    <Modal open={this.state.editOpen} onSubmit={() => { this.submitCommentChanges() }} onClose={this.editClose} trigger={<div onClick={(e) => e.preventDefault()} className="edit icon" onClick={this.editShow('blurring')} >Edit</div>}>
+                  <Modal.Header>Edit Review</Modal.Header>
+                  <Modal.Content>
+                  <Form reply>
+                    <Form.Field control={TextArea} label='Content' placeholder='What did you think?' value={this.state.editDesc} onChange={this.handleEditReviewChange}/>
+                    {this.state.editOpen && <Rating label="Rating" maxRating={5} defaultRating={arr[2]} icon="star" size='large' color="black" value={this.state.editRating} onRate={this.handleEditRateChange()}/>}
+                    <br></br>
+                    <Button content='Edit Review' labelPosition='left' icon='edit' primary />
+                  </Form>
+                  </Modal.Content>
+                  </Modal>
+                </Comment.Action>
                 }
-                {this.state.admin || this.state.userEmail == arr[0] &&
+                {this.state.admin &&
                 <Comment.Action color="red" onClick={this.deleteComment()}><Icon name="delete" color="red"></Icon>Delete</Comment.Action>
                 }
               </Comment.Actions>
@@ -174,7 +198,7 @@ class AttractionPage extends Component {
                                 <Modal.Content>
                                 <Form reply>
                                   <Form.Field control={TextArea} label='Content' placeholder='What did you think?' value={this.state.comText} onChange={this.handleReviewChange}/>
-                                  {this.state.reviewOpen && <Rating label="Rating" maxRating={5} defaultRating={0} icon="star" size='large' color="black" onRate={this.handleRateChange()}/>}
+                                  {this.state.reviewOpen && <Rating label="Rating" maxRating={5} icon="star" size='large' color="black" value={this.state.rating} onRate={this.handleRateChange()}/>}
                                   <br></br>
                                   <Button content='Add Review' labelPosition='left' icon='edit' primary />
                                 </Form>
