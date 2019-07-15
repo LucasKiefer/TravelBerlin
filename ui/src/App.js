@@ -38,7 +38,7 @@ class App extends Component {
         <div className="App">
           {/* <Route path="/:tech" component={Tech} /> */}
           <NavBar />
-          <Route path="/attraction/:id" exact render={(props) => <AttractionPage {...props} data={this.state.data} />} />
+          <Route path="/attraction/:id" exact render={(props) => <AttractionPage {...props} data={this.state.data} comments= {new Map([[1,["yes@gmail.com", "I hate this place bc I'm an anarchist uncle. If i could give this 0 stars i would", 1]], [4,["The Pope *", "Bruh my religion is the shit so sit tf down simar", 5]]])}/>} />
           <Route path="/" exact render={(props) => <Home {...props} data={this.state.data} />} />
           <Route path="/profile" exact render={(props) => <Profile {...props} data={this.state.data} />} />
           

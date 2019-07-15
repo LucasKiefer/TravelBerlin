@@ -6,11 +6,18 @@ import { TextArea, Button, Divider, Segment, Item, Header, Modal, Card, Image, F
 class AttractionPage extends Component {
     constructor(props) {
       super(props);
-      this.state = {title: '',loading:true};
+      this.state = {title: '',loading:true, comments: this.props.comments, rating:0};
       this.handleInputChange=this.handleInputChange.bind(this);
+      this.handleRateChange = this.handleRateChange.bind(this);
+      this.handleReviewChange = this.handleReviewChange.bind(this);
+      this.handleEditRateChange = this.handleEditRateChange.bind(this);
+      this.handleEditReviewChange = this.handleEditReviewChange.bind(this);
     }
     reviewShow = dimmer => () => this.setState({ dimmer, reviewOpen: true, reviewFormSuccess: false})
     reviewClose = () => this.setState({ reviewOpen: false})
+
+    editShow = dimmer => () => this.setState({ dimmer, editOpen: true, editFormSuccess: false})
+    editClose = () => this.setState({ editOpen: false})
 
     show = dimmer => () => this.setState({ dimmer, open: true, formSuccess: false})
     close = () => this.setState({ open: false, editedDescription: this.state.description, editedLocation: this.state.location, editedImageUrl: this.state.imageUrl})
@@ -22,45 +29,120 @@ class AttractionPage extends Component {
               if (usr.user === "Not logged in") {
                 this.setState({loggedin: false})
               } else {
-                this.setState({loggedin: true, admin: JSON.parse(usr.user).isAdmin})
+                this.setState({loggedin: true, admin: JSON.parse(usr.user).isAdmin, userEmail: JSON.parse(usr.user).email})
+                console.log("this.state.userEmail:"+this.state.userEmail)
               }
     
             }
         )
+
+
+
         Client.sendForm({id: parseInt(this.props.match.params.id)}, '/api/getAttraction').then(attraction => {
           console.log(attraction)
             if (attraction === "Could not find") {
               //ADD ERROR TO NOT FOUND
             } else {
               attraction = JSON.parse(attraction.attraction)
-              console.log(attraction)
               this.setState({loading: false, name:attraction.name, description: attraction.description, location: attraction.location, imageUrl:attraction.imageUrl, editedDescription: attraction.description, editedLocation: attraction.location, editedImageUrl:attraction.imageUrl})
             }
 
           }
       )
-        Client.sendForm({name: "Berlin Wall", author: "someoneelse@scala.com", comment: "It's  neet", rating: 4}, '/api/createComment').then(attraction => {
-          // console.log(comment)
-          // attraction = JSON.parse(attraction.attraction)
-          // console.log(attraction.comments)
-          // console.log("Edited comment")
-          // console.log(attraction)
-          // var attractionJson = JSON.parse(attraction)
-          // console.log(attractionJson)
-         }
-      )
+      //   Client.sendForm({name: "Berlin Wall", author: "thegod@scala.com", comment: "It's super neet", rating: 5}, '/api/deleteComment').then(attraction => {
+      //     // console.log(comment)
+      //     // attraction = JSON.parse(attraction.attraction)
+      //     // console.log(attraction.comments)
+      //     // console.log("Edited comment")
+      //     // console.log(attraction)
+      //     // var attractionJson = JSON.parse(attraction)
+      //     // console.log(attractionJson)
+      //    }
+      // )
     }
+
 
     handleInputChange(event) {
         const target = event.target;
         const value = target.value;
         const name = target.name;
-  
         this.setState({
           [name]: value
         });
+        console.log(this.state)
     }
 
+    handleReviewChange(event) {
+      this.setState({comText: event.target.value})
+      console.log(this.state)
+    }
+
+    handleEditReviewChange(event) {
+      this.setState({editDesc: event.target.value})
+      console.log(this.state)
+    }
+
+    handleRateChange = (e) =>(e, { rating, maxRating }) => this.setState({ rating, maxRating })
+    handleEditRateChange = (e) =>(e, { editRating, maxRating }) => this.setState({ editRating, maxRating })
+
+    deleteComment() {
+      Client.sendForm({name: this.state.name, author: this.state.userEmail}, "/api/deleteComment");
+    }
+
+    handleEdit = () => {
+        const comment = {name: this.state.name, author: this.state.userEmail, comment: this.state.editDesc, rating: this.state.editRating}
+        Client.sendForm(comment, "/api/editComment").then(console.log) 
+      }
+
+    createComment(comments) {
+      let commentRendered = []
+      for(var comm of comments.values()) {
+        var arr = Array.from(comm.values())
+        console.log(this.state.userEmail == arr[0])
+        commentRendered.push(
+          <Comment>
+            <Comment.Content>
+              <Comment.Author>{arr[0]}</Comment.Author>
+              <Comment.Metadata>
+                {this.getRatings(arr[2])}
+              </Comment.Metadata>
+              <Comment.Text>{arr[1]}</Comment.Text>
+              <Comment.Actions>
+                {(this.state.admin || this.state.userEmail == arr[0]) &&
+                <Comment.Action color="red">
+                    <Modal open={this.state.editOpen} onSubmit={() => { this.submitCommentChanges() }} onClose={this.editClose} trigger={<div onClick={(e) => e.preventDefault()} className="edit icon" onClick={this.editShow('blurring')} >Edit</div>}>
+                  <Modal.Header>Edit Review</Modal.Header>
+                  <Modal.Content>
+                  <Form reply>
+                    <Form.Field control={TextArea} label='Content' placeholder='What did you think?' value={this.state.editDesc} onChange={this.handleEditReviewChange}/>
+                    {this.state.editOpen && <Rating label="Rating" maxRating={5} defaultRating={arr[2]} icon="star" size='large' color="black" value={this.state.editRating} onRate={this.handleEditRateChange()}/>}
+                    <br></br>
+                    <Button content='Edit Review' labelPosition='left' icon='edit' primary />
+                  </Form>
+                  </Modal.Content>
+                  </Modal>
+                </Comment.Action>
+                }
+                {this.state.admin &&
+                <Comment.Action color="red" onClick={this.deleteComment()}><Icon name="delete" color="red"></Icon>Delete</Comment.Action>
+                }
+              </Comment.Actions>
+            </Comment.Content>
+          </Comment>
+        )
+
+      }
+      return commentRendered;
+    }
+
+    submitCommentChanges = () => {
+      const comment = {name: this.state.name, author: this.state.userEmail, comment: this.state.comText, rating: this.state.rating}
+      Client.sendForm(comment, "/api/createComment").then(console.log)
+    }
+
+    handleEdit = () => {
+
+    }
     submitChanges = () => {
         const editedAttraction = {id: parseInt(this.props.match.params.id), name: this.state.name, location: this.state.editedLocation, description: this.state.editedDescription, imageUrl: this.state.editedImageUrl}
         Client.sendForm(editedAttraction, "/api/editAttraction").then((json => {
@@ -86,6 +168,9 @@ class AttractionPage extends Component {
   
     render() {
       return (
+
+
+
         <div className="AttractionPage">
             <Segment loading={this.state.loading} raised textAlign='left' size="huge">
                 <Item.Group>
@@ -102,51 +187,18 @@ class AttractionPage extends Component {
                             <Header as='h3' dividing>
                               Ratings
                             </Header>
-                              <Comment>
-                                  <Comment.Content>
-                                    <Comment.Author as='a'>Matt</Comment.Author>
-                                    <Comment.Metadata>
-                                      {this.getRatings(3)}
-                                    </Comment.Metadata>
-                                    <Comment.Text>How artistic! sadlfk;j als;df lsdk;fskdfa;sflskda;f l;kdsf assl dfjk al asldfkjasldfkjfklasdfl;asj dflaskj dflaskj dljks fl;ajsdfjuoxvmkc smadofijqwe sadjlkf asoijczklxc sdfj osadkf maslkdfj wer nsdflkjasl dkfjas;ljdf alsfskldfl;asjd f</Comment.Text>
-                                    
-                                    <Comment.Actions>
-                                      {this.state.admin &&//USERS ARE EQUAL
-                                        <Comment.Action color="red"><Icon name="edit"></Icon>Edit</Comment.Action>
-                                      }
-                                      {this.state.admin && 
-                                        <Comment.Action color="red"><Icon name="delete" color="red"></Icon>Delete</Comment.Action>
-                                      }
-                                    </Comment.Actions>
-                                  </Comment.Content>
-                              </Comment>
-                              <Comment>
-                                  <Comment.Content>
-                                    <Comment.Author as='a'>George</Comment.Author>
-                                    <Comment.Metadata>
-                                      {this.getRatings(5)}
-                                    </Comment.Metadata>
-                                    <Comment.Text>wqerowiuerqwopierupwoqieru owqpe iuroqwpiuer qowpeiru oqpw iruqwopeiru wqoepir uqwopeiruqwopeiruqwopeiruwqope iuoui roqpweuir poqweiuropqweiurpoqwieuropqiuwer opqwiueroqwiueropiqwueo uowpq eiruoqpweiruqowperuoqpwieruqpowuerpoqwiero u</Comment.Text>
-                                    
-                                    <Comment.Actions>
-                                      {this.state.admin &&//USERS ARE EQUAL
-                                        <Comment.Action color="red"><Icon name="edit"></Icon>Edit</Comment.Action>
-                                      }
-                                      {this.state.admin && 
-                                        <Comment.Action color="red"><Icon name="delete" color="red"></Icon>Delete</Comment.Action>
-                                      }
-                                    </Comment.Actions>
-                                    
-                                  </Comment.Content>
-                              </Comment>
+
+
+                              {this.createComment(this.state.comments)}
+
                               {this.state.loggedin &&
 
-                                <Modal open={this.state.reviewOpen} onSubmit={() => { this.submitChanges() }} onClose={this.reviewClose} trigger={<div onClick={(e) => e.preventDefault()} className="ui primary button" onClick={this.reviewShow('blurring')}>Add Review</div>}>
+                                <Modal open={this.state.reviewOpen} onSubmit={() => { this.submitCommentChanges() }} onClose={this.reviewClose} trigger={<div onClick={(e) => e.preventDefault()} className="ui primary button" onClick={this.reviewShow('blurring')}>Add Review</div>}>
                                 <Modal.Header>Add Review</Modal.Header>
                                 <Modal.Content>
                                 <Form reply>
-                                  <Form.Field control={TextArea} label='Content' placeholder='What did you think?' />
-                                  <Rating label="Rating" maxRating={5} defaultRating={0} icon="star" size='large' color="black" clearable/>
+                                  <Form.Field control={TextArea} label='Content' placeholder='What did you think?' value={this.state.comText} onChange={this.handleReviewChange}/>
+                                  {this.state.reviewOpen && <Rating label="Rating" maxRating={5} icon="star" size='large' color="black" value={this.state.rating} onRate={this.handleRateChange()}/>}
                                   <br></br>
                                   <Button content='Add Review' labelPosition='left' icon='edit' primary />
                                 </Form>
