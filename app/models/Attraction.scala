@@ -11,7 +11,6 @@ import scala.concurrent._
 import ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import scala.collection.JavaConverters._
-
 import collection.JavaConversions._
 
 case class Attraction() {
@@ -96,8 +95,22 @@ object Attraction {
         .map(snapshot => snapshot.getValue(classOf[Attraction]))
 
     val attractionOption = Await.result(futureAttraction, 10.second)
+
+//    attractionOption match {
+//      case Some(attraction) => {
+//        for (comment <- attraction.comments.values()) println(comment.getAuthorEmail)
+//        //println(attraction.comments)
+//      }
+//      case None => None
+//    }
+
+//    val attractionListWithScalaComments = for (attraction <- attractionsList) yield {
+//      println(attraction)
+//      val javaComments = Try(attraction("comments")).getOrElse(Nil)
+//      println(javaComments)
+//      if (javaComments != Nil) println(javaComments)
+//    }
     
-    println(attractionOption.getOrElse(None))
     attractionOption
   }
 
@@ -182,30 +195,17 @@ object Attraction {
     attractionOption match {
       case None => None
       case Some(attraction: Attraction) =>
+
         val comment = Comment(authorEmail, commentStr, rating)
-        println(comment)
-        // val commentsOption: Option[List[Comment]] = Option(attraction.getComments)
 
-        // println("commentsOption: " + commentsOption)
-        // val commentList = commentsOption.getOrElse(List[Comment]())
-        // println("comment List: " + commentList)
-        // val comments: List[Comment] = comment :: commentList
         val commentMap: java.util.Map[String, CommentBean] = Option(attraction.getComments).getOrElse(new java.util.HashMap[String, CommentBean]())
-        println("Orig Comment Map" + commentMap)
+
         val comments = commentMap + (comment.##.toString -> comment.toBean)
-        println("With addition" + comments)
+
         attraction.setComments(comments)
-
-        // val javaAtrac = attraction
-        // javaAtrac.comments = javaAtrac.comments.asJava
-
-        // println(attraction.comments)
-
-        println("Full attraction: " + attraction)
 
         val storedAttraction = Await.result(attractionRef.set(attraction), 10.second)
 
-        println("stored attrac: "+ storedAttraction.comments)
         Option(storedAttraction)
     }
   }

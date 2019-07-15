@@ -33,12 +33,13 @@ class AttractionPage extends Component {
               //ADD ERROR TO NOT FOUND
             } else {
               attraction = JSON.parse(attraction.attraction)
+              console.log(attraction)
               this.setState({loading: false, name:attraction.name, description: attraction.description, location: attraction.location, imageUrl:attraction.imageUrl, editedDescription: attraction.description, editedLocation: attraction.location, editedImageUrl:attraction.imageUrl})
             }
 
           }
       )
-        Client.sendForm({name: "Berlin Wall", author: "thegod@scala.com", comment: "It's super neet", rating: 5}, '/api/deleteComment').then(attraction => {
+        Client.sendForm({name: "Berlin Wall", author: "someoneelse@scala.com", comment: "It's  neet", rating: 4}, '/api/createComment').then(attraction => {
           // console.log(comment)
           // attraction = JSON.parse(attraction.attraction)
           // console.log(attraction.comments)
