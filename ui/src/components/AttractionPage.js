@@ -6,7 +6,7 @@ import { TextArea, Button, Divider, Segment, Item, Header, Modal, Card, Image, F
 class AttractionPage extends Component {
     constructor(props) {
       super(props);
-      this.state = {title: '',loading:true};
+      this.state = {title: '',loading:true, comments: this.props.comments};
       this.handleInputChange=this.handleInputChange.bind(this);
     }
     reviewShow = dimmer => () => this.setState({ dimmer, reviewOpen: true, reviewFormSuccess: false})
@@ -27,6 +27,9 @@ class AttractionPage extends Component {
     
             }
         )
+
+
+
         Client.sendForm({id: parseInt(this.props.match.params.id)}, '/api/getAttraction').then(attraction => {
           console.log(attraction)
             if (attraction === "Could not find") {
@@ -50,6 +53,17 @@ class AttractionPage extends Component {
       )
     }
 
+    //NEED TO ADD
+    /*
+    async componentDidUpdate() {
+        Client.getComment(comments => {
+        this.setState({
+          reviews: JSON.parse(comments.content).comments
+        });
+      });
+    }
+     */
+
     handleInputChange(event) {
         const target = event.target;
         const value = target.value;
@@ -58,6 +72,34 @@ class AttractionPage extends Component {
         this.setState({
           [name]: value
         });
+    }
+
+    createComment(comments) {
+      let commentRendered = []
+      for(var comm of comments.values()) {
+        var arr = Array.from(comm.values())
+        commentRendered.push(
+          <Comment>
+            <Comment.Content>
+              <Comment.Author as='a'>{arr[0]}</Comment.Author>
+              <Comment.Metadata>
+                {this.getRatings(arr[2])}
+              </Comment.Metadata>
+              <Comment.Text>{arr[1]}</Comment.Text>
+              <Comment.Actions>
+                {this.state.admin &&//USERS ARE EQUAL
+                <Comment.Action color="red"><Icon name="edit"></Icon>Edit</Comment.Action>
+                }
+                {this.state.admin &&
+                <Comment.Action color="red"><Icon name="delete" color="red"></Icon>Delete</Comment.Action>
+                }
+              </Comment.Actions>
+            </Comment.Content>
+          </Comment>
+        )
+
+      }
+      return commentRendered;
     }
 
     submitChanges = () => {
@@ -85,6 +127,9 @@ class AttractionPage extends Component {
   
     render() {
       return (
+
+
+
         <div className="AttractionPage">
             <Segment loading={this.state.loading} raised textAlign='left' size="huge">
                 <Item.Group>
@@ -101,43 +146,10 @@ class AttractionPage extends Component {
                             <Header as='h3' dividing>
                               Ratings
                             </Header>
-                              <Comment>
-                                  <Comment.Content>
-                                    <Comment.Author as='a'>Matt</Comment.Author>
-                                    <Comment.Metadata>
-                                      {this.getRatings(3)}
-                                    </Comment.Metadata>
-                                    <Comment.Text>How artistic! sadlfk;j als;df lsdk;fskdfa;sflskda;f l;kdsf assl dfjk al asldfkjasldfkjfklasdfl;asj dflaskj dflaskj dljks fl;ajsdfjuoxvmkc smadofijqwe sadjlkf asoijczklxc sdfj osadkf maslkdfj wer nsdflkjasl dkfjas;ljdf alsfskldfl;asjd f</Comment.Text>
-                                    
-                                    <Comment.Actions>
-                                      {this.state.admin &&//USERS ARE EQUAL
-                                        <Comment.Action color="red"><Icon name="edit"></Icon>Edit</Comment.Action>
-                                      }
-                                      {this.state.admin && 
-                                        <Comment.Action color="red"><Icon name="delete" color="red"></Icon>Delete</Comment.Action>
-                                      }
-                                    </Comment.Actions>
-                                  </Comment.Content>
-                              </Comment>
-                              <Comment>
-                                  <Comment.Content>
-                                    <Comment.Author as='a'>George</Comment.Author>
-                                    <Comment.Metadata>
-                                      {this.getRatings(5)}
-                                    </Comment.Metadata>
-                                    <Comment.Text>wqerowiuerqwopierupwoqieru owqpe iuroqwpiuer qowpeiru oqpw iruqwopeiru wqoepir uqwopeiruqwopeiruqwopeiruwqope iuoui roqpweuir poqweiuropqweiurpoqwieuropqiuwer opqwiueroqwiueropiqwueo uowpq eiruoqpweiruqowperuoqpwieruqpowuerpoqwiero u</Comment.Text>
-                                    
-                                    <Comment.Actions>
-                                      {this.state.admin &&//USERS ARE EQUAL
-                                        <Comment.Action color="red"><Icon name="edit"></Icon>Edit</Comment.Action>
-                                      }
-                                      {this.state.admin && 
-                                        <Comment.Action color="red"><Icon name="delete" color="red"></Icon>Delete</Comment.Action>
-                                      }
-                                    </Comment.Actions>
-                                    
-                                  </Comment.Content>
-                              </Comment>
+
+
+                              {this.createComment(this.state.comments)}
+
                               {this.state.loggedin &&
 
                                 <Modal open={this.state.reviewOpen} onSubmit={() => { this.submitChanges() }} onClose={this.reviewClose} trigger={<div onClick={(e) => e.preventDefault()} className="ui primary button" onClick={this.reviewShow('blurring')}>Add Review</div>}>
