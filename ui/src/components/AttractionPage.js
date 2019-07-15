@@ -22,7 +22,8 @@ class AttractionPage extends Component {
               if (usr.user === "Not logged in") {
                 this.setState({loggedin: false})
               } else {
-                this.setState({loggedin: true, admin: JSON.parse(usr.user).isAdmin})
+                this.setState({loggedin: true, admin: JSON.parse(usr.user).isAdmin, userEmail: JSON.parse(usr.user).email})
+                console.log("this.state.userEmail:"+this.state.userEmail)
               }
     
             }
